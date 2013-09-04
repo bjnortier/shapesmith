@@ -448,6 +448,10 @@ input.field[type="text"] {
     color: #ff706b;
 }
 
+.dimensions .dim.xy {
+    color: #43a0c2;
+}
+
 /* ---------- Layer tree ----------- */
 
 #layertree-manager .icon24 {

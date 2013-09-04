@@ -8,6 +8,8 @@ define([
     'modelviews/geomvertexMV', 
     'modelviews/pointMV', 
     'modelviews/zanchorview',
+    'modelviews/radiusview',
+    'modelviews/dimensionview',
     'asyncAPI',
   ], 
   function(
@@ -20,6 +22,8 @@ define([
     GeomVertexMV,
     PointMV,
     ZAnchorView,
+    RadiusView,
+    DimensionView,
     AsyncAPI) {
 
   // ---------- Common ----------
@@ -103,8 +107,14 @@ define([
             vertex: this.origin,
             origin: this.origin.parameters.coordinate,
           }));
+
+          this.views.push(new RadiusView({
+            model: this,
+          }))
         }
       }
+
+      this.views.push(new RadiusDimensionView({model: this}));
 
     },
 
@@ -150,17 +160,7 @@ define([
           this.activePoint.trigger('change', this.activePoint);  
         // Radius      
         } else if (this.stage === 'radius') {
-          var points = geometryGraph.childrenOf(this.vertex).filter(function(v) {
-            return v.type === 'point'
-          });
-          var center = 
-            calc.objToVector(points[0].parameters.coordinate, geometryGraph, THREE.Vector3);
-          var radius = Math.sqrt(
-            Math.pow(center.x-position.x, 2) +
-            Math.pow(center.y-position.y, 2) +
-            Math.pow(center.z-position.z, 2));
-          this.vertex.parameters.radius = radius;
-          this.vertex.trigger('change', this.vertex);
+          this.radiusView.drag(position, undefined, event);
         }
       }
     },
@@ -175,6 +175,16 @@ define([
       if (this.vertex.proto) {
         if (this.stage === 'center') {
           this.stage ='radius';
+
+          this.radiusView = new RadiusView({
+            model: this, 
+          });
+          this.radiusView.dragStarted();
+          this.radiusView.isDraggable = function() {
+            return false;
+          };
+          this.views.push(this.radiusView);
+
           this.updateHint();
         } else if (this.stage === 'radius') {
           this.tryCommit();
@@ -238,6 +248,28 @@ define([
     }
 
   }); 
+
+  var RadiusDimensionView = DimensionView.extend({
+
+    className: 'dimensions',
+
+    render: function() {
+      var template = '<div class="dim xy">{{radius}}</div>';
+      var view = {radius: this.model.vertex.parameters.radius || ''};
+      this.$el.html(Mustache.render(template, view));
+    },
+
+    update: function() {
+      this.localPosition = calc.objToVector(
+        this.model.origin.parameters.coordinate,  
+        geometryGraph, 
+        THREE.Vector3);
+      this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.dx)/2;
+      this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.dy)/2;
+      DimensionView.prototype.update.call(this);
+    },
+
+  });
 
 
   var EditingSceneView = GeomVertexMV.EditingSceneView.extend(SceneViewMixin).extend({
