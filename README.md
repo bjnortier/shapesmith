@@ -1,6 +1,6 @@
 # Shapesmith[.next]
 
-Welcome to Shapesmith.next, the next generation EXPERIMENTAL implementation of Shapesmith. 
+Welcome to Shapesmith.next, the next generation implementation of Shapesmith. 
 
 You can find the original, stable, version at [http://github.com/bjnortier/shapesmith](http://github.com/bjnortier/shapesmith)
 
@@ -9,10 +9,13 @@ You can find the original, stable, version at [http://github.com/bjnortier/shape
 Shapemsith is an
 
  * Open Source
- * parametric
- * full-stack Javascript
+ * Parametric
  * 3D modelling application
- * for 3D printing
+
+and also:
+
+ * Full-stack JS using Node.js.
+ * Aimed at 3D printing
 
 ## Installation
 
@@ -26,7 +29,7 @@ I recommend using [Homebrew](http://mxcl.github.com/homebrew/) to install nodejs
      
     $ brew install node
 
-### Install grunt-cli and nodemon (nodemon is used suring development to restart on code changes)
+### Install grunt-cli and nodemon (nodemon is used during development to restart on code changes)
 
     $ npm install -g grunt-cli nodemon
 
