@@ -480,6 +480,9 @@
         //     '<div>z <input class="field workplane.origin.z" type="text" value="{{workplane.origin.z}}"></input></div>' +     
         //   '</div>' +
         // '</div>' +
+        '<div>centerx <input class="field centerx" type="text" value="{{center.x}}"></input></div>' +
+        '<div>centery <input class="field centery" type="text" value="{{center.y}}"></input></div>' +
+        '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' + 
         '<div>axisx <input class="field axisx" type="text" value="{{axis.x}}"></input></div>' +
         '<div>axisy <input class="field axisy" type="text" value="{{axis.y}}"></input></div>' +
         '<div>axisz <input class="field axisz" type="text" value="{{axis.z}}"></input></div>' + 
@@ -495,6 +498,11 @@
         icon: icons[this.model.vertex.type],
         isTopLevel: !geometryGraph.parentsOf(this.model.vertex).length,
         // workplane: this.model.vertex.workplane,
+        center: {
+          x: rotation.origin.x,
+          y: rotation.origin.y,
+          z: rotation.origin.z,
+        },
         axis: { 
           x: rotation.axis.x,
           y: rotation.axis.y,

@@ -82,7 +82,8 @@ define([
 
       if (addCallbackAndShouldGenerate(sha, callback)) {
         getOrGenerate(sha, function() {
-          return Lathe.createSubtract(sha, childBSPs, vertex.transforms, vertex.workplane);
+          var normalized = Normalize.normalizeVertex(vertex);
+          return Lathe.createSubtract(sha, childBSPs, normalized.transforms, normalized.workplane);
         }, performCallback);
       }
     }
@@ -116,7 +117,7 @@ define([
         var sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createSphere(sha, normalized, vertex.transforms, vertex.workplane);
+            return Lathe.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -126,7 +127,7 @@ define([
         var sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCube(sha, normalized, vertex.transforms, vertex.workplane);
+            return Lathe.createCube(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;

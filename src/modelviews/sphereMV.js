@@ -110,9 +110,9 @@ define([
 
     updateRotationCenter: function() {
       this.vertex.transforms.rotation.origin = {
-        x: geometryGraph.evaluate(this.origin.parameters.coordinate.x),
-        y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
-        z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
+        x: this.origin.parameters.coordinate.x,
+        y: this.origin.parameters.coordinate.y,
+        z: this.origin.parameters.coordinate.z,
       };
     },
 

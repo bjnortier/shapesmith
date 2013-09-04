@@ -131,7 +131,7 @@ define([
       var diff = new THREE.Vector3().subVectors(positionOnNormalInLocalCoords, this.initialPosition);
       var translation = new THREE.Vector3(Math.round(diff.x/grid) * grid,
                                           Math.round(diff.y/grid) * grid,
-                                          Math.round(diff.z/grid) * grid).add(this.initialTranslation);
+                                          Math.round(diff.z/grid) * grid);
       this.editingModel.translate(translation);
     },
 

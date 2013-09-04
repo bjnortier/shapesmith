@@ -53,9 +53,9 @@ define([
         z: this.startOrigin.z + translation.z,
       };
       this.vertex.transforms.rotation.origin =  {
-        x: this.startRotationCenter.x + translation.x,
-        y: this.startRotationCenter.y + translation.y,
-        z: this.startRotationCenter.z + translation.z,
+        x: '(' + this.startRotationCenter.x + ') + (' + translation.x + ')',
+        y: '(' + this.startRotationCenter.y + ') + (' + translation.y + ')',
+        z: '(' + this.startRotationCenter.z + ') + (' + translation.z + ')',
       };
       this.vertex.trigger('change', this.vertex);
     },

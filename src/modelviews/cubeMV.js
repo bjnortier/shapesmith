@@ -118,18 +118,18 @@ define([
 
     updateRotationCenter: function() {
       var origin = {
-        x: geometryGraph.evaluate(this.origin.parameters.coordinate.x),
-        y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
-        z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
+        x: this.origin.parameters.coordinate.x,
+        y: this.origin.parameters.coordinate.y,
+        z: this.origin.parameters.coordinate.z,
       };
-      var width = geometryGraph.evaluate(this.vertex.parameters.width);
-      var depth = geometryGraph.evaluate(this.vertex.parameters.depth);
-      var height = geometryGraph.evaluate(this.vertex.parameters.height);
+      var width = this.vertex.parameters.width;
+      var depth = this.vertex.parameters.depth;
+      var height = this.vertex.parameters.height;
 
       this.vertex.transforms.rotation.origin = {
-        x: origin.x + width/2,
-        y: origin.y + depth/2,
-        z: origin.z + height/2,
+        x: '(' + origin.x + ') + (' + width + ')/2',
+        y: '(' + origin.y + ') + (' + depth + ')/2',
+        z: '(' + origin.z + ') + (' + height + ')/2',
       };
 
     },
