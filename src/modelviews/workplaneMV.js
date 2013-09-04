@@ -76,6 +76,7 @@ define([
     initialize: function(options) {
       this.displayModelConstructor = DisplayModel;
       this.SceneView = GridView;
+      this.savedWorkplanes = [];
       VertexMV.DisplayModel.prototype.initialize.call(this, options);
 
       currentWorkplane.set(this);
@@ -89,6 +90,8 @@ define([
       geometryGraph.on('vertexRemoved', this.vertexRemoved, this);
       geometryGraph.on('vertexReplaced', this.vertexReplaced, this);
 
+      selection.on('selected', this.vertexSelected, this);
+      selection.on('deselected', this.vertexDeselected, this);
 
       this.views.push(new DisplayDOMView({model: this}));
     },
@@ -102,6 +105,9 @@ define([
       geometryGraph.off('vertexAdded', this.vertexAdded, this);
       geometryGraph.off('vertexRemoved', this.vertexRemoved, this);
       geometryGraph.off('vertexReplaced', this.vertexReplaced, this);
+
+      selection.off('selected', this.vertexSelected, this);
+      selection.off('deselected', this.vertexDeselected, this);
 
     },
 
@@ -118,13 +124,14 @@ define([
     },
 
     pushVertex: function(vertex) {
-      this.savedWorkplane = this.vertex.workplane;
+      this.savedWorkplanes.push(this.vertex.workplane);
       this.vertex.workplane = vertex.workplane;
+      console.log('pushed', this.savedWorkplanes);
     },
 
     popVertex: function(vertex) {
-      this.vertex.workplane = this.savedWorkplane;
-      this.savedWorkplane = undefined;
+      this.vertex.workplane = this.savedWorkplanes.pop();
+      console.log('popped', this.savedWorkplanes);
     },
 
     vertexAdded: function(vertex) {
@@ -148,6 +155,31 @@ define([
         this.pushVertex(replacement);
       } else if(!original.proto && original.editing && !original.implicit) {
         this.popVertex(replacement);
+      }
+      this.trigger('change');
+    },
+
+    // If selected and it's the only one - push the workplane
+    // Otherwise pop the workplane again for multiple selected 
+    vertexSelected: function(selectedIds) {
+      var allSelected = selection.getSelected();
+      if ((allSelected.length === 1) && (selectedIds.length === 1)) {
+        var vertex = geometryGraph.vertexById(selectedIds[0]);
+        if (vertex.category === 'geometry') {
+          this.selectedVertex = vertex;
+          this.pushVertex(this.selectedVertex);
+        }
+      } else if (this.selectedVertex) {
+        this.popVertex(this.selectedVertex);
+        this.selectedVertex = undefined;
+      }
+      this.trigger('change');
+    },
+
+    vertexDeselected: function() {
+      if (this.selectedVertex) {
+        this.popVertex(this.selectedVertex);
+        this.selectedVertex = undefined;
       }
       this.trigger('change');
     },
