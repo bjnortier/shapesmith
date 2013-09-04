@@ -3,6 +3,7 @@ define([
     'backbone-events',
     'calculations',
     'scene',
+    'geometrygraphsingleton',
     'scenevieweventgenerator',
     'modelviews/vertexMV',
     'settings',
@@ -11,6 +12,7 @@ define([
     Events,
     calc,
     sceneModel,
+    geometryGraph,
     sceneViewEventGenerator,
     VertexMV,
     userSettings,
@@ -37,15 +39,15 @@ define([
 
   var getPositionOnWorkplane = function(event) {
     var workplaneModel = currentWorkplane.get();
-    var positionOnWorkplane = 
-      calc.positionOnWorkplane($('#scene'), event, workplaneModel.vertex, camera);
-    return positionOnWorkplane;
+    return calc.positionOnWorkplane(
+      $('#scene'), event, workplaneModel.vertex, geometryGraph, camera);
   }
 
   var round = function(position, grid) {
-    return new THREE.Vector3(Math.round(position.x/grid) * grid,
-                 Math.round(position.y/grid) * grid,
-                 Math.round(position.z/grid) * grid);
+    return new THREE.Vector3(
+      Math.round(position.x/grid) * grid,
+      Math.round(position.y/grid) * grid,
+      Math.round(position.z/grid) * grid);
   }
 
   // ---------- Observer ----------

@@ -142,10 +142,39 @@ define([
     GeomNode.prototype.constructor.call(this, options);
   }
 
-  _.extend(Workplane.prototype, GeomNode.prototype);  
+  _.extend(Workplane.prototype, GeomNode.prototype); 
+
+  var getCommonExpressions = function(vertex) { 
+    return {
+      'workplane.origin.x' : vertex.workplane.origin.x,
+      'workplane.origin.y' : vertex.workplane.origin.y,
+      'workplane.origin.z' : vertex.workplane.origin.z,
+      'workplane.axis.x'   : vertex.workplane.axis.x,
+      'workplane.axis.y'   : vertex.workplane.axis.y,
+      'workplane.axis.z'   : vertex.workplane.axis.z,
+      'workplane.angle'    : vertex.workplane.angle,    
+
+      'transforms.rotation.origin.x' : vertex.transforms.rotation.origin.x,
+      'transforms.rotation.origin.y' : vertex.transforms.rotation.origin.y,
+      'transforms.rotation.origin.z' : vertex.transforms.rotation.origin.z,
+      'transforms.rotation.axis.x'   : vertex.transforms.rotation.axis.x,
+      'transforms.rotation.axis.y'   : vertex.transforms.rotation.axis.y,
+      'transforms.rotation.axis.z'   : vertex.transforms.rotation.axis.z,
+      'transforms.rotation.angle'    : vertex.transforms.rotation.angle,  
+
+      'transforms.translation.x' : vertex.transforms.translation.x,
+      'transforms.translation.y' : vertex.transforms.translation.y,
+      'transforms.translation.z' : vertex.transforms.translation.z,  
+
+      'transforms.scale.origin.x' : vertex.transforms.scale.origin.x,
+      'transforms.scale.origin.y' : vertex.transforms.scale.origin.y,
+      'transforms.scale.origin.z' : vertex.transforms.scale.origin.z,  
+      'transforms.scale.factor' : vertex.transforms.scale.factor,  
+    }
+  };
 
   Workplane.prototype.getExpressions = function() {
-    return {};
+    return getCommonExpressions(this);
   }
 
 
@@ -194,11 +223,11 @@ define([
   _.extend(Point.prototype, GeomNode.prototype);
 
   Point.prototype.getExpressions = function() {
-    return {
+    return _.extend({
       'x' : this.parameters.coordinate.x,
       'y' : this.parameters.coordinate.y,
       'z' : this.parameters.coordinate.z,
-    }
+    }, getCommonExpressions(this));
   }
 
   Point.prototype.validateSchema = function() {
@@ -224,7 +253,7 @@ define([
   _.extend(Polyline.prototype, GeomNode.prototype);
 
   Polyline.prototype.getExpressions = function() {
-    return {};
+    return getCommonExpressions(this);
   }
 
   // ----------- Cube ---------- 
@@ -240,11 +269,11 @@ define([
   _.extend(Cube.prototype, GeomNode.prototype);
 
   Cube.prototype.getExpressions = function() {
-    return {
+    return _.extend({
       'width'  : this.parameters.width,
       'depth'  : this.parameters.depth,
       'height' : this.parameters.height,
-    };
+    }, getCommonExpressions(this));
   }
 
   Cube.prototype.validateSchema = function() {
@@ -267,9 +296,9 @@ define([
   _.extend(Sphere.prototype, GeomNode.prototype);
 
   Sphere.prototype.getExpressions = function() {
-    return {
+    return _.extend({
       'radius' : this.parameters.radius,
-    };
+    }, getCommonExpressions(this));
   }
 
   Sphere.prototype.validateSchema = function() {
@@ -292,12 +321,12 @@ define([
   _.extend(Extrude.prototype, GeomNode.prototype);
 
   Extrude.prototype.getExpressions = function() {
-    return {
+    return _.extend({
       'vector.u' : this.parameters.vector.u, 
       'vector.v' : this.parameters.vector.v, 
       'vector.w' : this.parameters.vector.w,
       'height' : this.parameters.height,
-    }
+    }, getCommonExpressions(this));
   }
 
   Extrude.prototype.validateSchema = function() {
@@ -325,7 +354,7 @@ define([
   _.extend(Subtract.prototype, GeomNode.prototype);
 
   Subtract.prototype.getExpressions = function() {
-    return {}
+    return getCommonExpressions(this);
   }
 
   // ---------- Module ----------

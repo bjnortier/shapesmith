@@ -2,7 +2,7 @@ define([
     'lib/mustache',
     'scene',
     'calculations',
-    'geometryGraphSingleton',
+    'geometrygraphsingleton',
     'modelviews/dimensionview',
   ], function(
     Mustache,

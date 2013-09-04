@@ -34,21 +34,20 @@ define([], function() {
         return mouseRay;
     }
     
-    var positionOnWorkplane = function(sceneElement, event, workplaneVertex, camera) {
+    var positionOnWorkplane = function(sceneElement, event, workplaneVertex, geometryGraph, camera) {
         var planeOrigin = new THREE.Vector3(0,0,0);
         var planeNormal = new THREE.Vector3(0,0,1);
 
-        var workplaneOrigin = objToVector(workplaneVertex.workplane.origin, undefined, THREE.Vector3);
-        var workplaneAxis   = objToVector(workplaneVertex.workplane.axis, undefined, THREE.Vector3);   
-        var workplaneAngle  = workplaneVertex.workplane.angle;
+        var workplaneOrigin = objToVector(workplaneVertex.workplane.origin, geometryGraph, THREE.Vector3);
+        var workplaneAxis   = objToVector(workplaneVertex.workplane.axis, geometryGraph, THREE.Vector3);   
+        var workplaneAngle  = geometryGraph.evaluate(workplaneVertex.workplane.angle);
 
         var localPosition = positionOnPlane(sceneElement, event, planeOrigin, planeNormal, 
           workplaneOrigin, workplaneAxis, workplaneAngle, camera);
         return localPosition;
-    }
+    };
 
-    var positionOnPlane = function(sceneElement, event, planeOrigin, planeNormal, 
-          workplaneOrigin, workplaneAxis, workplaneAngle, camera) {
+    var positionOnPlane = function(sceneElement, event, planeOrigin, planeNormal, workplaneOrigin, workplaneAxis, workplaneAngle, camera) {
 
         var rotatedPlaneOrigin = rotateAroundAxis(planeOrigin, workplaneAxis, workplaneAngle);
         var origin = new THREE.Vector3().addVectors(rotatedPlaneOrigin, workplaneOrigin);
