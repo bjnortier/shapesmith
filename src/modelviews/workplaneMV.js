@@ -409,7 +409,8 @@ define([
           this.model.vertex.workplane.axis, 
           geometryGraph, 
           THREE.Vector3);
-      var angle = this.model.vertex.workplane.angle/180*Math.PI;
+      var angle = geometryGraph.evaluate(
+        this.model.vertex.workplane.angle)/180*Math.PI;
         
       quaternion.setFromAxisAngle(axis, angle);
       this.sceneObject.useQuaternion = true;
