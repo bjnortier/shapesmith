@@ -7,7 +7,6 @@ define([
     'worldcursor',
     'geometrygraphsingleton',
     'modelviews/geomvertexMV', 
-    'modelviews/dimensionview',
   ], 
   function(
     calc, 
@@ -17,8 +16,7 @@ define([
     sceneViewEventGenerator,
     worldCursor,
     geometryGraph,
-    GeomVertexMV,
-    DimensionView) {
+    GeomVertexMV) {
 
   var View = GeomVertexMV.EditingSceneView.extend({
 

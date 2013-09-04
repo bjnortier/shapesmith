@@ -9,6 +9,7 @@ define([
     'modelviews/geomvertexMV', 
     'modelviews/pointMV', 
     'modelviews/zanchorview',
+    'modelviews/dimensionview',
     'modelviews/heightOnWidthDepthAnchorView',
     'modelviews/widthdepthcornerview',
     'asyncAPI',
@@ -26,6 +27,7 @@ define([
     GeomVertexMV,
     PointMV,
     ZAnchorView,
+    DimensionView,
     CornerEditingHeightAnchor,
     WidthDepthCornerView,
     AsyncAPI,
@@ -113,6 +115,9 @@ define([
           }))
         }
       }
+      this.views.push(new WidthDimensionView({model: this}));
+      this.views.push(new DepthDimensionView({model: this}));
+      this.views.push(new HeightDimensionView({model: this}));
 
     },
 
@@ -315,6 +320,70 @@ define([
 
   }); 
 
+  var WidthDimensionView = DimensionView.extend({
+
+    className: 'dimensions',
+
+    render: function() {
+      var template = '<div class="dim x">{{width}}</div>';
+      var view = {width: this.model.vertex.parameters.width || ''};
+      this.$el.html(Mustache.render(template, view));
+    },
+
+    update: function() {
+      this.localPosition = calc.objToVector(
+        this.model.origin.parameters.coordinate,  
+        geometryGraph, 
+        THREE.Vector3);
+      this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.width)/2;
+      DimensionView.prototype.update.call(this);
+    },
+
+  });
+
+  var DepthDimensionView = DimensionView.extend({
+
+    className: 'dimensions',
+
+    render: function() {
+      var template = '<div class="dim y">{{depth}}</div>';
+      var view = {depth: this.model.vertex.parameters.depth || ''};
+      this.$el.html(Mustache.render(template, view));
+    },
+
+    update: function() {
+      this.localPosition = calc.objToVector(
+        this.model.origin.parameters.coordinate,  
+        geometryGraph, 
+        THREE.Vector3);
+      this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.depth)/2;
+      DimensionView.prototype.update.call(this);
+    },
+
+  });
+
+  var HeightDimensionView = DimensionView.extend({
+
+    className: 'dimensions',
+
+    render: function() {
+      var template = '<div class="dim z">{{height}}</div>';
+      var view = {height: this.model.vertex.parameters.height || ''};
+      this.$el.html(Mustache.render(template, view));
+    },
+
+    update: function() {
+      this.localPosition = calc.objToVector(
+        this.model.origin.parameters.coordinate,  
+        geometryGraph, 
+        THREE.Vector3);
+      this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.width);
+      this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.depth);
+      this.localPosition.z += geometryGraph.evaluate(this.model.vertex.parameters.height)/2;
+      DimensionView.prototype.update.call(this);
+    },
+
+  });
 
   var EditingSceneView = GeomVertexMV.EditingSceneView.extend({
 

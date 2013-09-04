@@ -200,34 +200,11 @@ define([
     },
 
     update: function() {
-      this.render();
-      var camera = sceneModel.view.camera;
-      var sceneWidth = $('#scene').innerWidth();
-      var sceneHeight = $('#scene').innerHeight();
-
-      var localPosition = calc.objToVector(
+      this.localPosition = calc.objToVector(
         this.model.vertex.parameters.coordinate,  
         geometryGraph, 
         THREE.Vector3);
-
-      // Apply Workplane
-      var workplaneOrigin = calc.objToVector(
-        this.model.vertex.workplane.origin, 
-        geometryGraph, 
-        THREE.Vector3);
-      var workplaneAxis =  calc.objToVector(
-        this.model.vertex.workplane.axis, 
-        geometryGraph, 
-        THREE.Vector3);
-      var workplaneAngle = geometryGraph.evaluate(this.model.vertex.workplane.angle);
-
-      var globalPosition = calc.rotateAroundAxis(localPosition, workplaneAxis, workplaneAngle);
-      globalPosition.add(workplaneOrigin);
-
-      var screenPos = calc.toScreenCoordinates(sceneWidth, sceneHeight, camera, globalPosition);
-        
-      this.$el.css('left', (screenPos.x + 10) + 'px');
-      this.$el.css('top',  (screenPos.y + 0) + 'px');
+      DimensionView.prototype.update.call(this);
     },
 
   });

@@ -437,11 +437,11 @@ input.field[type="text"] {
 }
 
 .dimensions .dim.x {
-    color: #3da033; 
+    color: #4394c2;
 }
 
 .dimensions .dim.y {
-    color: #4394c2;
+    color: #3da033; 
 }
 
 .dimensions .dim.z {
