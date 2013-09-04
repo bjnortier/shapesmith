@@ -126,12 +126,10 @@ define([
     pushVertex: function(vertex) {
       this.savedWorkplanes.push(this.vertex.workplane);
       this.vertex.workplane = vertex.workplane;
-      console.log('pushed', this.savedWorkplanes);
     },
 
     popVertex: function(vertex) {
       this.vertex.workplane = this.savedWorkplanes.pop();
-      console.log('popped', this.savedWorkplanes);
     },
 
     vertexAdded: function(vertex) {

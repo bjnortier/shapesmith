@@ -108,6 +108,14 @@ define([
 
     },
 
+    updateRotationCenter: function() {
+      this.vertex.transforms.rotation.origin = {
+        x: geometryGraph.evaluate(this.origin.parameters.coordinate.x),
+        y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
+        z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
+      };
+    },
+
     translate: function(translation) {
       if (!this.startOrigin) {
         this.startOrigin = {
@@ -119,16 +127,13 @@ define([
       this.origin.parameters.coordinate.x = this.startOrigin.x + translation.x;
       this.origin.parameters.coordinate.y = this.startOrigin.y + translation.y;
       this.origin.parameters.coordinate.z = this.startOrigin.z + translation.z;
+
+      this.updateRotationCenter();
       this.origin.trigger('change', this.origin);
     },
 
     scale: function(origin, factor) {
-      if (!this.startOrigin) {
-        this.startOrigin = {
-          x: geometryGraph.evaluate(this.origin.parameters.coordinate.x),
-          y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
-          z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
-        };
+      if (!this.startRadius) {
         this.startRadius = geometryGraph.evaluate(this.vertex.parameters.radius);
       }
       this.vertex.parameters.radius = this.startRadius*factor;

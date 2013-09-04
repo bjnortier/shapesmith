@@ -11,7 +11,7 @@ define([
         var that = this;
         var db;
 
-        var openDBRequest = indexedDB.open("shapesmith", 1);
+        var openDBRequest = indexedDB.open('shapesmith', 1);
         
         openDBRequest.onerror = function(event) {
             console.error('Could not create BSP database');
@@ -33,18 +33,18 @@ define([
         openDBRequest.onupgradeneeded = function(event) {
             infoHandler('creating/upgrading BSP db');
             var db = event.target.result;
-            bspStore = db.createObjectStore("bsp", { keyPath: "sha" });
+            bspStore = db.createObjectStore('bsp.cache', { keyPath: 'sha' });
         }
 
         this.read = function(sha, callback) {
-            var transaction = db.transaction(["bsp"], "readonly");
+            var transaction = db.transaction(['bsp.cache'], 'readonly');
 
             transaction.onerror = function(event) {
                 errorHandler('could not read bsp', event);
                 callback(event);
             }
 
-            var request = transaction.objectStore("bsp").get(sha);
+            var request = transaction.objectStore('bsp.cache').get(sha);
             request.onsuccess = function(event) {
                 // console.log('read success:', request.result && request.result.sha);
                 callback(undefined, request.result);
@@ -53,7 +53,7 @@ define([
         }
 
         this.write = function(value, callback) {
-            var transaction = db.transaction(["bsp"], "readwrite");
+            var transaction = db.transaction(['bsp.cache'], 'readwrite');
             transaction.onerror = function(event) {
                 errorHandler('could not write bsp', event);
                 callback(event);
@@ -62,7 +62,7 @@ define([
                 // infoHandler('write transaction complete');
             }
 
-            var readRequest = transaction.objectStore("bsp").get(value.sha);
+            var readRequest = transaction.objectStore('bsp.cache').get(value.sha);
             readRequest.onsuccess = function(event) {
                 if (readRequest.result) {
                     callback();
@@ -70,7 +70,7 @@ define([
 
                     // BSP is serialized manually otherwise the IndexDB shim fails
                     // because JSON.stringify fails because of circular references 
-                    var writeRequest = transaction.objectStore("bsp").add(value);
+                    var writeRequest = transaction.objectStore('bsp.cache').add(value);
                     writeRequest.onsuccess = function(event) {
                         // infoHandler('write success', value.sha);
                         callback();

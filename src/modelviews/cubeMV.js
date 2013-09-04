@@ -116,6 +116,24 @@ define([
 
     },
 
+    updateRotationCenter: function() {
+      var origin = {
+        x: geometryGraph.evaluate(this.origin.parameters.coordinate.x),
+        y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
+        z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
+      };
+      var width = geometryGraph.evaluate(this.vertex.parameters.width);
+      var depth = geometryGraph.evaluate(this.vertex.parameters.depth);
+      var height = geometryGraph.evaluate(this.vertex.parameters.height);
+
+      this.vertex.transforms.rotation.origin = {
+        x: origin.x + width/2,
+        y: origin.y + depth/2,
+        z: origin.z + height/2,
+      };
+
+    },
+
     translate: function(translation) {
       if (!this.startOrigin) {
         this.startOrigin = {
@@ -123,22 +141,13 @@ define([
           y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
           z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
         }
-        this.startRotationCenter = {
-          x: this.vertex.transforms.rotation.origin.x,
-          y: this.vertex.transforms.rotation.origin.y,
-          z: this.vertex.transforms.rotation.origin.z, 
-        }
       }
       this.origin.parameters.coordinate = {
         x: this.startOrigin.x + translation.x,
         y: this.startOrigin.y + translation.y,
         z: this.startOrigin.z + translation.z,
       }
-      this.vertex.transforms.rotation.origin =  {
-        x: this.startRotationCenter.x + translation.x,
-        y: this.startRotationCenter.y + translation.y,
-        z: this.startRotationCenter.z + translation.z,
-      };
+      this.updateRotationCenter();
       this.origin.trigger('change', this.origin);
     },
 
@@ -168,6 +177,7 @@ define([
       this.vertex.parameters.depth = this.startDepth*factor;
       this.vertex.parameters.height = this.startHeight*factor;
 
+      this.updateRotationCenter();
       // Origin point change event will cascade up to the cube vertex
       // so only one trigger is necessary
       this.origin.trigger('change', this.origin);
