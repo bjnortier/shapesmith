@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 64 64" version="0.48.2 r9819" width="64px" height="64px" id="svg5886">
+  <defs id="defs5888"/>
+  <format/>
+  <type resource="http://purl.org/dc/dcmitype/StillImage"/>
+  <title/>
+  <g id="layer1" label="Layer 1" groupmode="layer">
+    <g id="g5036-4" transform="matrix(0.92691639,0,0,0.92691639,-218.81288,-291.36632)">
+      <path nodetypes="ccccc" connector-curvature="0" id="path4033-9" d="m 240.42857,360.64789 33.78572,-8.67857 26.21428,15.67857 -38,14 z"/>
+      <path nodetypes="ccccc" connector-curvature="0" id="path4031-1" d="m 274.42857,316.64789 -0.21428,35.5 -33.78572,8.5 -1,-41 z"/>
+      <path nodetypes="ccccc" connector-curvature="0" id="path4029-5" d="m 274.42857,316.64789 -0.21428,35.5 26.71428,15.5 0,-45 z"/>
+      <path nodetypes="ccccc" connector-curvature="0" id="path4025-5" d="m 262.07143,381.46932 38.5,-14 0,-45 -38.5,7 z"/>
+      <path nodetypes="ccccc" connector-curvature="0" id="path4027-5" d="m 239.07143,319.46932 35,-3 26.5,6 -38.5,7 z"/>
+      <path nodetypes="ccccc" connector-curvature="0" id="path4023-8" d="m 240.07143,360.46932 -1,-41 23,10 0,52 z"/>
+    </g>
+  </g>
+</svg>

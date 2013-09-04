@@ -1,0 +1,619 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    /* @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300); 
+    font-family: 'Open Sans', sans-serif;
+    */
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 85%;
+    line-height: 1em; /*color: #393939;*/
+    color: #fff;
+}
+
+#webgl-detector {
+    font-family: monospace;
+    font-size: 13px;
+    text-align: center;
+    background: #eee;
+    color: #000;
+    padding: 1em;
+    width: 475px;
+    margin: 5em auto 0;
+    border-radius: 5px;
+}
+
+#scene {
+    color: #080808;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*z-index: -1;*/
+    overflow: hidden;
+}
+
+#hint {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    margin-left: -250px;
+    width: 500px;
+    background: rgba(200, 200, 200, 0.7);
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    font-size: 2em;
+    line-height: 1em;
+}
+
+#rendering-options {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+img#logo {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    height: 50px;
+}
+
+.toolbar.main {
+    padding-left: 10px;
+}
+
+#toolbar ol {
+    display: inline-block;
+}
+
+.toolbar li {
+    list-style-type: none;
+    display: inline;    
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.toolbar li:hover {
+    background-color: #ffc;
+}
+
+.okcancel .button:hover {
+    border-bottom: solid 2px #ffc;
+    cursor: pointer;
+}
+
+.toolbar .item.active {
+    background-color: #fcfc6f;
+}
+
+.coordinate, .named  {
+    padding: 5px;
+}
+
+#geometry .vertex .name {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    color: #fff;
+}
+
+#geometry .name {
+    vertical-align: middle;
+    margin-top: -13px;
+}
+
+#variable-manager .name {
+    padding: 12px;
+}
+
+#variable-manager .add {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+#variable-manager .add:hover {
+    border-bottom: solid 2px #ff0;
+    cursor: pointer;
+}
+
+.vertex .okcancel {
+    float: right;
+    padding: 5px;
+}
+
+.ok.disabled {
+    display: none;
+}
+
+.vertex .okcancel div {
+    margin: 4px;
+}
+
+#graphs {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 10px;
+    border-spacing: 5px;
+    z-index: 1;
+}
+
+#geometry {
+    margin-top: 5px;
+}
+
+#variables, #geometry {
+    border-collapse: collapse;
+    padding: 5px;
+}   
+
+#variables tr {
+    /*border-bottom: solid thin #999;*/
+}
+
+#geometry tr:first-child, #variables tr:first-child {
+    /*border-bottom: solid thin #666;*/
+}
+
+.vertex.display {
+    cursor: pointer;    
+}
+
+.materials {
+    position: absolute;
+    border-top: solid thin #ADACAC;
+    border-left: solid thin #ADACAC;
+    border-right: solid thin #818181;
+    border-bottom: solid thin #818181;
+    background-color: white;
+}
+
+.materials .title {
+    padding: 5px;
+    background-color: rgb(255, 255, 136);
+    cursor: pointer;
+}
+
+.materials .options {
+    border-top: solid thin gray;
+}
+
+.materials .colors, .materials .textures {
+    padding: 5px;
+}
+
+.materials .color, .materials .texture { 
+    position: relative;
+    height: 16px;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: solid thin;
+    border-color: rgba(90, 86, 86, 0.14);
+    cursor: pointer;    
+}
+
+.materials .color {
+    display: inline-block;
+    width: 16px;
+} 
+
+.materials .texture {
+    padding-top: 2px;
+    text-shadow: #D8D7D7 0px 1px;
+}
+
+.materials .color:hover, .materials .texture:hover {
+    border-color: rgba(90, 86, 86, 0.5);
+}
+
+#geometry .vertex.display:hover td {
+    border-bottom: solid #ff0 2px;
+}
+
+.vertex.selected td {
+    border-bottom: solid #ff0 2px;
+}
+
+.vertex.editing .title {
+    background: rgba(136, 170, 201, 0.46);
+}
+
+.vertex.editing .coordinate.editing {
+    background: rgba(91, 91, 91, 0.46);
+}
+
+.offscreen {
+    position: absolute;
+    top: -200px;
+    left: -200px;
+}
+
+.toolbar .item .icon {
+    width: 32px;
+    min-height: 32px;
+    display: block;
+}
+
+.toolbar .expander {
+    margin-bottom: -14px;
+    padding-bottom: 24px;
+}
+
+.toolbar {
+    border-right: solid thin gray;
+}
+
+.toolbar .expander .icon8x32 {
+    display: inline-block;
+    width: 8px;
+    height: 32px;
+    background-image: url('/images/icons/contract8x32.png');
+    background-repeat: no-repeat;
+}
+
+.toolbar .expander.hidden .icon8x32 {
+    background-image: url('/images/icons/expand8x32.png');
+}
+
+
+.icon16 {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.icon24 {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+.icon32 {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+}
+
+.toolbar .item .icon {
+    background-position: top; left;
+}
+
+.toolbar.main .settings .icon, #dialog .icon32.settings {
+    background-image: url('/images/icons/cog32x32.png');
+}
+
+.toolbar.main .map .icon {
+    background-image: url('/images/icons/map32x32.png');
+}
+
+.toolbar.main .save .icon {
+    background-image: url('/images/icons/save32x32.png');
+}
+
+.toolbar.main .obj .icon {
+    background-image: url('/images/icons/export32x32.png');
+}
+
+.toolbar.main .exit .icon {
+    background-image: url('/images/icons/exit32x32.png');
+}
+
+.toolbar.geometry .select .icon {
+    background-image: url('/images/icons/mouse32x32.png');
+}
+
+.toolbar.geometry .point .icon {
+    background-image: url('/images/icons/point32x32.png');
+}
+
+.toolbar.geometry .polyline .icon {
+    background-image: url('/images/icons/polyline32x32.png');
+}
+
+.toolbar.geometry .extrude .icon {
+    background-image: url('/images/icons/extrude32x32.png');
+}
+
+.toolbar.geometry .extrude.disabled .icon {
+    background-image: url('/images/icons/extrude32x32.disabled.png');
+}
+
+.toolbar.geometry .extrude.active .icon {
+    background-image: url('/images/icons/extrude32x32.png');
+}
+
+.icon24.point {
+    background-image: url('/images/icons/point24x24.png');
+}
+
+.icon24.polyline {
+    background-image: url('/images/icons/polyline24x24.png');
+}
+
+.icon24.extrude {
+    background-image: url('/images/icons/extrude24x24.png');
+}
+
+.coordinate span {
+    padding: 2px;
+}
+
+input.field[type="text"] {
+    width: 30px;
+    border: none;
+    background: none; 
+}
+
+.section {
+    padding: 5px;
+    border-bottom: solid thin rgb(206, 206, 206)
+}
+
+.title {
+    padding: 5px;
+}
+
+.section.geometry {
+    margin-top: 10px;
+}
+
+input.field[type="text"] {
+    background: rgba(136, 170, 201, 0.46);
+}
+
+#variables .editing .field, 
+#variables .name, 
+#variables .expression {
+    width: 50px;
+}
+
+.field.x {
+    color: #3da033; 
+}
+
+.field.y {
+    color: #4394c2;
+}
+
+.field.z, .field.h {
+    color: #ff706b;
+}
+
+#geometry .field, #workplane-settings .field {
+    margin: 5px;
+    padding: 5px;
+}
+
+#variables .name, 
+#variables .expression,
+#variables .field {
+    padding: 5px;
+}
+
+#variables .field {
+    margin: -5px;
+}
+
+#variables .field {
+    margin-right: 5px;
+} 
+
+.error .field, .error.field {
+    border-bottom: solid 2px red !important;
+}
+
+/* ---------- Dimensions ----------- */
+
+.dimensions {
+    position: absolute;
+    background-color: rgba(255,255,255,0.2);
+}
+
+.dimensions .dim {
+    display: inline-block;
+}
+
+.dimensions .dim.x {
+    color: #3da033; 
+}
+
+.dimensions .dim.y {
+    color: #4394c2;
+}
+
+.dimensions .dim.z {
+    color: #ff706b;
+}
+
+/* ---------- Layer tree ----------- */
+
+#layertree-manager .icon24 {
+    margin-left: 2px !important;
+}
+
+#layertree-manager .icon24:hover {
+    cursor: pointer;
+    border-bottom: solid 2px black;
+    margin-bottom: -2px;
+}
+
+.layer-container .title > div, .layer-leaf .title > div {
+    display: inline-block;
+}
+
+.layer-container {
+    cursor: move;
+}
+
+.layer-container .name {
+    margin-left: 5px;
+    line-height: 24px;
+}
+
+.layer-container.validChildDropTarget > .title, .layer-leaf.validChildDropTarget > .title {
+    border: solid thin green;
+    border-radius: 2px;
+    margin-right: 7px;
+}
+
+.layer-container.validChildDropTarget, .layer-leaf.validChildDropTarget {
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+.layer-container.validSiblingBeforeDropTarget, .layer-leaf.validSiblingBeforeDropTarget {
+    border-top: solid thin green;
+    margin-top: -1px;
+}
+
+.layer-container.validSiblingAfterDropTarget, .layer-leaf.validSiblingAfterDropTarget {
+    border-bottom: solid thin green;
+    margin-bottom: -1px;
+}
+
+.layer-container, .layer-leaf {
+    margin-left: 5px;
+}
+
+.layer-container > .layer-container, .layer-container > .layer-leaf  {
+    margin-left: 15px;
+}
+
+.layer-container.root  > .layer-container, .layer-container.root > .layer-leaf  {
+    margin-left: 2px;
+}
+
+/* ---------- Dialog ---------- */
+
+#dialog {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    margin-left: -150px;
+    width: 300px;
+    background: rgba(200, 200, 200, 0.7);
+    padding: 10px;
+}
+
+#dialog .field {
+    margin: 5px;
+    padding: 5px;
+}
+
+#dialog input.field[type="text"] {
+    background: white;
+}
+
+#dialog h2 {
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+/* ---------- Splash ---------- */
+
+#dialog.splash {
+    top: 100px;
+    width: 360px;
+    margin-left: -180px;
+}
+
+#dialog.splash ul {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+/* ---------- Colors ---------- */
+
+body {
+    background-color: #ebf0ef;
+    color: #000;
+}
+
+#geometry {
+    background: none;
+}
+
+#elevation-plane #ruler {
+    color: #000;
+}
+
+#geometry .vertex, #variables {
+    background-color: rgba(200, 200, 200, 0.7);
+}
+
+#geometry .vertex .name {
+    color: #000;
+}
+
+.field.x {
+    color: #225522; 
+}
+
+.field.y {
+    color: #222255;
+}
+
+.field.z, .field.h {
+    color: #552222;
+}
+
+/* ---------- Scene colors ---------- */
+
+.scene .workplane .majorGridLine {
+    color: #000000; 
+}
+
+.scene .workplane .minorGridLine {
+    color: #000000;
+}
+
+.scene .geometry .selected {
+    color: #f4f653;
+}
+
+.scene .geometry .selectedAmbient {
+    color: #333333;
+}
+
+.scene .geometry .highlightColor {
+    color: #bbbb66;
+}
+
+.scene .geometry .highlightAmbient {
+    color: #bbbb66;
+}
+
+.scene .geometry .default {
+    color: #009900;
+}
+
+.scene .geometry .defaultAmbient {
+    color: #666666;
+}
+
+.scene .geometry .editing {
+    color: #007088;
+}

@@ -1,0 +1,216 @@
+@import '/css/reset.css';
+body {
+  width: 100%;
+  *zoom: 1;
+}
+body:before,
+body:after {
+  content: "";
+  display: table;
+}
+body:after {
+  clear: both;
+}
+#logo {
+  display: inline;
+  float: left;
+  width: 47.91666666666667%;
+  margin: 0 1.0416666666666665%;
+  margin-top: 1em;
+}
+#create {
+  display: inline;
+  float: left;
+  width: 47.91666666666667%;
+  margin: 0 1.0416666666666665%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.maincolumn {
+  display: inline;
+  float: left;
+  width: 97.91666666666666%;
+  margin: 0 1.0416666666666665%;
+}
+.maincolumn ul#designs {
+  display: block;
+  width: 102.08333333333333%;
+  margin: 0 -1.0416666666666665%;
+  *zoom: 1;
+}
+.maincolumn ul#designs:before,
+.maincolumn ul#designs:after {
+  content: "";
+  display: table;
+}
+.maincolumn ul#designs:after {
+  clear: both;
+}
+.maincolumn ul#designs li {
+  display: inline;
+  float: left;
+  width: 22.916666666666664%;
+  margin: 0 1.0416666666666665%;
+  margin-bottom: 1em;
+}
+@media screen and (max-width: 720px) {
+  .maincolumn,
+  .left,
+  .right {
+    display: inline;
+    float: left;
+    width: 97.91666666666666%;
+    margin: 0 1.0416666666666665%;
+  }
+  .maincolumn ul#designs {
+    display: block;
+    width: 102.08333333333333%;
+    margin: 0 -1.0416666666666665%;
+    *zoom: 1;
+  }
+  .maincolumn ul#designs:before,
+  .maincolumn ul#designs:after {
+    content: "";
+    display: table;
+  }
+  .maincolumn ul#designs:after {
+    clear: both;
+  }
+  .maincolumn ul#designs li {
+    display: inline;
+    float: left;
+    width: 47.91666666666667%;
+    margin: 0 1.0416666666666665%;
+    margin-bottom: 1em;
+  }
+}
+@media screen and (max-width: 480px) {
+  .maincolumn,
+  .left,
+  .right {
+    display: inline;
+    float: left;
+    width: 97.91666666666666%;
+    margin: 0 1.0416666666666665%;
+  }
+  .maincolumn ul#designs {
+    display: block;
+    width: 102.08333333333333%;
+    margin: 0 -1.0416666666666665%;
+    *zoom: 1;
+  }
+  .maincolumn ul#designs:before,
+  .maincolumn ul#designs:after {
+    content: "";
+    display: table;
+  }
+  .maincolumn ul#designs:after {
+    clear: both;
+  }
+  .maincolumn ul#designs li {
+    display: inline;
+    float: left;
+    width: 97.91666666666666%;
+    margin: 0 1.0416666666666665%;
+    margin-bottom: 1em;
+  }
+}
+body {
+  background-color: #f0ebef;
+  background-position: 100% -50%;
+  background-repeat: no-repeat;
+  color: #090909;
+  font-family: Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-size: 15px;
+}
+#create .input-container {
+  margin-right: 23px;
+}
+#create .input-container #new-design-name {
+  vertical-align: middle;
+  border: solid thin #2D5FAA;
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+}
+#create .input-container #hidden-button {
+  position: absolute;
+  top: -100px;
+}
+input.rename {
+  padding: 5px;
+  font-size: 15px;
+}
+input.error {
+  color: red;
+}
+.design {
+  background-color: #fff;
+  border: solid thin #cccccc;
+}
+.design:hover {
+  background-color: #ffc;
+  border-color: #2D5FAA;
+}
+.design:hover .delete {
+  background: url('/images/icons/delete16x16.disabled.png') no-repeat;
+}
+.design:hover .delete:hover {
+  background: url('/images/icons/delete16x16.png') no-repeat;
+}
+.design h2 {
+  padding: 10px;
+}
+.design h2 .name {
+  cursor: text;
+}
+.design .delete {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: none;
+  float: right;
+  margin: 8px;
+}
+.design .confirm {
+  background-color: #ffecec;
+  border: solid thin red;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 3px;
+}
+.design .confirm .question {
+  padding: 2px;
+  color: red;
+}
+.design .confirm .buttons {
+  margin-top: 5px;
+}
+.design .preview {
+  cursor: pointer;
+}
+.design .preview .nopreview {
+  color: #ccc;
+  font-size: 0.8em;
+  margin: 10px;
+}
+.design .preview .screenshot {
+  width: 100%;
+  height: 220px;
+  display: inline-block;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #eee;
+  border-top: solid thin #cccccc;
+  margin-bottom: -2px;
+}
+.design .preview .screenshot.loading {
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.design .preview .screenshot.loading div {
+  padding: 20px;
+}

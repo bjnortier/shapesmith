@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link href="/css/modeller.css" rel="stylesheet" type="text/css"/>
+  <link href="/css/shapesmith.css" rel="stylesheet" type="text/css"/>
+
+   <script>
+        var globals = globals || {};
+        globals.user = '{{user}}';
+        globals.design = '{{design}}';
+    </script>
+  
+  <script data-main="/ui/{{js_environment}}main.ui.js" src="/lib/require-jquery.js"></script>
+
+  <script type="text/javascript" src="/lib/Detector.js"></script>
+  <script type="text/javascript" src="/lib/three.min.js"></script>
+  <script type="text/javascript" src="/lib/stats.min.js"></script>
+  <script type="text/javascript" src="/lib/dat.gui.min.js"></script>
+  <script type="text/javascript" src="/ui/PipeGeometry.js"></script>
+  
+  <script type="text/javascript" src="/lib/IndexedDBShim.min.js"></script>
+  <script type="text/javascript" src="/lib/html5slider.js"></script>
+
+
+</head>
+<body>
+
+  <div id="graphs">
+    <table id="variables"></table>
+    <div class="geometry section">geometry</div>
+    <div id="geometry"></div>
+  </div>
+
+  <div id="scene"></div>
+  <div id="toolbar"></div>
+  <div id="workplane-settings"></div>
+
+</body>

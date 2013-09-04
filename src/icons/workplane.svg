@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 64 64" version="0.48.2 r9819" width="64px" height="64px" id="svg3047">
+  <defs id="defs3049"/>
+  <grid type="xygrid" id="grid3055" empspacing="5" visible="true" enabled="true" snapvisiblegridlinesonly="true"/>
+  <format/>
+  <type resource="http://purl.org/dc/dcmitype/StillImage"/>
+  <title/>
+  <g id="layer1" label="Layer 1" groupmode="layer">
+    <path d="m 19.5,29 -15,25 55,0 -15,-25 z" id="path3057" connector-curvature="0" nodetypes="ccccc"/>
+    <path d="m 13,40 38,0" id="path3059" connector-curvature="0" nodetypes="cc"/>
+    <path d="m 32,29 0,25" id="path3061" connector-curvature="0" nodetypes="cc"/>
+  </g>
+</svg>

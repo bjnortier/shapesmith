@@ -1,0 +1,267 @@
+body {
+  background-color: #fcfcfc;
+}
+.splash {
+  box-shadow: 0px 0px 30px #888;
+  border-radius: 5px;
+  border-top: solid thin #E0E0E0;
+  border-left: solid thin #E0E0E0;
+}
+#geometry {
+  padding: 0;
+  margin-left: 0;
+}
+#geometry .layer-leaf {
+  margin-left: 0;
+  border-bottom: solid thin #999;
+}
+#toolbar {
+  margin-left: -174px;
+  background-color: rgba(255, 255, 255, 0.64);
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  padding: 0;
+  font-size: 8px;
+  border-top: solid 3px #9ff1f8;
+}
+#toolbar .item {
+  padding-bottom: 10px;
+}
+#toolbar .item .label {
+  display: none;
+  position: absolute;
+  top: -20px;
+  left: 0;
+  text-align: center;
+  width: 42px;
+}
+#toolbar .item:hover .label {
+  display: inline-block;
+}
+#toolbar li {
+  position: relative;
+  /*padding-top: 5px;*/
+
+}
+.toolbar {
+  background: none;
+}
+#toolbar .item.active {
+  /*border-radius: 2px;*/
+
+}
+.toolbar.geometry .select .icon32 {
+  background-image: url('/images/icons/mouse32x32.png');
+}
+.icon32 svg {
+  width: 32px;
+  height: 32px;
+}
+.icon24 svg {
+  width: 24px;
+  height: 24px;
+}
+.icon24 svg path,
+.icon32 svg path,
+.icon24 svg rect,
+.icon32 svg rect {
+  fill-opacity: 0.9;
+  stroke-width: 1.5px;
+  stroke-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon24 svg path,
+.icon24 svg rect {
+  fill-opacity: 0.5;
+}
+#geometry .editing .icon24 svg {
+  fill: rgba(166, 219, 230, 0.42);
+  stroke: #a6dbe6;
+}
+.toolbar .icon32 svg {
+  fill: #eee;
+  stroke: #999;
+}
+.toolbar .item:hover path,
+.toolbar .item:hover rect {
+  fill: #7DE61C;
+  stroke: #538A41;
+}
+.toolbar .item:hover g[label=nofilldashed] path,
+.toolbar .item:hover g[label=nofilldashed] rect {
+  fill: none;
+}
+.toolbar .item.disabled path,
+.toolbar .item.disabled rect {
+  fill-opacity: 0.1;
+  stroke-opacity: 0.5;
+}
+/* Icon-specific overrides */
+.toolbar .designs path {
+  stroke-width: 1.2px;
+}
+svg g[label=nofilldashed] {
+  fill: none;
+  stroke-miterlimit: 4;
+  stroke-dasharray: 1, 2;
+  stroke-dashoffset: 0;
+}
+.vertex.editing .title {
+  background: rgba(255, 255, 255, 0.64);
+}
+input.field[type="text"] {
+  background: rgba(255, 255, 255, 0.64);
+}
+.toolbar .expander {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+#graphs {
+  padding: 0;
+  height: 100%;
+  min-width: 150px;
+  background-color: rgba(255, 255, 255, 0.64);
+  border-right: solid 3px #9ff1f8;
+}
+#variables {
+  background: none;
+  width: 100%;
+}
+#variables .delete {
+  visibility: hidden;
+}
+#variables .delete:hover {
+  color: red;
+}
+#variables .vertex:hover .delete {
+  visibility: visible;
+}
+.variable-slider {
+  position: absolute;
+  z-index: 2;
+}
+#geometry .vertex {
+  background-color: rgba(255, 255, 255, 0);
+}
+#geometry .vertex .vertex {
+  margin-left: 10px;
+}
+#geometry .vertex > .title > .actions,
+#geometry .vertex > .title > .dive {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -16px;
+  color: black;
+  font-size: 16px;
+}
+#geometry .vertex > .title > .actions,
+#geometry .vertex > .title > .ascend {
+  vertical-align: middle;
+  margin-top: -16px;
+  color: black;
+  font-size: 16px;
+}
+#geometry .vertex > .title .actions {
+  visibility: hidden;
+}
+#geometry .vertex > .title .actions i {
+  margin: 2px;
+}
+#geometry .vertex .dive,
+#geometry .vertex .ascend {
+  margin-right: 5px;
+}
+#geometry .vertex:hover > .title .actions {
+  visibility: visible;
+}
+#geometry .vertex .delete:hover {
+  color: red;
+}
+#geometry .vertex .showhide:hover {
+  color: blue;
+}
+#geometry .vertex .ascend {
+  display: none;
+}
+#geometry .vertex .dive:hover,
+#geometry .vertex .ascend:hover {
+  color: #53a72c;
+}
+#geometry .vertex.dived > .title {
+  /*>.icon24 {
+        fill: #eee;
+        stroke: #999;
+      }*/
+
+}
+#geometry .vertex.dived > .title > .name {
+  display: none;
+}
+#geometry .vertex.dived > .title > .dive {
+  display: none;
+}
+#geometry .vertex.dived > .title > .ascend {
+  display: inline-block;
+  vertical-align: middle;
+}
+#geometry .vertex.dived .title {
+  display: inline-block;
+}
+#geometry .vertex.display > .children {
+  display: none;
+}
+#geometry .vertex.display.dived > .children {
+  display: block;
+}
+#geometry .vertex.editing > .children > .vertex {
+  display: none;
+}
+#geometry .vertex.editing > .children > .vertex.implicit {
+  display: block;
+}
+#geometry .vertex.editing,
+#variables .vertex.editing,
+#workplane-settings .vertex.editing {
+  background-color: #bebebe;
+}
+#geometry .vertex.editing > div,
+#variables .vertex.editing > div,
+#workplane-settings .vertex.editing > div {
+  padding-left: 5px;
+}
+#geometry .vertex.editing > div.title,
+#variables .vertex.editing > div.title,
+#workplane-settings .vertex.editing > div.title,
+#geometry .vertex.editing > div.children,
+#variables .vertex.editing > div.children,
+#workplane-settings .vertex.editing > div.children {
+  padding-left: 0;
+}
+#geometry .vertex.editing > .title > .icon24,
+#variables .vertex.editing > .title > .icon24,
+#workplane-settings .vertex.editing > .title > .icon24 {
+  margin: 0 5px;
+}
+#geometry .vertex.editing .vertex,
+#variables .vertex.editing .vertex,
+#workplane-settings .vertex.editing .vertex {
+  margin-left: 0;
+}
+#workplane-settings {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+}
+#workplane-settings .icon32 svg {
+  fill: #eee;
+  stroke: #999;
+}
+#workplane-settings .icon32:hover {
+  cursor: pointer;
+}
+#workplane-settings .icon32:hover svg {
+  fill: #A8F38A;
+  stroke: #999;
+}
