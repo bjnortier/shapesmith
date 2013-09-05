@@ -4,99 +4,101 @@
 // view and one or more dom tree views for each node (in the case of shared 
 // vertices)
 define([
-        'underscore',
-        'backbone-events',
-        'geometrygraphsingleton',
-        'modelviews/vertexMV',
-    ], 
-    function(
-        _,
-        Events,
-        geometryGraph,
-        VertexMV) {
+    'underscore',
+    'backbone-events',
+    'geometrygraphsingleton',
+    'modelviews/vertexMV',
+  ], 
+  function(
+    _,
+    Events,
+    geometryGraph,
+    VertexMV) {
 
-    var Models = function() {
+  var Models = function() {
 
-        _.extend(this, Events);
+    _.extend(this, Events);
 
-        var that = this;
-        var models = {};
-        var wrappers = {};
+    var that = this;
+    var models = {};
+    var wrappers = {};
 
-        this.addWrapper = function(type, wrapper) {
-            wrappers[type] = wrapper;
-        }
-
-        geometryGraph.on('vertexAdded', function(vertex) {
-
-            var modelConstructor = vertex.editing ? 
-                wrappers[vertex.type].EditingModel :
-                wrappers[vertex.type].DisplayModel;
-            var model = new modelConstructor({
-                vertex: vertex,
-            });
-            model.addSceneView();
-            models[vertex.id] = model;
-
-            that.trigger('added', vertex, model);
-        });
-
-        geometryGraph.on('vertexRemoved', function(vertex) {
-
-            if (!models[vertex.id]) {
-                throw Error('no model for ' + vertex.id);
-            }
-            var model = models[vertex.id];
-            model.destroy();
-            delete models[vertex.id];
-
-            that.trigger('removed', vertex, model);
-        });
-
-        geometryGraph.on('vertexReplaced', function(original, replacement) {
-
-            if (!models[original.id]) {
-                throw Error('no model for ' + original.id);
-            }
-
-            var originalModel = models[original.id];
-            var modelConstructor = replacement.editing ? 
-                wrappers[replacement.type].EditingModel :
-                wrappers[replacement.type].DisplayModel;
-            var replacementModel = new modelConstructor({
-                original: original,
-                originalModel: originalModel, 
-                vertex: replacement,
-            });
-
-            replacementModel.addSceneView();
-
-            if (originalModel.sceneView.showStack) {
-                for (var i = 0; i < originalModel.sceneView.showStack; ++i) {
-                    replacementModel.sceneView.pushShowStack();
-                }
-            }
-
-            models[replacement.id] = replacementModel;
-            that.trigger('replaced', original, originalModel, replacement, replacementModel);
-
-            // Destroy after replacement for DOM replacement
-            originalModel.destroy();
-        }); 
-
-        this.get = function(id) {
-            return models[id];
-        }
-
-        this.cancelIfEditing = function() {
-            _.map(models, function(model) {
-                if (model.vertex.editing) {
-                    model.cancel();
-                }
-            });
-        }
+    this.addWrapper = function(type, wrapper) {
+      wrappers[type] = wrapper;
     }
 
-    return new Models();
+    geometryGraph.on('vertexAdded', function(vertex) {
+
+      var modelConstructor = vertex.editing ? 
+        wrappers[vertex.type].EditingModel :
+        wrappers[vertex.type].DisplayModel;
+      var model = new modelConstructor({
+        vertex: vertex,
+      });
+      model.postInitialize()
+      model.addSceneView();
+      models[vertex.id] = model;
+
+      that.trigger('added', vertex, model);
+    });
+
+    geometryGraph.on('vertexRemoved', function(vertex) {
+
+      if (!models[vertex.id]) {
+        throw Error('no model for ' + vertex.id);
+      }
+      var model = models[vertex.id];
+      model.destroy();
+      delete models[vertex.id];
+
+      that.trigger('removed', vertex, model);
+    });
+
+    geometryGraph.on('vertexReplaced', function(original, replacement) {
+
+      if (!models[original.id]) {
+        throw Error('no model for ' + original.id);
+      }
+
+      var originalModel = models[original.id];
+      var modelConstructor = replacement.editing ? 
+        wrappers[replacement.type].EditingModel :
+        wrappers[replacement.type].DisplayModel;
+      var replacementModel = new modelConstructor({
+        original: original,
+        originalModel: originalModel, 
+        vertex: replacement,
+      });
+      models[replacement.id] = replacementModel;
+
+      replacementModel.postInitialize();
+      replacementModel.addSceneView();
+
+      if (originalModel.sceneView.showStack) {
+        for (var i = 0; i < originalModel.sceneView.showStack; ++i) {
+          replacementModel.sceneView.pushShowStack();
+        }
+      }
+
+      that.trigger('replaced', original, originalModel, replacement, replacementModel);
+
+      // Destroy after replacement for DOM replacement
+      originalModel.destroy();
+    }); 
+
+    this.get = function(id) {
+      return models[id];
+    }
+
+    this.cancelIfEditing = function() {
+      _.map(models, function(model) {
+        if (model.vertex.editing) {
+          model.cancel();
+        }
+      });
+    }
+  }
+
+  return new Models();
 
 });

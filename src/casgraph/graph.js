@@ -361,11 +361,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
             // Replaced
             var verticesWithSameId = _.intersection(fromIds, toIds);
             verticesWithSameId.forEach(function(id) {
-                var fromHash = fromGraph.hashForId(id);
-                var toHash = toGraph.hashForId(id);
-                if (fromHash !== toHash) {
-                    listener({vertexReplaced: {from: fromGraph.get(id), to: toGraph.get(id)}})
-                }
+              listener({vertexReplaced: {from: fromGraph.get(id), to: toGraph.get(id)}})
             })
 
             // Metadata changed

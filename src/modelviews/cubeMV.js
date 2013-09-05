@@ -6,6 +6,7 @@ define([
     'scene',
     'selection',
     'geometrygraphsingleton',
+    'modelviews/modelgraph', 
     'modelviews/geomvertexMV', 
     'modelviews/pointMV', 
     'modelviews/zanchorview',
@@ -24,6 +25,7 @@ define([
     sceneModel,
     selection,
     geometryGraph,
+    modelGraph,
     GeomVertexMV,
     PointMV,
     ZAnchorView,
@@ -81,7 +83,9 @@ define([
       this.DOMView = EditingDOMView;
       this.SceneView = EditingSceneView;
       GeomVertexMV.EditingModel.prototype.initialize.call(this, options);
+    },
 
+    postInitialize: function() {
       this.origin = geometryGraph.childrenOf(this.vertex).filter(function(v) {
         return v.type === 'point'
       })[0];
@@ -94,6 +98,8 @@ define([
       } else {
         this.originalImplicitChildren = [this.origin];
         this.origin = AsyncAPI.edit(this.origin);
+        modelGraph.get(this.origin.id).parentModel = this;
+
         this.editingImplicitChildren = [this.origin];
 
         if (!this.vertex.transforming) {

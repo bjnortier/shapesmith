@@ -39,6 +39,11 @@ define([
       selection.on('deselected', this.deselect, this);
     },
 
+    // Used by models that required a sub-edit of a implicit vertex, e.g.
+    // spheres and cube that edit the origin
+    postInitialize: function() {
+    },
+
     destroy: function() {
       this.views.forEach(function(view) {
         view.remove();

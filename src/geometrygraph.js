@@ -210,7 +210,6 @@ define([
         var replacement = event.vertexReplaced.to;
         that.updateVariableEdges(replacement);
         that.setupEventsForReplacement(original, replacement);
-        that.trigger('vertexReplaced', original, replacement);
       } else if (event.metadataChanged) {
         that.layerTree.fromObj(event.metadataChanged.to);
         that.layerTree.trigger('change');
@@ -336,8 +335,8 @@ define([
     this.setupEventsForReplacement = function(original, replacement) {
       original.off('change', this.vertexChanged, this);
       replacement.on('change', this.vertexChanged, this);
-      replacement.trigger('change', replacement);
       this.trigger('vertexReplaced', original, replacement);
+      replacement.trigger('change', replacement);
     }
 
     this.vertexChanged = function(vertex) {

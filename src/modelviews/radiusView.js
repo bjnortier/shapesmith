@@ -50,12 +50,21 @@ define([
         ]);
 
       var originPosition = calc.objToVector(this.origin.parameters.coordinate, geometryGraph, THREE.Vector3);
-      var cornerPosition = new THREE.Vector3().addVectors(
-        originPosition,
-        new THREE.Vector3(
-          this.vertex.parameters.dx,
-          this.vertex.parameters.dy,
-          0));
+      var cornerPosition;
+      if ((this.vertex.parameters.dx !== undefined) &&
+          (this.vertex.parameters.dy !== undefined)) {
+        cornerPosition = new THREE.Vector3().addVectors(
+          originPosition,
+          new THREE.Vector3(
+            this.vertex.parameters.dx,
+            this.vertex.parameters.dy,
+            0));
+      } else {
+        cornerPosition = new THREE.Vector3().addVectors(
+          originPosition,
+          new THREE.Vector3(
+            geometryGraph.evaluate(this.vertex.parameters.radius), 0, 0));
+      }
       this.point.position = cornerPosition;
 
       var radiusLineGeom = new THREE.Geometry();

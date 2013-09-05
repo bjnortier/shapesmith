@@ -5,6 +5,7 @@ define([
     'worldcursor',
     'scene',
     'geometrygraphsingleton',
+    'modelviews/modelgraph', 
     'modelviews/geomvertexMV', 
     'modelviews/pointMV', 
     'modelviews/zanchorview',
@@ -19,6 +20,7 @@ define([
     worldCursor,
     sceneModel,
     geometryGraph,
+    modelGraph,
     GeomVertexMV,
     PointMV,
     ZAnchorView,
@@ -83,6 +85,9 @@ define([
       this.DOMView = EditingDOMView;
       this.SceneView = EditingSceneView;
       GeomVertexMV.EditingModel.prototype.initialize.call(this, options);
+    },
+
+    postInitialize: function() {
 
       this.origin = geometryGraph.childrenOf(this.vertex).filter(function(v) {
         return v.type === 'point'
@@ -99,6 +104,8 @@ define([
         this.originalImplicitChildren = geometryGraph.childrenOf(this.vertex);
         this.editingImplicitChildren = [];
         this.origin = AsyncAPI.edit(this.origin);
+        modelGraph.get(this.origin.id).parentModel = this;
+
         this.editingImplicitChildren = [this.origin];
         
         if (!this.vertex.transforming) {
@@ -264,8 +271,14 @@ define([
         this.model.origin.parameters.coordinate,  
         geometryGraph, 
         THREE.Vector3);
-      this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.dx)/2;
-      this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.dy)/2;
+      // Use the temporary dx and dy used on creation when available
+      if ((this.model.vertex.parameters.dx !== undefined) &&
+          (this.model.vertex.parameters.dy !== undefined)) {
+        this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.dx)/2;
+        this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.dy)/2;
+      } else {
+        this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.radius)/2;
+      }
       DimensionView.prototype.update.call(this);
     },
 
