@@ -164,11 +164,12 @@ define([
 
     drag: function(position) {
       this.dragging = true;
-      this.model.vertex.parameters.coordinate = {
-        x: position.x,
-        y: position.y,
-        z: position.z,
-      }
+      // Do it individuallt because the z anchor view
+      // refernces the coordinate or origin object, so
+      // don't replace the entire object
+      this.model.vertex.parameters.coordinate.x = position.x;
+      this.model.vertex.parameters.coordinate.y = position.y;
+      this.model.vertex.parameters.coordinate.z = position.z;
       this.model.vertex.trigger('change', this.model.vertex);
     },
 

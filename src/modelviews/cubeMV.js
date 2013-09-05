@@ -106,7 +106,6 @@ define([
           this.views.push(new ZAnchorView({
             model: this, 
             vertex: this.origin,
-            origin: this.origin.parameters.coordinate,
           }));
 
           this.views.push(new CornerEditingHeightAnchor({
