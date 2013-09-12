@@ -52,6 +52,11 @@
             ambient: normalColor,
             name: 'normal.face'
           }),
+          origin: new THREE.MeshLambertMaterial({
+            color: normalColor,
+            ambient: normalColor,
+            name: 'normal.origin'
+          }),
           wire: new THREE.MeshBasicMaterial({
             color: normalColor,
             wireframe: true,
@@ -70,6 +75,12 @@
             transparent: true,
             opacity: 0,
             name: 'implicit.face'
+          }),
+          origin: new THREE.MeshLambertMaterial({
+            color: 0xff0000,
+            transparent: true,
+            opacity: 0,
+            name: 'implicit.origin'
           }),
           wire: new THREE.MeshBasicMaterial({
             color: 0x000000,
@@ -113,6 +124,12 @@
             // transparent: true,
             // opacity: 0.5,
             name: 'selected.face'}),
+          origin: new THREE.MeshLambertMaterial({
+            color: 0x999933,
+            ambient: 0xffff99,
+            // transparent: true,
+            // opacity: 0.5,
+            name: 'selected.origin'}),
           wire: new THREE.MeshBasicMaterial({
             color: 0x999933,
             wireframe: true,
@@ -131,6 +148,12 @@
             transparent: true,
             opacity: 0.5,
             name: 'editing.face'
+          }),
+          origin: new THREE.MeshLambertMaterial({
+            color: 0x000066,
+            transparent: true,
+            opacity: 0.8,
+            name: 'editing.origin'
           }),
           wire: new THREE.MeshBasicMaterial({
             color: 0x007088,
@@ -185,6 +208,8 @@
             mesh.material = this.materials[key].face;
           } else if (mesh.material.name.endsWith('wire')) {
             mesh.material = this.materials[key].wire;
+          } else if (mesh.material.name.endsWith('origin')) {
+            mesh.material = this.materials[key].origin;
           }
         }
       }, this);

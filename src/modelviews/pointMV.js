@@ -131,7 +131,7 @@ define([
       this.point = THREE.SceneUtils.createMultiMaterialObject(
         new THREE.CubeGeometry(1, 1, 1, 1, 1, 1), 
         [
-          this.materials.editing.face, 
+          this.materials.editing.origin, 
           this.materials.editing.wire
         ]);
       this.point.position = calc.objToVector(
@@ -246,9 +246,9 @@ define([
 
       var materials;
       if (this.model.vertex.implicit && !this.highlighted) {
-        materials = [this.materials.implicit.face];
+        materials = [this.materials.implicit.origin];
       } else {
-        materials = [this.materials.normal.face, this.materials.normal.wire];
+        materials = [this.materials.normal.origin, this.materials.normal.wire];
       }
       this.point = THREE.SceneUtils.createMultiMaterialObject(
         new THREE.CubeGeometry(1, 1, 1), materials);
