@@ -87,7 +87,7 @@ define([
       ].map(function(rotationAndOffset) {
         var corner = new THREE.Mesh(
           cornerGeometry,
-          new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.5, side: THREE.DoubleSide })
+          new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.8, side: THREE.DoubleSide })
         );
         corner.position = new THREE.Vector3(extents.center.x, extents.center.y, 0)
           .add(rotationAndOffset.offset);

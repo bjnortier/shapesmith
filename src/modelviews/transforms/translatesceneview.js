@@ -47,7 +47,7 @@ define([
       this.arrow = new THREE.Object3D();
       this.arrow.add(new THREE.Mesh(
         new THREE.CylinderGeometry(0, 0.75, 1.5, 3), 
-        new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.5})));
+        new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.8})));
 
       this.arrow.scale = this.cameraScale;
       this.sceneObject.add(this.arrow);

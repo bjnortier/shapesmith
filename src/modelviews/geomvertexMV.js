@@ -382,6 +382,7 @@
             geometryGraph, 
             THREE.Vector3);
       }
+
     },
 
     renderMesh: function(result) {
@@ -466,6 +467,21 @@
       if (replacement.type === 'workplane') {
         this.vertex.workplane = calc.copyObj(replacement.workplane);
       }
+    },
+
+    rotate: function(origin, axisAngle) {
+      if (!this.startAxisAngle) {
+        this.startAxisAngle = axisAngle;
+      }
+      this.vertex.transforms.rotation.origin.x = origin.x;
+      this.vertex.transforms.rotation.origin.y = origin.y;
+      this.vertex.transforms.rotation.origin.z = origin.z;
+      this.vertex.transforms.rotation.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
+      this.vertex.transforms.rotation.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
+      this.vertex.transforms.rotation.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
+      this.vertex.transforms.rotation.angle  = parseFloat(axisAngle.angle.toFixed(2));
+      this.vertex.trigger('change', this.vertex);
+
     },
 
   })

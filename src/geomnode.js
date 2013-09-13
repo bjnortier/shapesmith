@@ -67,6 +67,7 @@ define([
       angle : 0,
     };
     this.transforming = options.transforming || false;
+    this.rotating = options.rotating || false;
     this.transforms = options.transforms || {
       rotation: {
         origin: {x: 0, y:0, z: 0},
@@ -99,7 +100,6 @@ define([
       isClone     : true,
       name        : this.name,
       implicit    : this.implicit,
-      transforming: this.transforming,
       transforms  : calc.copyObj(this.transforms),
       workplane   : calc.copyObj(this.workplane),
       parameters  : calc.copyObj(this.parameters),
@@ -112,6 +112,8 @@ define([
   GeomNode.prototype.cloneEditing = function() {
     var newNode = this.cloneNonEditing();
     newNode.editing = true;
+    newNode.transforming = this.transforming;
+    newNode.rotating = this.rotating;
     return newNode;
   }
 

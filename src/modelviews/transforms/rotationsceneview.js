@@ -58,7 +58,7 @@ define([
       var arrowGeometry = new THREE.CylinderGeometry(0, 0.75, 2, 3);
       this.arrow = new THREE.Mesh(
         arrowGeometry,
-        new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.5}));
+        new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.8}));
       this.arrow.position = new THREE.Vector3(this.radius, 0, 0);
       this.arrow.scale = this.cameraScale;
 
@@ -68,9 +68,9 @@ define([
 
       // Separate object so the scene object can be
       // transformed with the workplane
-      var rotationObject = new THREE.Object3D();
-      this.sceneObject.add(rotationObject);
-      rotationObject.add(this.circleAndArrow);
+      this.rotationSceneObject = new THREE.Object3D();
+      this.sceneObject.add(this.rotationSceneObject);
+      this.rotationSceneObject.add(this.circleAndArrow);
      
       if (!this.isWorkplane) {
         var quat1 = new THREE.Quaternion().setFromAxisAngle(
@@ -82,9 +82,9 @@ define([
         var quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
         quat3.normalize();
         
-        rotationObject.useQuaternion = true;
-        rotationObject.quaternion = quat3;
-        rotationObject.position = this.center;
+        this.rotationSceneObject.useQuaternion = true;
+        this.rotationSceneObject.quaternion = quat3;
+        this.rotationSceneObject.position = this.center;
       }
 
     },
@@ -92,7 +92,7 @@ define([
     updateCameraScale: function() {
       TransformSceneView.prototype.updateCameraScale.call(this);
       if (this.arrow) {
-        // this.arrow.scale = this.cameraScale;
+        this.arrow.scale = this.cameraScale;
       }
     },
 
@@ -105,6 +105,7 @@ define([
       } else {
         this.originalVertex = this.vertex;
         this.originalVertex.transforming = true;
+        this.originalVertex.rotating = true;
         this.editingVertex = AsyncAPI.edit(this.vertex);
         this.editingModel = modelGraph.get(this.editingVertex.id);
         this.rotationObj = this.editingVertex.transforms.rotation;
@@ -187,17 +188,31 @@ define([
         };
 
         var axisAngle = quaternionToAxisAngle(quat3);
-        if (!this.isWorkplane) {        
-          this.rotationObj.origin.x = this.center.x;
-          this.rotationObj.origin.y = this.center.y;
-          this.rotationObj.origin.z = this.center.z;
-        }
-        this.rotationObj.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
-        this.rotationObj.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
-        this.rotationObj.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
-        this.rotationObj.angle  = parseFloat(axisAngle.angle.toFixed(2));
 
-        this.editingVertex.trigger('change', this.editingVertex);
+        this.editingModel.rotate(this.center, axisAngle)
+        // if (!this.isWorkplane) {        
+        //   this.rotationObj.origin.x = this.center.x;
+        //   this.rotationObj.origin.y = this.center.y;
+        //   this.rotationObj.origin.z = this.center.z;
+        // }
+        // this.rotationObj.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
+        // this.rotationObj.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
+        // this.rotationObj.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
+        // this.rotationObj.angle  = parseFloat(axisAngle.angle.toFixed(2));
+        // this.editingVertex.trigger('change', this.editingVertex);
+
+        if (!this.isWorkplane) {
+          var quat1 = new THREE.Quaternion().setFromAxisAngle(
+            this.relativeRotationAxis, 0);
+          var quat2 = new THREE.Quaternion().setFromAxisAngle(
+            calc.objToVector(this.rotationObj.axis, geometryGraph, THREE.Vector3),
+            geometryGraph.evaluate(this.rotationObj.angle)/180*Math.PI);
+          var quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
+          quat3.normalize();
+          
+          this.rotationSceneObject.useQuaternion = true;
+          this.rotationSceneObject.quaternion = quat3;
+        }
       }
 
     },

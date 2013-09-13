@@ -72,7 +72,37 @@ define([
         circle = new THREE.Line(circleGeom, this.materials.normal.edge);
       }
       circle.position = center;
-      this.sceneObject.add(circle);
+
+      var unrotatedSceneObject = new THREE.Object3D();
+      unrotatedSceneObject.add(circle);
+      this.sceneObject.add(unrotatedSceneObject);
+
+      if (this.model.vertex.rotating) {
+
+        unrotatedSceneObject.position = 
+          calc.objToVector(
+            this.model.vertex.transforms.rotation.origin,
+            geometryGraph, 
+            THREE.Vector3).negate();
+
+        var quat2 = new THREE.Quaternion();
+        quat2.setFromAxisAngle(
+          calc.objToVector(
+            this.model.vertex.transforms.rotation.axis,
+            geometryGraph, 
+            THREE.Vector3),
+          geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
+        var quat3 = new THREE.Quaternion().multiplyQuaternions(this.sceneObject.quaternion, quat2);
+
+        this.sceneObject.quaternion = quat3;
+
+        this.sceneObject.position.add(
+          calc.objToVector(
+            this.model.vertex.transforms.rotation.origin,
+            geometryGraph, 
+            THREE.Vector3));
+
+      }
 
     },
   }
@@ -99,6 +129,7 @@ define([
         this.stage = 'center';
         this.updateHint();
         this.activePoint = this.origin;
+        this.views.push(new RadiusDimensionView({model: this}));
       } else {
 
         this.originalImplicitChildren = geometryGraph.childrenOf(this.vertex);
@@ -115,13 +146,10 @@ define([
             origin: this.origin.parameters.coordinate,
           }));
 
-          this.views.push(new RadiusView({
-            model: this,
-          }))
+          this.views.push(new RadiusView({model: this}))
+          this.views.push(new RadiusDimensionView({model: this}));
         }
       }
-
-      this.views.push(new RadiusDimensionView({model: this}));
 
     },
 
@@ -139,13 +167,20 @@ define([
           x: this.origin.parameters.coordinate.x,
           y: this.origin.parameters.coordinate.y,
           z: this.origin.parameters.coordinate.z,
-        }
+        };
+        this.firstTransformRender = true;
+        this.origin.trigger('change', this.origin);
+        this.firstTransformRender = false;
+        this.startPosition = this.sceneView.sceneObject.position.clone();
       }
       this.origin.parameters.coordinate.x = this.startOrigin.x + translation.x;
       this.origin.parameters.coordinate.y = this.startOrigin.y + translation.y;
       this.origin.parameters.coordinate.z = this.startOrigin.z + translation.z;
 
       this.updateRotationCenter();
+
+      this.sceneView.sceneObject.position = this.startPosition.clone().add(
+        new THREE.Vector3(translation.x, translation.y, translation.z));
       this.origin.trigger('change', this.origin);
     },
 
@@ -284,21 +319,11 @@ define([
 
   });
 
-
-  var EditingSceneView = GeomVertexMV.EditingSceneView.extend(SceneViewMixin).extend({
+  var EditingSceneView = GeomVertexMV.EditingSceneView.extend({
 
     render: function() {
-      if (this.model.vertex.transforming) {
-        GeomVertexMV.EditingSceneView.prototype.render.call(this);
-        var that = this;
-        this.createMesh(function(result) {
-          that.renderMesh(result);
-        });
-      } else {
-        SceneViewMixin.render.call(this);
-      }
+      SceneViewMixin.render.call(this);
     },
-
 
   });
 

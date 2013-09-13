@@ -70,7 +70,37 @@ define([
         materials);
       cube.position = position.add(new THREE.Vector3(
         dimensions.w/2, dimensions.d/2, dimensions.h/2));
-      this.sceneObject.add(cube);
+      
+      var unrotatedSceneObject = new THREE.Object3D();
+      unrotatedSceneObject.add(cube);
+      this.sceneObject.add(unrotatedSceneObject);
+
+      if (this.model.vertex.rotating) {
+
+        unrotatedSceneObject.position = 
+          calc.objToVector(
+            this.model.vertex.transforms.rotation.origin,
+            geometryGraph, 
+            THREE.Vector3).negate();
+
+        var quat2 = new THREE.Quaternion();
+        quat2.setFromAxisAngle(
+          calc.objToVector(
+            this.model.vertex.transforms.rotation.axis,
+            geometryGraph, 
+            THREE.Vector3),
+          geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
+        var quat3 = new THREE.Quaternion().multiplyQuaternions(this.sceneObject.quaternion, quat2);
+
+        this.sceneObject.quaternion = quat3;
+
+        this.sceneObject.position.add(
+          calc.objToVector(
+            this.model.vertex.transforms.rotation.origin,
+            geometryGraph, 
+            THREE.Vector3));
+
+      }
     },
 
   }
@@ -95,14 +125,23 @@ define([
       if (this.vertex.proto) {
         this.stage = 0;
         this.updateHint();
+        this.views.push(new WidthDimensionView({model: this}));
+        this.views.push(new DepthDimensionView({model: this}));
+        this.views.push(new HeightDimensionView({model: this}));
       } else {
-        this.originalImplicitChildren = [this.origin];
-        this.origin = AsyncAPI.edit(this.origin);
-        modelGraph.get(this.origin.id).parentModel = this;
 
-        this.editingImplicitChildren = [this.origin];
+        if (this.vertex.rotating) {
+          this.originalImplicitChildren = [];
+          this.editingImplicitChildren = [];
+        } else {
+          this.originalImplicitChildren = [this.origin];
+          this.origin = AsyncAPI.edit(this.origin);
+          modelGraph.get(this.origin.id).parentModel = this;
+          this.editingImplicitChildren = [this.origin];
+        }
 
         if (!this.vertex.transforming) {
+
           this.views.push(new ZAnchorView({
             model: this, 
             vertex: this.origin,
@@ -116,14 +155,13 @@ define([
             vertex: this.vertex,
           }));
 
-          this.views.push(new WidthDepthCornerView({
-            model: this,
-          }))
+          this.views.push(new WidthDepthCornerView({model: this}))
+          this.views.push(new WidthDimensionView({model: this}));
+          this.views.push(new DepthDimensionView({model: this}));
+          this.views.push(new HeightDimensionView({model: this}));
         }
       }
-      this.views.push(new WidthDimensionView({model: this}));
-      this.views.push(new DepthDimensionView({model: this}));
-      this.views.push(new HeightDimensionView({model: this}));
+      
 
     },
 
@@ -152,6 +190,10 @@ define([
           y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
           z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
         }
+        // this.transformRender = true; 
+        this.origin.trigger('change', this.origin);
+        // this.transformRender = false;
+        this.startPosition = this.sceneView.sceneObject.position.clone();
       }
       this.origin.parameters.coordinate = {
         x: this.startOrigin.x + translation.x,
@@ -159,6 +201,7 @@ define([
         z: this.startOrigin.z + translation.z,
       }
       this.updateRotationCenter();
+
       this.origin.trigger('change', this.origin);
     },
 
@@ -193,6 +236,8 @@ define([
       // so only one trigger is necessary
       this.origin.trigger('change', this.origin);
     },
+
+
 
     workplanePositionChanged: function(position, event) {
       if (this.vertex.proto) {
@@ -394,15 +439,7 @@ define([
   var EditingSceneView = GeomVertexMV.EditingSceneView.extend({
 
     render: function() {
-      if (this.model.vertex.transforming) {
-        GeomVertexMV.EditingSceneView.prototype.render.call(this);
-        var that = this;
-        this.createMesh(function(result) {
-          that.renderMesh(result);
-        });
-      } else {
-        SceneViewMixin.render.call(this);
-      }
+      SceneViewMixin.render.call(this);
     },
 
   });
