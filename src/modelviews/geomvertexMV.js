@@ -470,9 +470,6 @@
     },
 
     rotate: function(origin, axisAngle) {
-      if (!this.startAxisAngle) {
-        this.startAxisAngle = axisAngle;
-      }
       this.vertex.transforms.rotation.origin.x = origin.x;
       this.vertex.transforms.rotation.origin.y = origin.y;
       this.vertex.transforms.rotation.origin.z = origin.z;

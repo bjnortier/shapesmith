@@ -101,6 +101,7 @@ define([
       
       if (this.isWorkplane) {
         this.editingVertex = this.vertex;
+        this.editingModel = modelGraph.get(this.editingVertex.id);
         this.rotationObj = this.editingVertex.workplane;
       } else {
         this.originalVertex = this.vertex;
@@ -188,18 +189,7 @@ define([
         };
 
         var axisAngle = quaternionToAxisAngle(quat3);
-
         this.editingModel.rotate(this.center, axisAngle)
-        // if (!this.isWorkplane) {        
-        //   this.rotationObj.origin.x = this.center.x;
-        //   this.rotationObj.origin.y = this.center.y;
-        //   this.rotationObj.origin.z = this.center.z;
-        // }
-        // this.rotationObj.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
-        // this.rotationObj.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
-        // this.rotationObj.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
-        // this.rotationObj.angle  = parseFloat(axisAngle.angle.toFixed(2));
-        // this.editingVertex.trigger('change', this.editingVertex);
 
         if (!this.isWorkplane) {
           var quat1 = new THREE.Quaternion().setFromAxisAngle(
