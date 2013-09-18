@@ -125,6 +125,7 @@ define([
 
   var EditingSceneView = GeomVertexMV.EditingSceneView.extend({
 
+
     render: function() {
       // Only render it once, and render it *without* transforms
       if (!this.isFirst) {
@@ -133,53 +134,57 @@ define([
         var that = this;
         this.createUntransformedMesh(function(result) {
           that.renderMesh(result);
+          that.applyTransforms();
         });
       } else {
-
         if (this.meshObject) {
-
-          var translation = calc.objToVector(
-            this.model.vertex.transforms.translation, 
-            geometryGraph, 
-            THREE.Vector3);
-
-          var rotationOrigin = calc.objToVector(
-            this.model.vertex.transforms.rotation.origin, 
-            geometryGraph, 
-            THREE.Vector3);
-
-          var rotationQuat = new THREE.Quaternion().setFromAxisAngle(
-            calc.objToVector(this.model.vertex.transforms.rotation.axis, geometryGraph, THREE.Vector3),
-              geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
-
-          var scaleOrigin = calc.objToVector(
-            this.model.vertex.transforms.scale.origin, 
-            geometryGraph, 
-            THREE.Vector3);
-
-          var factor = geometryGraph.evaluate(this.model.vertex.transforms.scale.factor);
-
-          var matrices = [
-            new THREE.Matrix4().makeTranslation(translation.x, translation.y, translation.z),
-            new THREE.Matrix4().makeTranslation(-rotationOrigin.x, -rotationOrigin.y, -rotationOrigin.z),
-            new THREE.Matrix4().setRotationFromQuaternion(rotationQuat),
-            new THREE.Matrix4().makeTranslation(rotationOrigin.x, rotationOrigin.y, rotationOrigin.z),
-            new THREE.Matrix4().makeTranslation(-scaleOrigin.x, -scaleOrigin.y, -scaleOrigin.z),
-            new THREE.Matrix4().makeScale(factor, factor, factor),
-            new THREE.Matrix4().makeTranslation(scaleOrigin.x, scaleOrigin.y, scaleOrigin.z),
-          ];
-
-          var result = matrices.reduce(function(acc, m) {
-            return m.multiply(acc);
-          }, new THREE.Matrix4());
-
-          this.meshObject.matrix = new THREE.Matrix4();
-          this.meshObject.applyMatrix(result);
-          sceneModel.view.updateScene = true;
-
+          this.applyTransforms();
         }
       }
     },
+
+    applyTransforms: function() {
+      var translation = calc.objToVector(
+        this.model.vertex.transforms.translation, 
+        geometryGraph, 
+        THREE.Vector3);
+
+      var rotationOrigin = calc.objToVector(
+        this.model.vertex.transforms.rotation.origin, 
+        geometryGraph, 
+        THREE.Vector3);
+
+      var rotationQuat = new THREE.Quaternion().setFromAxisAngle(
+        calc.objToVector(this.model.vertex.transforms.rotation.axis, geometryGraph, THREE.Vector3),
+          geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
+
+      var scaleOrigin = calc.objToVector(
+        this.model.vertex.transforms.scale.origin, 
+        geometryGraph, 
+        THREE.Vector3);
+
+      var factor = geometryGraph.evaluate(this.model.vertex.transforms.scale.factor);
+
+      var matrices = [
+        new THREE.Matrix4().makeTranslation(translation.x, translation.y, translation.z),
+        new THREE.Matrix4().makeTranslation(-rotationOrigin.x, -rotationOrigin.y, -rotationOrigin.z),
+        new THREE.Matrix4().setRotationFromQuaternion(rotationQuat),
+        new THREE.Matrix4().makeTranslation(rotationOrigin.x, rotationOrigin.y, rotationOrigin.z),
+        new THREE.Matrix4().makeTranslation(-scaleOrigin.x, -scaleOrigin.y, -scaleOrigin.z),
+        new THREE.Matrix4().makeScale(factor, factor, factor),
+        new THREE.Matrix4().makeTranslation(scaleOrigin.x, scaleOrigin.y, scaleOrigin.z),
+      ];
+
+      var result = matrices.reduce(function(acc, m) {
+        return m.multiply(acc);
+      }, new THREE.Matrix4());
+
+      this.meshObject.matrix = new THREE.Matrix4();
+      this.meshObject.applyMatrix(result);
+      sceneModel.view.updateScene = true;
+
+    }
+
 
   });
 
