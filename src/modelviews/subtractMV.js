@@ -165,7 +165,18 @@ define([
 
       var factor = geometryGraph.evaluate(this.model.vertex.transforms.scale.factor);
 
+      var workplaneOrigin = calc.objToVector(
+        this.model.vertex.workplane.origin, 
+        geometryGraph,
+        THREE.Vector3);
+
+      var workplaneQuat = new THREE.Quaternion().setFromAxisAngle(
+        calc.objToVector(this.model.vertex.workplane.axis, geometryGraph, THREE.Vector3),
+          geometryGraph.evaluate(this.model.vertex.workplane.angle)/180*Math.PI);
+
       var matrices = [
+        new THREE.Matrix4().makeTranslation(-workplaneOrigin.x, -workplaneOrigin.y, -workplaneOrigin.z),
+        new THREE.Matrix4().setRotationFromQuaternion(workplaneQuat.clone().inverse()),
         new THREE.Matrix4().makeTranslation(translation.x, translation.y, translation.z),
         new THREE.Matrix4().makeTranslation(-rotationOrigin.x, -rotationOrigin.y, -rotationOrigin.z),
         new THREE.Matrix4().setRotationFromQuaternion(rotationQuat),
@@ -173,6 +184,8 @@ define([
         new THREE.Matrix4().makeTranslation(-scaleOrigin.x, -scaleOrigin.y, -scaleOrigin.z),
         new THREE.Matrix4().makeScale(factor, factor, factor),
         new THREE.Matrix4().makeTranslation(scaleOrigin.x, scaleOrigin.y, scaleOrigin.z),
+        new THREE.Matrix4().setRotationFromQuaternion(workplaneQuat),
+        new THREE.Matrix4().makeTranslation(workplaneOrigin.x, workplaneOrigin.y, workplaneOrigin.z),
       ];
 
       var result = matrices.reduce(function(acc, m) {
