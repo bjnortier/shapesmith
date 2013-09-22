@@ -28,7 +28,8 @@ define([
         this.rotationObj = this.vertex.transforms.rotation;
       }
 
-      this.center = extents.center;//calc.objToVector(this.rotationObj.origin, geometryGraph, THREE.Vector3);
+      this.center = extents.center; 
+      
       TransformSceneView.prototype.initialize.call(this, options);
       this.vertex.on('change', this.render, this);
     },
@@ -183,21 +184,36 @@ define([
         var quaternionToAxisAngle = function(q) {
           var angle = 2*Math.acos(q.w);
           var axis = new THREE.Vector3(q.x/Math.sqrt(1-q.w*q.w),
-                                       q.y/Math.sqrt(1-q.w*q.w),
+                                         q.y/Math.sqrt(1-q.w*q.w),
                                        q.z/Math.sqrt(1-q.w*q.w));
           return {angle: angle/Math.PI*180, axis: axis};
         };
 
         var axisAngle = quaternionToAxisAngle(quat3);
-        this.editingModel.rotate(this.center, axisAngle)
+
+
+        var rotationOrigin = this.center;
+        //  Scale is applied after rotation, so rotation center should be un-scaled
+        if (this.vertex.transforms.scale.factor !== 1) {
+          var scaleFactor = geometryGraph.evaluate(this.vertex.transforms.scale.factor);
+          var rotationOriginVec = calc.objToVector(this.center, geometryGraph, THREE.Vector3);
+          console.log('1', rotationOriginVec);
+          rotationOriginVec.multiplyScalar(1/scaleFactor);
+          rotationOrigin = {
+            x: rotationOriginVec.x, y: rotationOriginVec.y, z: rotationOriginVec.z
+          };
+        }
+        console.log('2', rotationOrigin);
+
+        this.editingModel.rotate(rotationOrigin, axisAngle);
 
         if (!this.isWorkplane) {
-          var quat1 = new THREE.Quaternion().setFromAxisAngle(
+          quat1 = new THREE.Quaternion().setFromAxisAngle(
             this.relativeRotationAxis, 0);
-          var quat2 = new THREE.Quaternion().setFromAxisAngle(
+          quat2 = new THREE.Quaternion().setFromAxisAngle(
             calc.objToVector(this.rotationObj.axis, geometryGraph, THREE.Vector3),
             geometryGraph.evaluate(this.rotationObj.angle)/180*Math.PI);
-          var quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
+          quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
           quat3.normalize();
           
           this.rotationSceneObject.useQuaternion = true;
