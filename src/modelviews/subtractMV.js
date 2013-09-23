@@ -37,14 +37,14 @@ define([
     translate: function(translation) {
       if (!this.startOrigin) {
         this.startOrigin = {
-          x: this.vertex.transforms.translation.x,
-          y: this.vertex.transforms.translation.y,
-          z: this.vertex.transforms.translation.z,
+          x: geometryGraph.evaluate(this.vertex.transforms.translation.x),
+          y: geometryGraph.evaluate(this.vertex.transforms.translation.y),
+          z: geometryGraph.evaluate(this.vertex.transforms.translation.z),
         }
         this.startRotationCenter = {
-          x: this.vertex.transforms.rotation.origin.x,
-          y: this.vertex.transforms.rotation.origin.y,
-          z: this.vertex.transforms.rotation.origin.z, 
+          x: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.x),
+          y: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.y),
+          z: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.z), 
         }
       }
       this.vertex.transforms.translation =  {
