@@ -197,13 +197,11 @@ define([
         if (this.vertex.transforms.scale.factor !== 1) {
           var scaleFactor = geometryGraph.evaluate(this.vertex.transforms.scale.factor);
           var rotationOriginVec = calc.objToVector(this.center, geometryGraph, THREE.Vector3);
-          console.log('1', rotationOriginVec);
           rotationOriginVec.multiplyScalar(1/scaleFactor);
           rotationOrigin = {
             x: rotationOriginVec.x, y: rotationOriginVec.y, z: rotationOriginVec.z
           };
         }
-        console.log('2', rotationOrigin);
 
         this.editingModel.rotate(rotationOrigin, axisAngle);
 
