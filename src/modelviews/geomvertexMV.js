@@ -361,6 +361,51 @@
       });
     },
 
+    createUntransformedMesh: function(callback) {
+      var vertex = this.model.vertex.cloneEditing();
+      vertex.transforms = {
+        rotation : {
+          origin: {
+            x: 0,
+            y: 0,
+            z: 0,
+          },
+          axis: {
+            x: 0,
+            y: 0,
+            z: 1,
+          },
+          angle: 0,
+        },
+        translation: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
+        scale: {
+          origin: {
+            x: 0,
+            y: 0,
+            z: 0,
+          },
+          factor: 1, 
+        }
+      };
+      var untransformed = true;
+      var sha = latheAdapter.generate(
+        vertex,
+        function(err, result) {
+
+        if (err) {
+          console.error('no mesh', vertex.id);
+          return;
+        } else if(callback) {
+          callback(result);
+        }
+        
+      });
+    },
+
     render: function() {
       VertexMV.SceneView.prototype.render.call(this);
 
@@ -382,6 +427,7 @@
             geometryGraph, 
             THREE.Vector3);
       }
+
     },
 
     renderMesh: function(result) {
@@ -407,7 +453,7 @@
         } else {
           faceMaterial = this.materials.normal.face;
         }
-        var meshObject = new THREE.Mesh(faceGeometry, faceMaterial);
+        this.meshObject = new THREE.Mesh(faceGeometry, faceMaterial);
 
         // Debug - show edges
         // var meshObject = THREE.SceneUtils.createMultiMaterialObject(faceGeometry, [
@@ -415,7 +461,7 @@
         //   new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true, linewidth: 5}),
         // ]);
 
-        this.sceneObject.add(meshObject);
+        this.sceneObject.add(this.meshObject);
         sceneModel.view.updateScene = true;
       }
     },
@@ -466,6 +512,17 @@
       if (replacement.type === 'workplane') {
         this.vertex.workplane = calc.copyObj(replacement.workplane);
       }
+    },
+
+    rotate: function(origin, axisAngle) {
+      this.vertex.transforms.rotation.origin.x = origin.x;
+      this.vertex.transforms.rotation.origin.y = origin.y;
+      this.vertex.transforms.rotation.origin.z = origin.z;
+      this.vertex.transforms.rotation.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
+      this.vertex.transforms.rotation.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
+      this.vertex.transforms.rotation.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
+      this.vertex.transforms.rotation.angle  = parseFloat(axisAngle.angle.toFixed(2));
+      this.vertex.trigger('change', this.vertex);
     },
 
   })

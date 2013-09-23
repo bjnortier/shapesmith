@@ -68,6 +68,15 @@ define([
 
     hideOtherViews: function() {
     },
+
+    rotate: function(origin, axisAngle) {
+      this.vertex.workplane.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
+      this.vertex.workplane.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
+      this.vertex.workplane.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
+      this.vertex.workplane.angle  = parseFloat(axisAngle.angle.toFixed(2));
+      this.vertex.trigger('change', this.vertex);
+
+    },
     
   });
 

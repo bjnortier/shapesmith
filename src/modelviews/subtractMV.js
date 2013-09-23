@@ -68,6 +68,10 @@ define([
       this.vertex.trigger('change', this.vertex);
     },
 
+    rotate: function(origin, axisAngle) {
+      GeomVertexMV.EditingModel.prototype.rotate.call(this, origin, axisAngle);
+    },
+
   });
 
   var EditingDOMView = GeomVertexMV.EditingDOMView.extend({
@@ -121,13 +125,79 @@ define([
 
   var EditingSceneView = GeomVertexMV.EditingSceneView.extend({
 
+
     render: function() {
-      GeomVertexMV.EditingSceneView.prototype.render.call(this);
-      var that = this;
-      this.createMesh(function(result) {
-        that.renderMesh(result);
-      });
+      // Only render it once, and render it *without* transforms
+      if (!this.isFirst) {
+        GeomVertexMV.EditingSceneView.prototype.render.call(this);
+        this.isFirst = true;
+        var that = this;
+        this.createUntransformedMesh(function(result) {
+          that.renderMesh(result);
+          that.applyTransforms();
+        });
+      } else {
+        if (this.meshObject) {
+          this.applyTransforms();
+        }
+      }
     },
+
+    applyTransforms: function() {
+      var translation = calc.objToVector(
+        this.model.vertex.transforms.translation, 
+        geometryGraph, 
+        THREE.Vector3);
+
+      var rotationOrigin = calc.objToVector(
+        this.model.vertex.transforms.rotation.origin, 
+        geometryGraph, 
+        THREE.Vector3);
+
+      var rotationQuat = new THREE.Quaternion().setFromAxisAngle(
+        calc.objToVector(this.model.vertex.transforms.rotation.axis, geometryGraph, THREE.Vector3),
+          geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
+
+      var scaleOrigin = calc.objToVector(
+        this.model.vertex.transforms.scale.origin, 
+        geometryGraph, 
+        THREE.Vector3);
+
+      var factor = geometryGraph.evaluate(this.model.vertex.transforms.scale.factor);
+
+      var workplaneOrigin = calc.objToVector(
+        this.model.vertex.workplane.origin, 
+        geometryGraph,
+        THREE.Vector3);
+
+      var workplaneQuat = new THREE.Quaternion().setFromAxisAngle(
+        calc.objToVector(this.model.vertex.workplane.axis, geometryGraph, THREE.Vector3),
+          geometryGraph.evaluate(this.model.vertex.workplane.angle)/180*Math.PI);
+
+      var matrices = [
+        new THREE.Matrix4().makeTranslation(-workplaneOrigin.x, -workplaneOrigin.y, -workplaneOrigin.z),
+        new THREE.Matrix4().setRotationFromQuaternion(workplaneQuat.clone().inverse()),
+        new THREE.Matrix4().makeTranslation(translation.x, translation.y, translation.z),
+        new THREE.Matrix4().makeTranslation(-rotationOrigin.x, -rotationOrigin.y, -rotationOrigin.z),
+        new THREE.Matrix4().setRotationFromQuaternion(rotationQuat),
+        new THREE.Matrix4().makeTranslation(rotationOrigin.x, rotationOrigin.y, rotationOrigin.z),
+        new THREE.Matrix4().makeTranslation(-scaleOrigin.x, -scaleOrigin.y, -scaleOrigin.z),
+        new THREE.Matrix4().makeScale(factor, factor, factor),
+        new THREE.Matrix4().makeTranslation(scaleOrigin.x, scaleOrigin.y, scaleOrigin.z),
+        new THREE.Matrix4().setRotationFromQuaternion(workplaneQuat),
+        new THREE.Matrix4().makeTranslation(workplaneOrigin.x, workplaneOrigin.y, workplaneOrigin.z),
+      ];
+
+      var result = matrices.reduce(function(acc, m) {
+        return m.multiply(acc);
+      }, new THREE.Matrix4());
+
+      this.meshObject.matrix = new THREE.Matrix4();
+      this.meshObject.applyMatrix(result);
+      sceneModel.view.updateScene = true;
+
+    }
+
 
   });
 

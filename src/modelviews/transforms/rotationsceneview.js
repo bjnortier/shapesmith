@@ -28,7 +28,8 @@ define([
         this.rotationObj = this.vertex.transforms.rotation;
       }
 
-      this.center = extents.center;//calc.objToVector(this.rotationObj.origin, geometryGraph, THREE.Vector3);
+      this.center = extents.center; 
+      
       TransformSceneView.prototype.initialize.call(this, options);
       this.vertex.on('change', this.render, this);
     },
@@ -58,7 +59,7 @@ define([
       var arrowGeometry = new THREE.CylinderGeometry(0, 0.75, 2, 3);
       this.arrow = new THREE.Mesh(
         arrowGeometry,
-        new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.5}));
+        new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.8}));
       this.arrow.position = new THREE.Vector3(this.radius, 0, 0);
       this.arrow.scale = this.cameraScale;
 
@@ -68,9 +69,9 @@ define([
 
       // Separate object so the scene object can be
       // transformed with the workplane
-      var rotationObject = new THREE.Object3D();
-      this.sceneObject.add(rotationObject);
-      rotationObject.add(this.circleAndArrow);
+      this.rotationSceneObject = new THREE.Object3D();
+      this.sceneObject.add(this.rotationSceneObject);
+      this.rotationSceneObject.add(this.circleAndArrow);
      
       if (!this.isWorkplane) {
         var quat1 = new THREE.Quaternion().setFromAxisAngle(
@@ -82,9 +83,9 @@ define([
         var quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
         quat3.normalize();
         
-        rotationObject.useQuaternion = true;
-        rotationObject.quaternion = quat3;
-        rotationObject.position = this.center;
+        this.rotationSceneObject.useQuaternion = true;
+        this.rotationSceneObject.quaternion = quat3;
+        this.rotationSceneObject.position = this.center;
       }
 
     },
@@ -92,7 +93,7 @@ define([
     updateCameraScale: function() {
       TransformSceneView.prototype.updateCameraScale.call(this);
       if (this.arrow) {
-        // this.arrow.scale = this.cameraScale;
+        this.arrow.scale = this.cameraScale;
       }
     },
 
@@ -101,10 +102,12 @@ define([
       
       if (this.isWorkplane) {
         this.editingVertex = this.vertex;
+        this.editingModel = modelGraph.get(this.editingVertex.id);
         this.rotationObj = this.editingVertex.workplane;
       } else {
         this.originalVertex = this.vertex;
         this.originalVertex.transforming = true;
+        this.originalVertex.rotating = true;
         this.editingVertex = AsyncAPI.edit(this.vertex);
         this.editingModel = modelGraph.get(this.editingVertex.id);
         this.rotationObj = this.editingVertex.transforms.rotation;
@@ -181,23 +184,41 @@ define([
         var quaternionToAxisAngle = function(q) {
           var angle = 2*Math.acos(q.w);
           var axis = new THREE.Vector3(q.x/Math.sqrt(1-q.w*q.w),
-                                       q.y/Math.sqrt(1-q.w*q.w),
+                                         q.y/Math.sqrt(1-q.w*q.w),
                                        q.z/Math.sqrt(1-q.w*q.w));
           return {angle: angle/Math.PI*180, axis: axis};
         };
 
         var axisAngle = quaternionToAxisAngle(quat3);
-        if (!this.isWorkplane) {        
-          this.rotationObj.origin.x = this.center.x;
-          this.rotationObj.origin.y = this.center.y;
-          this.rotationObj.origin.z = this.center.z;
-        }
-        this.rotationObj.axis.x = parseFloat(axisAngle.axis.x.toFixed(3));
-        this.rotationObj.axis.y = parseFloat(axisAngle.axis.y.toFixed(3));
-        this.rotationObj.axis.z = parseFloat(axisAngle.axis.z.toFixed(3));
-        this.rotationObj.angle  = parseFloat(axisAngle.angle.toFixed(2));
 
-        this.editingVertex.trigger('change', this.editingVertex);
+
+        var rotationOrigin = this.center;
+        //  Scale is applied after rotation, so rotation center should be un-scaled
+        if (this.vertex.transforms.scale.factor !== 1) {
+          var scaleFactor = geometryGraph.evaluate(this.vertex.transforms.scale.factor);
+          var rotationOriginVec = calc.objToVector(this.center, geometryGraph, THREE.Vector3);
+          console.log('1', rotationOriginVec);
+          rotationOriginVec.multiplyScalar(1/scaleFactor);
+          rotationOrigin = {
+            x: rotationOriginVec.x, y: rotationOriginVec.y, z: rotationOriginVec.z
+          };
+        }
+        console.log('2', rotationOrigin);
+
+        this.editingModel.rotate(rotationOrigin, axisAngle);
+
+        if (!this.isWorkplane) {
+          quat1 = new THREE.Quaternion().setFromAxisAngle(
+            this.relativeRotationAxis, 0);
+          quat2 = new THREE.Quaternion().setFromAxisAngle(
+            calc.objToVector(this.rotationObj.axis, geometryGraph, THREE.Vector3),
+            geometryGraph.evaluate(this.rotationObj.angle)/180*Math.PI);
+          quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
+          quat3.normalize();
+          
+          this.rotationSceneObject.useQuaternion = true;
+          this.rotationSceneObject.quaternion = quat3;
+        }
       }
 
     },

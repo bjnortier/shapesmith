@@ -79,9 +79,9 @@ requirejs([
         bsp = bsp.translate(transforms.translation.x, transforms.translation.y, transforms.translation.z);
       }
       if (transforms.rotation.angle !== 0) {
-       bsp = bsp.translate(-transforms.rotation.origin.x, -transforms.rotation.origin.y, -transforms.rotation.origin.z); 
-       bsp = bsp.rotate(transforms.rotation.axis.x, transforms.rotation.axis.y, transforms.rotation.axis.z, transforms.rotation.angle/180*Math.PI);
-       bsp = bsp.translate(transforms.rotation.origin.x, transforms.rotation.origin.y, transforms.rotation.origin.z); 
+        bsp = bsp.translate(-transforms.rotation.origin.x, -transforms.rotation.origin.y, -transforms.rotation.origin.z); 
+        bsp = bsp.rotate(transforms.rotation.axis.x, transforms.rotation.axis.y, transforms.rotation.axis.z, transforms.rotation.angle/180*Math.PI);
+        bsp = bsp.translate(transforms.rotation.origin.x, transforms.rotation.origin.y, transforms.rotation.origin.z); 
       }
       if (transforms.scale.factor !== 1) {
         bsp = bsp.translate(-transforms.scale.origin.x, -transforms.scale.origin.y, -transforms.scale.origin.z); 
