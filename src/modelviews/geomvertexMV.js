@@ -696,6 +696,12 @@
       } else if (options.replaceDomElement) {
         options.replaceDomElement.replaceWith(this.$el);
       }
+      this.model.on('change:selected', this.updateSelected, this);
+    },
+
+    remove: function() {
+      VertexMV.DisplayDOMView.prototype.remove.call(this);
+      this.model.off('change:selected', this.updateSelected, this);
     },
 
     render: function() {
@@ -738,7 +744,15 @@
       } else {
         this.$el.html();
       }
-    },    
+    },  
+
+    updateSelected: function() {
+      if (this.model.get('selected')) {
+        this.$el.addClass('selected');
+      } else {
+        this.$el.removeClass('selected');
+      }
+    }, 
 
     events: {
       'click > .title .icon24'   : 'clickTitle',
