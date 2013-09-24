@@ -46,7 +46,7 @@ define([
     });
   }
 
-  var generateSubtract = function(vertex, callback) {
+  var generateBoolean = function(vertex, latheGenerator, callback) {
 
     var children = geometryGraph.childrenOf(vertex);
     var childResults = {};
@@ -83,7 +83,7 @@ define([
       if (addCallbackAndShouldGenerate(sha, callback)) {
         getOrGenerate(sha, function() {
           var normalized = Normalize.normalizeVertex(vertex);
-          return Lathe.createSubtract(sha, childBSPs, normalized.transforms, normalized.workplane);
+          return latheGenerator(sha, childBSPs, normalized.transforms, normalized.workplane);
         }, performCallback);
       }
     }
@@ -131,8 +131,14 @@ define([
           }, performCallback);
         }
         break;
+      case 'union':
+        generateBoolean(vertex, Lathe.createUnion, callback);
+        break;
       case 'subtract':
-        generateSubtract(vertex, callback);
+        generateBoolean(vertex, Lathe.createSubtract, callback);
+        break;
+      case 'intersect':
+        generateBoolean(vertex, Lathe.createIntersect, callback);
         break;
       default:
         throw Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);

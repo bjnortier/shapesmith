@@ -29,6 +29,7 @@ module.exports = function(grunt) {
           'src/modelviews/transforms/*.js',
           'src/modelviews/vertexMV.js',
           'src/modelviews/geomvertexMV.js',
+          'src/modelviews/booleanMV.js',
           'src/modelviews/subtractMV.js',
           'src/modelviews/actionsoverlayMV.js',
         ],

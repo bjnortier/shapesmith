@@ -9,9 +9,9 @@ define([
 
   var Model = BooleanItemModel.extend({
     
-    name: 'subtract',
-    VertexConstructor: GeomNode.Subtract,
-    icon: icons['subtract'],
+    name: 'intersect',
+    VertexConstructor: GeomNode.Intersect,
+    icon: icons['intersect'],
 
   });
 

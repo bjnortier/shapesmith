@@ -112,7 +112,9 @@ define([
         return normalizeCube(vertex);
       case 'sphere':
         return normalizeSphere(vertex);
+      case 'union':
       case 'subtract':
+      case 'intersect':
         return normalizeBoolean(vertex);
       default:
         throw Error('no normalization defined for ' + vertex.id)

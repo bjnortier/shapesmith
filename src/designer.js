@@ -6,6 +6,8 @@ define([
     'modelviews/cubeMV',
     'modelviews/sphereMV',
     'modelviews/subtractMV',
+    'modelviews/subtractMV',
+    'modelviews/subtractMV',
     'modelviews/modelgraph',
     'modelviews/transforms/transforminitiator',
     'modelviews/actionsoverlayMV',
@@ -17,7 +19,9 @@ define([
     'toolbars/polylineitemmodel',
     'toolbars/cubeitemmodel',
     'toolbars/sphereitemmodel',
+    'toolbars/unionitemmodel',
     'toolbars/subtractitemmodel',
+    'toolbars/intersectitemmodel',
     'toolbars/settingsitemmodel',
     'toolbars/saveitemmodel',
     'toolbars/exititemmodel',
@@ -29,7 +33,9 @@ define([
         PolylineMV,
         CubeMV,
         SphereMV,
+        UnionMV,
         SubtractMV,
+        IntersectMV,
         modelgraph,
         transformInitiator,
         actionsOverlayMV,
@@ -41,7 +47,9 @@ define([
         PolylineItemModel,
         CubeItemModel,
         SphereItemModel,
+        UnionItemModel,
         SubtractItemModel,
+        IntersectItemModel,
         SettingsItemModel,
         SaveItemModel,
         ExitItemModel,
@@ -54,12 +62,16 @@ define([
         modelgraph.addWrapper('point', PointMV);
         modelgraph.addWrapper('cube', CubeMV);
         modelgraph.addWrapper('sphere', SphereMV);
+        modelgraph.addWrapper('union', UnionMV);
         modelgraph.addWrapper('subtract', SubtractMV);
+        modelgraph.addWrapper('intersect', IntersectMV);
 
         // geomToolbar.addItem(new PointItemModel());
         geomToolbar.addItem(new CubeItemModel());
         geomToolbar.addItem(new SphereItemModel());
+        geomToolbar.addItem(new UnionItemModel());
         geomToolbar.addItem(new SubtractItemModel());
+        geomToolbar.addItem(new IntersectItemModel());
 
         var expander = new Toolbar.ExpanderItem();
         mainToolbar.addItem(new SettingsItemModel());

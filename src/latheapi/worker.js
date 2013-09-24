@@ -25,10 +25,12 @@ requirejs([
     'lathe/bsp',
     'lathe/primitives/cube',
     'lathe/primitives/sphere',
+    'lathe/primitives/union3d',
     'lathe/primitives/subtract3d',
+    'lathe/primitives/intersect3d',
     'lathe/conv',
   ],
-  function(BSP, Cube, Sphere, Subtract3D, Conv) {
+  function(BSP, Cube, Sphere, Union3D, Subtract3D, Intersect3D, Conv) {
 
     var infoHandler = function(a,b,c,d) {
       postMessage({info: [a,b,c,d].join('')});
@@ -110,18 +112,25 @@ requirejs([
       } else if (e.data.cube) {
         var bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
-      } else if (e.data.subtract) {
+      } else if (e.data.union || e.data.subtract || e.data.intersect) {
 
         // The child BSPs start off as an array of SHAs, 
         // and each SHA is replaced with the BSP from the DB
-        var childBSPs = e.data.subtract;
+        var childBSPs = e.data.union || e.data.subtract || e.data.intersect;
         
         var remaining = childBSPs.length;
 
         var a = BSP.deserialize(childBSPs[0]);
         var b = BSP.deserialize(childBSPs[1]);
-        var subtract = new Subtract3D(a,b);
-        var bsp = applyReverseWorkplane(subtract.bsp, e.data.workplane);
+        var primitive;
+        if (e.data.union) {
+          primitive = new Union3D(a,b);
+        } else if (e.data.subtract) {
+          primitive = new Subtract3D(a,b);
+        } else {
+          primitive = new Intersect3D(a,b);
+        }
+        var bsp = applyReverseWorkplane(primitive.bsp, e.data.workplane);
         bsp = applyTransformsAndWorkplane(bsp, e.data.transforms, e.data.workplane);
 
         returnResult(e.data.id, e.data.sha, bsp);

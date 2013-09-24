@@ -344,20 +344,46 @@ define([
     return {};
   }
 
-  // ---------- Subtract ----------
+  // ---------- Booleans ----------
 
   var Subtract = function(options) {
     var options = options || {};
     options.type = 'subtract';
     options.category = 'geometry';
     GeomNode.prototype.constructor.call(this, options);
-  }
+  };
 
   _.extend(Subtract.prototype, GeomNode.prototype);
 
   Subtract.prototype.getExpressions = function() {
     return getCommonExpressions(this);
-  }
+  };
+
+  var Intersect = function(options) {
+    var options = options || {};
+    options.type = 'intersect';
+    options.category = 'geometry';
+    GeomNode.prototype.constructor.call(this, options);
+  };
+
+  _.extend(Intersect.prototype, GeomNode.prototype);
+
+  Intersect.prototype.getExpressions = function() {
+    return getCommonExpressions(this);
+  };
+
+  var Union = function(options) {
+    var options = options || {};
+    options.type = 'union';
+    options.category = 'geometry';
+    GeomNode.prototype.constructor.call(this, options);
+  };
+
+  _.extend(Union.prototype, GeomNode.prototype);
+
+  Union.prototype.getExpressions = function() {
+    return getCommonExpressions(this);
+  };
 
   // ---------- Module ----------
 
@@ -372,16 +398,20 @@ define([
     Cube           : Cube,
     Sphere         : Sphere,
     Extrude        : Extrude,
+    Union          : Union,
     Subtract       : Subtract,
+    Intersect      : Intersect,
     constructors: {
-      'workplane' : Workplane,
-      'variable'  : Variable,
-      'point'   : Point,
-      'polyline'  : Polyline,
-      'cube'    : Cube,
-      'sphere'  : Sphere,
-      'extrude'   : Extrude,
-      'subtract'  : Subtract,
+      'workplane': Workplane,
+      'variable' : Variable,
+      'point'    : Point,
+      'polyline' : Polyline,
+      'cube'     : Cube,
+      'sphere'   : Sphere,
+      'extrude'  : Extrude,
+      'union'    : Union,
+      'subtract' : Subtract,
+      'intersect': Intersect,
     }
   }
 
