@@ -19,12 +19,19 @@ module.exports = function(grunt) {
         eqnull: true,
         node: true,
         loopfunc: true,
+        indent: 2,
       },
       gruntfile: {
         src: 'Gruntfile.js'
       },
       ui: {
-        src: ['src/modelviews/transforms/*.js'],
+        src: [
+          'src/modelviews/transforms/*.js',
+          'src/modelviews/vertexMV.js',
+          'src/modelviews/geomvertexMV.js',
+          'src/modelviews/subtractMV.js',
+          'src/modelviews/actionsoverlayMV.js',
+        ],
         options: {
           globals: {
             define: false,
