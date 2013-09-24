@@ -60,7 +60,7 @@ define([
         var arrowGeometry = new THREE.CylinderGeometry(0, 0.75, 2, 3);
         this.arrow = new THREE.Mesh(
           arrowGeometry,
-          new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.8}));
+          new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: false}));
         this.arrow.position = new THREE.Vector3(this.radius, 0, 0);
         this.arrow.scale = this.cameraScale;
 

@@ -41,11 +41,9 @@ define([
 
       initialize: function() {
         var normalColor = 0x6cbe32;
-        var highlightColor = normalColor;
         var vertexMaterial = this.model.vertex.parameters.material;
         if (vertexMaterial && vertexMaterial.color) {
           normalColor = vertexMaterial.color;
-          highlightColor = normalColor;
         }
         this.materials = {
           normal: {
@@ -99,26 +97,6 @@ define([
               name: 'implicit.edge'
             }),
           },
-          highlight: {
-            face: new THREE.MeshLambertMaterial({
-              color: highlightColor,
-              ambient: normalColor,
-              // transparent: true,
-              // opacity: 0.5,
-              name: 'highlight.face'
-            }),
-            wire: new THREE.MeshBasicMaterial({
-              color: highlightColor,
-              wireframe: true,
-              linewidth: 1,
-              name: 'highlight.wire'
-            }),
-            edge: new THREE.LineBasicMaterial({
-              color: highlightColor,
-              linewidth: 2,
-              name: 'highlight.edge'
-            }),
-          },
           selected: {
             face: new THREE.MeshLambertMaterial({
               color: 0x999933,
@@ -144,6 +122,33 @@ define([
               color: 0x999933,
               linewidth: 2,
               name: 'selected.edge'
+            }),
+          },
+          unselected: {
+            face: new THREE.MeshLambertMaterial({
+              color: normalColor,
+              ambient: normalColor,
+              transparent: true,
+              opacity: 0.5,
+              name: 'unselected.face'
+            }),
+            origin: new THREE.MeshLambertMaterial({
+              color: normalColor,
+              ambient: normalColor,
+              transparent: true,
+              opacity: 0,
+              name: 'unselected.origin'
+            }),
+            wire: new THREE.MeshBasicMaterial({
+              color: normalColor,
+              wireframe: true,
+              linewidth: 1,
+              name: 'unselected.wire'
+            }),
+            edge: new THREE.LineBasicMaterial({
+              color: normalColor,
+              linewidth: 2,
+              name: 'unselected.edge'
             }),
           },
           editing: {
@@ -828,22 +833,22 @@ define([
 
       initialize: function() {
         SceneView.prototype.initialize.call(this);
-        this.on('mouseenterfirst', this.highlight, this);
-        this.on('mouseleavefirst', this.unhighlight, this);
         this.on('click', this.click, this);
         this.on('dblclick', this.dblclick, this);
         this.model.vertex.on('change', this.renderIfInContext, this);
         this.model.on('change:selected', this.updateSelected, this);
+        this.model.on('postSelection', this.updateAppearance, this);
+        geometryGraph.on('vertexReplaced', this.updateAppearance, this);
       },
 
       remove: function() {
         SceneView.prototype.remove.call(this);
-        this.off('mouseenterfirst', this.highlight, this);
-        this.off('mouseleavefirst', this.unhighlight, this);
         this.off('click', this.click, this);
         this.off('dblclick', this.dblclick, this);
         this.model.vertex.off('change', this.renderIfInContext, this);
         this.model.off('change:selected', this.updateSelected, this);
+        this.model.off('postSelection', this.updateAppearance, this);
+        geometryGraph.on('vertexReplaced', this.updateAppearance, this);
       },
 
       isClickable: function() {
@@ -851,17 +856,22 @@ define([
       },
 
       updateSelected: function() {
-        if (this.model.get('selected')) {
-          this.updateMaterials('selected');
+      },
+
+      updateAppearance: function() {
+        if (selection.getSelected().length || geometryGraph.isEditing()) {
+          if (this.model.get('selected')) {
+            this.updateMaterials('selected');
+          } else {
+            this.updateMaterials('unselected');
+          }
         } else {
-          this.updateMaterials('normal');
+          if (this.model.vertex.implicit) {
+            this.updateMaterials('implicit');
+          } else {
+            this.updateMaterials('normal');
+          }
         }
-      },
-
-      highlight: function() {
-      },
-
-      unhighlight: function() {
       },
 
       click: function(event) {

@@ -75,13 +75,15 @@ define([
       select: function(ids) {
         if (ids.indexOf(this.vertex.id) !== -1) {
           this.set('selected', true);
-        }
+        } 
+        this.trigger('postSelection');
       },
 
       deselect: function(ids) {
         if (ids.indexOf(this.vertex.id) !== -1) {
           this.set('selected', false);
-        }
+        } 
+        this.trigger('postSelection');
       },
 
     });

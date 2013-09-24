@@ -100,12 +100,12 @@ define([
       },
 
       highlight: function() {
-        this.updateMaterials(this.highlightLineColor, this.highlightFaceColor, 1.0);
+        this.updateMaterials(this.highlightLineColor, this.highlightFaceColor);
       },
 
       unhighlight: function() {
         if (!this.dragging) {
-          this.updateMaterials(this.greyLineColor, this.greyFaceColor, 0.5);
+          this.updateMaterials(this.greyLineColor, this.greyFaceColor);
         }
       },
 
@@ -127,7 +127,7 @@ define([
         return {lines: lines, meshes: meshes};
       },
 
-      updateMaterials: function(lineColor, faceColor, faceOpacity) {
+      updateMaterials: function(lineColor, faceColor) {
         var objects = this.findObjects([this.sceneObject]);
         objects.lines.forEach(function(line) {
           line.material.color = new THREE.Color(lineColor);
@@ -135,7 +135,6 @@ define([
         objects.meshes.forEach(function(mesh) {
           if (mesh.material) {
             mesh.material.color = new THREE.Color(faceColor);
-            mesh.material.opacity = faceOpacity;
           }
         });
         sceneModel.view.updateScene = true;
