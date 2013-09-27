@@ -469,6 +469,8 @@ define([
 
           this.sceneObject.add(this.meshObject);
           sceneModel.view.updateScene = true;
+
+          this.updateAppearance();
         }
       },
 
@@ -646,6 +648,9 @@ define([
       remove: function() {
         SceneView.prototype.remove.call(this);
         this.model.vertex.off('change', this.renderIfInContext, this);
+      },
+
+      updateAppearance: function() {
       },
 
     });
@@ -840,6 +845,7 @@ define([
         this.model.on('postSelection', this.updateAppearance, this);
         geometryGraph.on('vertexAdded', this.updateAppearance, this);
         geometryGraph.on('vertexReplaced', this.updateAppearance, this);
+        geometryGraph.on('vertexRemoved', this.updateAppearance, this);
       },
 
       remove: function() {
@@ -851,6 +857,7 @@ define([
         this.model.off('postSelection', this.updateAppearance, this);
         geometryGraph.off('vertexAdded', this.updateAppearance, this);
         geometryGraph.off('vertexReplaced', this.updateAppearance, this);
+        geometryGraph.off('vertexRemoved', this.updateAppearance, this);
       },
 
       isClickable: function() {
