@@ -12,6 +12,7 @@ define([
     name: 'subtract',
     VertexConstructor: GeomNode.Subtract,
     icon: icons['subtract'],
+    maxNumberOfChildren: 2,
 
   });
 

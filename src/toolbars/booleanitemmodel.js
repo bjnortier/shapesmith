@@ -28,22 +28,27 @@ define([
 
     selectionChanged: function(_, selection) {
       var polyline;
-      this.set('enabled', (selection.length === 2));
+      var enabled = (selection.length >= 2);
+      if (this.maxNumberOfChildren !== undefined) {
+        enabled = enabled && (selection.length <= this.maxNumberOfChildren);
+      }
+      this.set('enabled', enabled);
     },
 
     activate: function(savedSelection) {
       toolbar.ItemModel.prototype.activate.call(this);
-      var a = geometryGraph.vertexById(savedSelection[1]);
-      var b = geometryGraph.vertexById(savedSelection[0]);
-
+      var children = savedSelection.map(function(id) {
+        return geometryGraph.vertexById(id);
+      })
       var boolVertex = new this.VertexConstructor({
         proto: true,
         editing: true,
-        workplane: calc.copyObj(b.workplane),
+        workplane: calc.copyObj(children[children.length-1].workplane),
       });
       geometryGraph.add(boolVertex, function() {
-        geometryGraph.addEdge(boolVertex, a);
-        geometryGraph.addEdge(boolVertex, b);
+        children.forEach(function(child) {
+          geometryGraph.addEdge(boolVertex, child);
+        });
       });
       var result = AsyncAPI.tryCommitCreate([boolVertex]);
       if (!result.error) {

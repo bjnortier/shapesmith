@@ -120,17 +120,18 @@ requirejs([
         
         var remaining = childBSPs.length;
 
-        var a = BSP.deserialize(childBSPs[0]);
-        var b = BSP.deserialize(childBSPs[1]);
-        var primitive;
-        if (e.data.union) {
-          primitive = new Union3D(a,b);
-        } else if (e.data.subtract) {
-          primitive = new Subtract3D(a,b);
-        } else {
-          primitive = new Intersect3D(a,b);
+        var primitiveBsp = BSP.deserialize(childBSPs[0]);
+        for (var i = 1; i < childBSPs.length; ++i) {
+          var other = BSP.deserialize(childBSPs[i]);
+          if (e.data.union) {
+            primitiveBsp = new Union3D(primitiveBsp, other).bsp;
+          } else if (e.data.subtract) {
+            primitiveBsp = new Subtract3D(primitiveBsp, other).bsp;
+          } else {
+            primitiveBsp = new Intersect3D(primitiveBsp, other).bsp;
+          }
         }
-        var bsp = applyReverseWorkplane(primitive.bsp, e.data.workplane);
+        var bsp = applyReverseWorkplane(primitiveBsp, e.data.workplane);
         bsp = applyTransformsAndWorkplane(bsp, e.data.transforms, e.data.workplane);
 
         returnResult(e.data.id, e.data.sha, bsp);

@@ -70,8 +70,8 @@ define([
         geomToolbar.addItem(new CubeItemModel());
         geomToolbar.addItem(new SphereItemModel());
         geomToolbar.addItem(new UnionItemModel());
-        geomToolbar.addItem(new SubtractItemModel());
         geomToolbar.addItem(new IntersectItemModel());
+        geomToolbar.addItem(new SubtractItemModel());
 
         var expander = new Toolbar.ExpanderItem();
         mainToolbar.addItem(new SettingsItemModel());
