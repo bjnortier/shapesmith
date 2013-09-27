@@ -838,6 +838,7 @@ define([
         this.model.vertex.on('change', this.renderIfInContext, this);
         this.model.on('change:selected', this.updateSelected, this);
         this.model.on('postSelection', this.updateAppearance, this);
+        geometryGraph.on('vertexAdded', this.updateAppearance, this);
         geometryGraph.on('vertexReplaced', this.updateAppearance, this);
       },
 
@@ -848,7 +849,8 @@ define([
         this.model.vertex.off('change', this.renderIfInContext, this);
         this.model.off('change:selected', this.updateSelected, this);
         this.model.off('postSelection', this.updateAppearance, this);
-        geometryGraph.on('vertexReplaced', this.updateAppearance, this);
+        geometryGraph.off('vertexAdded', this.updateAppearance, this);
+        geometryGraph.off('vertexReplaced', this.updateAppearance, this);
       },
 
       isClickable: function() {
