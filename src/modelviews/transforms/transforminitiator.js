@@ -63,9 +63,11 @@ define([
           });
           this.sceneViews = [];
 
-          this.selectedModel.sceneView.on('dragStarted', this.dragStarted, this);
-          this.selectedModel.sceneView.on('dragEnded', this.dragEnded, this);
-          this.selectedModel.sceneView.on('drag', this.drag, this);
+          if (this.selectedModel) {
+            this.selectedModel.sceneView.off('dragStarted', this.dragStarted, this);
+            this.selectedModel.sceneView.off('dragEnded', this.dragEnded, this);
+            this.selectedModel.sceneView.off('drag', this.drag, this);
+          }
           this.selectedModel = undefined;
         }
       },
