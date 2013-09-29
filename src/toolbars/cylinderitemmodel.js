@@ -15,7 +15,7 @@ define([
 
   var Model = toolbar.ItemModel.extend({
     
-    name: 'sphere',   
+    name: 'cylinder',   
     
     activate: function() {
       toolbar.ItemModel.prototype.activate.call(this);
@@ -29,21 +29,21 @@ define([
       });
       geometryGraph.add(point);
       
-      var sphereOptions = {
+      var cylinderOptions = {
         editing    : true,
         proto    : true,
         workplane  : workplane,
       }
-      var sphereVertex = new GeomNode.Sphere(sphereOptions);
-      geometryGraph.add(sphereVertex, function() {
-        geometryGraph.addEdge(sphereVertex, point);
+      var cylinderVertex = new GeomNode.Cylinder(cylinderOptions);
+      geometryGraph.add(cylinderVertex, function() {
+        geometryGraph.addEdge(cylinderVertex, point);
       });
     },
 
-    icon: icons['sphere'],
+    icon: icons['cylinder'],
 
-    createAnother: function(type) {
-      return type === 'sphere';
+     createAnother: function(type) {
+      return type === 'cylinder';
     } 
 
   });

@@ -114,6 +114,10 @@ define([
     return jobQueue.queueJob({sha: sha, sphere: dimensions, transforms: transforms, workplane: workplane})
   };
 
+  var createCylinder = function(sha, dimensions, transforms, workplane) {
+    return jobQueue.queueJob({sha: sha, cylinder: dimensions, transforms: transforms, workplane: workplane})
+  };
+
   var createCube = function(sha, dimensions, transforms, workplane) {
     return jobQueue.queueJob({sha: sha, cube: dimensions, transforms: transforms, workplane: workplane});
   };
@@ -133,6 +137,7 @@ define([
   return {
     createCube     : createCube,
     createSphere   : createSphere,
+    createCylinder : createCylinder,
     createUnion    : createUnion,
     createSubtract : createSubtract,
     createIntersect: createIntersect,

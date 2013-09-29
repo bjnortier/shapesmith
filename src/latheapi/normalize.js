@@ -97,6 +97,24 @@ define([
 
   };
 
+  var normalizeCylinder = function(sphere) {
+    var points = geometryGraph.childrenOf(sphere);
+    var center = calc.objToVector(points[0].parameters.coordinate, geometryGraph, THREE.Vector3);
+    var radius = geometryGraph.evaluate(sphere.parameters.radius);
+    var height = geometryGraph.evaluate(sphere.parameters.height);
+
+    return {
+      x: center.x, 
+      y: center.y,
+      z: center.z,
+      r: radius,
+      h: height,
+      transforms: normalizeTransforms(sphere.transforms),
+      workplane: normalizeWorkplane(sphere.workplane),
+    };
+
+  };
+
   var normalizeBoolean = function(boolean) {
 
     return {
@@ -112,6 +130,8 @@ define([
         return normalizeCube(vertex);
       case 'sphere':
         return normalizeSphere(vertex);
+        case 'cylinder':
+        return normalizeCylinder(vertex);
       case 'union':
       case 'subtract':
       case 'intersect':

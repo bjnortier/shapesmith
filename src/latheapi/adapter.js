@@ -121,7 +121,15 @@ define([
           }, performCallback);
         }
         break;
-
+      case 'cylinder':
+        var normalized = Normalize.normalizeVertex(vertex);
+        var sha = SHA1Hasher.hash(normalized);
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            return Lathe.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
+          }, performCallback);
+        }
+        break;
       case 'cube':
         var normalized = Normalize.normalizeVertex(vertex);
         var sha = SHA1Hasher.hash(normalized);

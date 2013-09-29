@@ -5,9 +5,8 @@ define([
     'modelviews/polylineMV',
     'modelviews/cubeMV',
     'modelviews/sphereMV',
-    'modelviews/subtractMV',
-    'modelviews/subtractMV',
-    'modelviews/subtractMV',
+    'modelviews/cylinderMV',
+    'modelviews/booleanMV',
     'modelviews/modelgraph',
     'modelviews/transforms/transforminitiator',
     'modelviews/actionsoverlayMV',
@@ -19,6 +18,7 @@ define([
     'toolbars/polylineitemmodel',
     'toolbars/cubeitemmodel',
     'toolbars/sphereitemmodel',
+    'toolbars/cylinderitemmodel',
     'toolbars/unionitemmodel',
     'toolbars/subtractitemmodel',
     'toolbars/intersectitemmodel',
@@ -33,9 +33,8 @@ define([
         PolylineMV,
         CubeMV,
         SphereMV,
-        UnionMV,
-        SubtractMV,
-        IntersectMV,
+        CylinderMV,
+        BooleanMV,
         modelgraph,
         transformInitiator,
         actionsOverlayMV,
@@ -47,6 +46,7 @@ define([
         PolylineItemModel,
         CubeItemModel,
         SphereItemModel,
+        CylinderItemModel,
         UnionItemModel,
         SubtractItemModel,
         IntersectItemModel,
@@ -62,13 +62,15 @@ define([
         modelgraph.addWrapper('point', PointMV);
         modelgraph.addWrapper('cube', CubeMV);
         modelgraph.addWrapper('sphere', SphereMV);
-        modelgraph.addWrapper('union', UnionMV);
-        modelgraph.addWrapper('subtract', SubtractMV);
-        modelgraph.addWrapper('intersect', IntersectMV);
+        modelgraph.addWrapper('cylinder', CylinderMV);
+        modelgraph.addWrapper('union', BooleanMV);
+        modelgraph.addWrapper('subtract', BooleanMV);
+        modelgraph.addWrapper('intersect', BooleanMV);
 
         // geomToolbar.addItem(new PointItemModel());
         geomToolbar.addItem(new CubeItemModel());
         geomToolbar.addItem(new SphereItemModel());
+        geomToolbar.addItem(new CylinderItemModel());
         geomToolbar.addItem(new UnionItemModel());
         geomToolbar.addItem(new IntersectItemModel());
         geomToolbar.addItem(new SubtractItemModel());

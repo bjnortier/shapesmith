@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 64 64" version="0.48.2 r9819" width="64px" height="64px" id="svg5961">
+  <defs id="defs5963"/>
+  <format/>
+  <type resource="http://purl.org/dc/dcmitype/StillImage"/>
+  <title/>
+  <g id="layer1" label="Layer 1" groupmode="layer">
+    <path d="M 32.59375,7.46875 C 19.105338,7.46033 8.1338196,11.030754 8,15.46875 c -6.427e-4,0.02131 1.42e-4,0.04115 0,0.0625 l 0,36.84375 0.1875,0 c 0.022735,4.453785 10.976348,8.083979 24.5,8.09375 13.556047,0.0098 24.564038,-3.625275 24.59375,-8.09375 l 0.1875,0 C 57.390674,40.069199 57.493561,27.023924 57.366477,14.832386 57.239887,10.408019 46.052612,7.4784739 32.59375,7.46875 z" id="path3054" connector-curvature="0" nodetypes="cscccscccc"/>
+    <path type="arc" id="path3077" cx="32.045456" cy="14.727273" rx="24.59091" ry="6.6363635" d="m 32.099355,8.0909254 a 24.59091,6.6363635 0 1 1 -0.0074,-4e-6" start="4.7145808" end="10.997467" transform="matrix(1,0,0,1.2019887,0.72727273,-2.2706387)" open="true"/>
+  </g>
+</svg>

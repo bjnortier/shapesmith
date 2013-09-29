@@ -310,6 +310,35 @@ define([
     return {};
   }
 
+  // ----------- Cylinder ---------- 
+
+  var Cylinder = function(options) {
+    var options = options || {};
+    options.type = 'cylinder';
+    options.category = 'geometry';
+    options.parameters = options.parameters || {
+      radius: 0,
+      height: 0,
+    };
+    GeomNode.prototype.constructor.call(this, options);
+  }
+
+  _.extend(Cylinder.prototype, GeomNode.prototype);
+
+  Cylinder.prototype.getExpressions = function() {
+    return _.extend({
+      'radius' : this.parameters.radius,
+      'height' : this.parameters.height,
+    }, getCommonExpressions(this));
+  }
+
+  Cylinder.prototype.validateSchema = function() {
+    if (this.parameters === undefined) {
+      return {parameters: 'missing'}
+    }
+    return {};
+  }
+
   // ---------- Extrude ----------
 
   var Extrude = function(options) {
@@ -397,6 +426,7 @@ define([
     Polyline       : Polyline,
     Cube           : Cube,
     Sphere         : Sphere,
+    Cylinder       : Cylinder,
     Extrude        : Extrude,
     Union          : Union,
     Subtract       : Subtract,
@@ -408,6 +438,7 @@ define([
       'polyline' : Polyline,
       'cube'     : Cube,
       'sphere'   : Sphere,
+      'cylinder' : Cylinder,
       'extrude'  : Extrude,
       'union'    : Union,
       'subtract' : Subtract,
