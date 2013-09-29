@@ -313,9 +313,9 @@ define([
 
     updateFromDOM: function() {
       GeomVertexMV.EditingDOMView.prototype.updateFromDOM.call(this);
-      ['radius', 'heiht'].forEach(function(key) {
+      ['radius', 'height'].forEach(function(key) {
         try {
-          var expression = that.$el.find('.field.' + key).val();
+          var expression = this.$el.find('.field.' + key).val();
           this.model.vertex.parameters[key] = expression;
         } catch(e) {
           console.error(e);
