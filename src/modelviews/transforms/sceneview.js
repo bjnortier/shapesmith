@@ -1,14 +1,12 @@
 define([
     'backbone',
     'calculations',
-    'settings',
     'scene',
     'scenevieweventgenerator',
     'geometrygraphsingleton',
   ], function(
     Backbone, 
     calc,
-    settings,
     sceneModel,
     sceneViewEventGenerator,
     geometryGraph) {

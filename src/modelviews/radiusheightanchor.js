@@ -3,9 +3,9 @@ define([
   'scene',
   'geometrygraphsingleton',
   'settings',
-  'modelviews/workplaneMV',
   'modelviews/geomvertexMV',
-  ], function(calc, sceneModel, geometryGraph, settings, WorkplaneMV, GeomVertexMV) {
+  'modelviews/currentworkplane'
+  ], function(calc, sceneModel, geometryGraph, settings, GeomVertexMV, currentWorkplane) {
 
   var EditingHeightAnchor = GeomVertexMV.EditingSceneView.extend({
 
@@ -141,7 +141,7 @@ define([
       // Back into local coordinates
       var positionOnNormalInLocalCoords = 
         calc.rotateAroundAxis(absolutePositionOnNormal, workplaneAxis, -workplaneAngle);
-      var grid = settings.get('gridsize');
+      var grid = currentWorkplane.getGridSize();
       var h = positionOnNormalInLocalCoords.z - rayOrigin.z;
       this.model.vertex.parameters[this.heightKey] = 
         Math.round(parseFloat(h/grid))*grid;

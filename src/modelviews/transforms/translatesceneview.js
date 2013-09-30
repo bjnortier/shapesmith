@@ -1,20 +1,20 @@
 define([
     'calculations',
-    'settings',
     'asyncAPI',
     'scene',
     'geometrygraphsingleton',
     './sceneview',
     'modelviews/modelgraph',
+    'modelviews/currentworkplane',
   ],
   function(
     calc,
-    settings, 
     AsyncAPI, 
     sceneModel,
     geometryGraph,
     TransformSceneView,
-    modelGraph) {
+    modelGraph,
+    currentWorkplane) {
 
     var TranslateSceneView = TransformSceneView.extend({
 
@@ -123,7 +123,7 @@ define([
         var positionOnNormalInLocalCoords = 
           calc.rotateAroundAxis(absolutePositionOnNormal, workplaneAxis, -workplaneAngle);
         positionOnNormalInLocalCoords.sub(workplaneOrigin);
-        var grid = settings.get('gridsize');
+        var grid = currentWorkplane.getGridSize();
 
         this.arrow.position = positionOnNormalInLocalCoords;
         this.arrow.position.z -= 2*this.cameraScale.z;

@@ -31,7 +31,7 @@ define([
     } else if (settings.get('snapfaces') && facePosition) {
       return facePosition;
     } else if (settings.get('snapgrid')) {
-      return round(workplanePosition,settings.get('gridsize'));
+      return round(workplanePosition, currentWorkplane.getGridSize());
     } else {
       return round(workplanePosition, 0.001)
     }

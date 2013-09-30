@@ -2,10 +2,9 @@ define([
   'calculations',
   'scene',
   'geometrygraphsingleton',
-  'settings',
-  'modelviews/workplaneMV',
+  'modelviews/currentworkplane',
   'modelviews/geomvertexMV',
-  ], function(calc, sceneModel, geometryGraph, settings, WorkplaneMV, GeomVertexMV) {
+  ], function(calc, sceneModel, geometryGraph, currentWorkplane, GeomVertexMV) {
 
   var ZAnchor = GeomVertexMV.EditingSceneView.extend({
 
@@ -119,7 +118,7 @@ define([
         var h = positionOnNormalInLocalCoords.z - this.rayOrigin.z;
       }
 
-      var grid = settings.get('gridsize');
+      var grid = currentWorkplane.getGridSize();
       this.origin.z = this.rayOrigin.z + Math.round(parseFloat(h/grid))*grid;
 
       this.vertex.trigger('change', this.vertex);

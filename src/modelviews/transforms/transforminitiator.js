@@ -10,7 +10,7 @@ define([
     'modelviews/transforms/scalesceneview',
     'modelviews/transforms/uvwrotationsceneviews',
     'calculations',
-    'settings',
+    'modelviews/currentworkplane',
   ], 
   function(
     Backbone, 
@@ -24,7 +24,7 @@ define([
     ScaleSceneView,
     UVWRotationSceneViews,
     calc,
-    settings) {
+    currentWorkplane) {
 
     var Model = Backbone.Model.extend({
 
@@ -71,7 +71,7 @@ define([
           this.selectedModel = undefined;
         }
       },
-
+ 
       dragStarted: function() {
         this.sceneViews.forEach(function(view) {
           view.remove();
@@ -98,7 +98,7 @@ define([
           this.initialPosition = position;
         }
         var diff = new THREE.Vector3().subVectors(position, this.initialPosition);
-        var grid = settings.get('gridsize');
+        var grid = currentWorkplane.getGridSize();
         var translation = new THREE.Vector3(Math.round(diff.x/grid) * grid,
                                             Math.round(diff.y/grid) * grid,
                                             Math.round(diff.z/grid) * grid);

@@ -6,7 +6,6 @@ define([
     'interactioncoordinator', 
     'modelviews/currentworkplane',
     'scene',
-    'settings',
     'geomnode',
     'geometrygraphsingleton',
     'modelviews/vertexMV',
@@ -25,7 +24,6 @@ define([
     coordinator, 
     currentWorkplane,
     sceneModel,
-    settings,
     geomNode,
     geometryGraph,
     VertexMV,
@@ -90,7 +88,6 @@ define([
 
       currentWorkplane.set(this);
 
-      settings.on('change:gridsize', this.gridSizeChanged, this);
       coordinator.on('mousemove', this.mousemove, this);
       coordinator.on('sceneClick', this.workplaneClick, this);
       coordinator.on('sceneDblClick', this.workplaneDblClick, this);
@@ -107,7 +104,6 @@ define([
 
     destroy: function() {
       VertexMV.DisplayModel.prototype.destroy.call(this);
-      settings.off('change:gridsize', this.gridSizeChanged, this);
       coordinator.off('mousemove', this.mousemove, this);
       coordinator.off('sceneClick', this.workplaneClick, this);
       coordinator.off('sceneDblClick', this.workplaneDblClick, this);
@@ -226,11 +222,12 @@ define([
 
     render: function() {
       var template = 
-        '<div>' + 
+        '<div class="planes">' + 
           '<input type="button" name="xy" value="XY"/>' + 
           '<input type="button" name="yz" value="YZ"/>' + 
           '<input type="button" name="zx" value="ZX"/>' +
         '</div>' +
+        '<div>grid size:<input class="field gridsize" type="text"/></div>' +
         '<div>origin</div>' +   
         '<div>' +
           'x <input class="field originx" type="text" value="{{origin.x}}"></input>' +
@@ -246,6 +243,7 @@ define([
         '<div>angle <input class="field angle" type="text" value="{{angle}}"></input></div>';
       var workplane = this.model.vertex.workplane;
       var view = {
+        gridsize: this.model.vertex.parameters.gridsize,
         origin : workplane.origin,
         axis: workplane.axis,
         angle: workplane.angle,
@@ -303,24 +301,27 @@ define([
     },
 
     update: function() {
-      var parameters = this.model.vertex.workplane;
+      var parameters = this.model.vertex.parameters;
+      var workplane = this.model.vertex.workplane;
       ['x', 'y', 'z'].forEach(function(key) {
-        this.$el.find('.origin' + key).val(parameters.origin[key]);
-        this.$el.find('.axis' + key).val(parameters.axis[key]);
+        this.$el.find('.origin' + key).val(workplane.origin[key]);
+        this.$el.find('.axis' + key).val(workplane.axis[key]);
       }, this);
-      this.$el.find('.angle').val(parameters.angle);
+      this.$el.find('.angle').val(workplane.angle);
+      this.$el.find('.gridsize').val(parameters.gridsize)
     },
 
     updateFromDOM: function() {
-      var parameters = this.model.vertex.workplane;
+      var parameters = this.model.vertex.parameters;
+      var workplane = this.model.vertex.workplane;
       ['x', 'y', 'z'].forEach(function(key) {
         var expression;
         try {
           expression = this.$el.find('.field.origin' + key).val();
-          parameters.origin[key] = expression;
+          workplane.origin[key] = expression;
 
           expression = this.$el.find('.field.axis' + key).val();
-          parameters.axis[key] = expression;
+          workplane.axis[key] = expression;
 
         } catch(e) {
           console.error(e);
@@ -329,7 +330,14 @@ define([
 
       try {
         var expression = this.$el.find('.field.angle').val();
-        parameters.angle = expression;
+        workplane.angle = expression;
+      } catch(e) {
+        console.error(e);
+      }
+
+      try {
+        var expression = this.$el.find('.field.gridsize').val();
+        parameters.gridsize = expression;
       } catch(e) {
         console.error(e);
       }
@@ -356,7 +364,7 @@ define([
     render: function() {
       VertexMV.SceneView.prototype.render.call(this);
 
-      var grid = settings.get('gridsize');
+      var grid = this.model.vertex.parameters.gridsize;
       var boundary = Math.floor(grid*10)*10;
 
       var majorGridLineGeometry = new THREE.Geometry();

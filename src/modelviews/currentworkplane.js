@@ -1,18 +1,23 @@
-define([], function() {
+define(['geometrygraphsingleton'], function(geometryGraph) {
 
-  var workplaneVertex;
+  var workplaneModel;
 
-  var set = function(newWorkplaneVertex) {
-    workplaneVertex = newWorkplaneVertex;
-  }
+  var set = function(newWorkplaneModel) {
+    workplaneModel = newWorkplaneModel;
+  };
 
   var get = function() {
-    return workplaneVertex;
-  }
+    return workplaneModel;
+  };
+
+  var getGridSize = function() {
+    return geometryGraph.evaluate(workplaneModel.vertex.parameters.gridsize);
+  };
 
   return {
     get: get,
     set: set,
+    getGridSize: getGridSize,
   }
 
 });

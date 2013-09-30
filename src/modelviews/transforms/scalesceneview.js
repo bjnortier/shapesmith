@@ -1,6 +1,5 @@
 define([
     'calculations',
-    'settings',
     'asyncAPI',
     'scene',
     'geometrygraphsingleton',
@@ -9,7 +8,6 @@ define([
   ],
   function(
     calc,
-    settings, 
     AsyncAPI, 
     sceneModel,
     geometryGraph,

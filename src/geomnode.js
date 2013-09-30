@@ -141,6 +141,7 @@ define([
   var Workplane = function(options) {
     var options = options || {};
     options.type = 'workplane';
+    options.parameters = options.parameters || {gridsize: 1.0};
     GeomNode.prototype.constructor.call(this, options);
   }
 
@@ -148,6 +149,7 @@ define([
 
   var getCommonExpressions = function(vertex) { 
     return {
+
       'workplane.origin.x' : vertex.workplane.origin.x,
       'workplane.origin.y' : vertex.workplane.origin.y,
       'workplane.origin.z' : vertex.workplane.origin.z,
@@ -176,7 +178,10 @@ define([
   };
 
   Workplane.prototype.getExpressions = function() {
-    return getCommonExpressions(this);
+    return _.extend(
+      getCommonExpressions(this), {
+        'parameters.gridsize' : this.parameters.gridsize,
+      });
   }
 
 

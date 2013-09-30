@@ -258,6 +258,16 @@ input.field[type="text"] {
   right: 20px;
   top: 20px;
 }
+#workplane-settings .planes input {
+  background-color: #636363;
+  border: none;
+  color: white;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
 #workplane-settings .icon32 svg {
   fill: #eee;
   stroke: #999;
