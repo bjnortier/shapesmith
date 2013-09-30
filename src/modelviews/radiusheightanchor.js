@@ -69,13 +69,11 @@ define([
       this.pointSceneObject.rotation.x = heightParameterValue >= 0 ? Math.PI/2 : 3*Math.PI/2;
       this.sceneObject.add(this.pointSceneObject);
 
-      if (this.showHeightLine) {
-        var lineGeometry = new THREE.Geometry();
-        lineGeometry.vertices.push(this.heightBasePosition.clone().setZ(-1000));
-        lineGeometry.vertices.push(this.heightBasePosition.clone().setZ(1000));
-        var line = new THREE.Line(lineGeometry, new THREE.LineBasicMaterial({color: 0xff6666}));
-        this.sceneObject.add(line);
-      }
+      var lineGeometry = new THREE.Geometry();
+      lineGeometry.vertices.push(this.heightBasePosition.clone().setZ(-1000));
+      lineGeometry.vertices.push(this.heightBasePosition.clone().setZ(1000));
+      var line = new THREE.Line(lineGeometry, new THREE.LineBasicMaterial({color: 0xff6666}));
+      this.sceneObject.add(line);
 
     },
 
@@ -92,12 +90,10 @@ define([
     },
 
     dragStarted: function() {
-      this.showHeightLine = true;
       this.originPosition = calc.objToVector(this.origin.parameters.coordinate, geometryGraph, THREE.Vector3);
     },
 
     dragEnded: function() {
-      this.showHeightLine = false;
       this.model.vertex.trigger('change', this.model.vertex);
     },
 

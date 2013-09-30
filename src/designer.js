@@ -6,6 +6,7 @@ define([
     'modelviews/cubeMV',
     'modelviews/sphereMV',
     'modelviews/cylinderMV',
+    'modelviews/coneMV',
     'modelviews/booleanMV',
     'modelviews/modelgraph',
     'modelviews/transforms/transforminitiator',
@@ -19,6 +20,7 @@ define([
     'toolbars/cubeitemmodel',
     'toolbars/sphereitemmodel',
     'toolbars/cylinderitemmodel',
+    'toolbars/coneitemmodel',
     'toolbars/unionitemmodel',
     'toolbars/subtractitemmodel',
     'toolbars/intersectitemmodel',
@@ -34,6 +36,7 @@ define([
         CubeMV,
         SphereMV,
         CylinderMV,
+        ConeMV,
         BooleanMV,
         modelgraph,
         transformInitiator,
@@ -47,6 +50,7 @@ define([
         CubeItemModel,
         SphereItemModel,
         CylinderItemModel,
+        ConeItemModel,
         UnionItemModel,
         SubtractItemModel,
         IntersectItemModel,
@@ -63,6 +67,7 @@ define([
         modelgraph.addWrapper('cube', CubeMV);
         modelgraph.addWrapper('sphere', SphereMV);
         modelgraph.addWrapper('cylinder', CylinderMV);
+        modelgraph.addWrapper('cone', ConeMV);
         modelgraph.addWrapper('union', BooleanMV);
         modelgraph.addWrapper('subtract', BooleanMV);
         modelgraph.addWrapper('intersect', BooleanMV);
@@ -71,6 +76,7 @@ define([
         geomToolbar.addItem(new CubeItemModel());
         geomToolbar.addItem(new SphereItemModel());
         geomToolbar.addItem(new CylinderItemModel());
+        geomToolbar.addItem(new ConeItemModel());
         geomToolbar.addItem(new UnionItemModel());
         geomToolbar.addItem(new IntersectItemModel());
         geomToolbar.addItem(new SubtractItemModel());

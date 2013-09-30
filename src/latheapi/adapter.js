@@ -130,6 +130,15 @@ define([
           }, performCallback);
         }
         break;
+      case 'cone':
+        var normalized = Normalize.normalizeVertex(vertex);
+        var sha = SHA1Hasher.hash(normalized);
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            return Lathe.createCone(sha, normalized, normalized.transforms, normalized.workplane);
+          }, performCallback);
+        }
+        break;
       case 'cube':
         var normalized = Normalize.normalizeVertex(vertex);
         var sha = SHA1Hasher.hash(normalized);

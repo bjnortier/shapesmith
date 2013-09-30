@@ -97,11 +97,11 @@ define([
 
   };
 
-  var normalizeCylinder = function(sphere) {
-    var points = geometryGraph.childrenOf(sphere);
+  var normalizeCylinder = function(cylinder) {
+    var points = geometryGraph.childrenOf(cylinder);
     var center = calc.objToVector(points[0].parameters.coordinate, geometryGraph, THREE.Vector3);
-    var radius = geometryGraph.evaluate(sphere.parameters.radius);
-    var height = geometryGraph.evaluate(sphere.parameters.height);
+    var radius = geometryGraph.evaluate(cylinder.parameters.radius);
+    var height = geometryGraph.evaluate(cylinder.parameters.height);
 
     return {
       x: center.x, 
@@ -109,10 +109,14 @@ define([
       z: center.z,
       r: radius,
       h: height,
-      transforms: normalizeTransforms(sphere.transforms),
-      workplane: normalizeWorkplane(sphere.workplane),
+      transforms: normalizeTransforms(cylinder.transforms),
+      workplane: normalizeWorkplane(cylinder.workplane),
     };
 
+  };
+
+  var normalizeCone = function(cone) {
+    return normalizeCylinder(cone);
   };
 
   var normalizeBoolean = function(boolean) {
@@ -130,8 +134,10 @@ define([
         return normalizeCube(vertex);
       case 'sphere':
         return normalizeSphere(vertex);
-        case 'cylinder':
+      case 'cylinder':
         return normalizeCylinder(vertex);
+      case 'cone':
+        return normalizeCone(vertex);
       case 'union':
       case 'subtract':
       case 'intersect':

@@ -339,6 +339,35 @@ define([
     return {};
   }
 
+// ----------- Cone ---------- 
+
+  var Cone = function(options) {
+    var options = options || {};
+    options.type = 'cone';
+    options.category = 'geometry';
+    options.parameters = options.parameters || {
+      radius: 0,
+      height: 0,
+    };
+    GeomNode.prototype.constructor.call(this, options);
+  }
+
+  _.extend(Cone.prototype, GeomNode.prototype);
+
+  Cone.prototype.getExpressions = function() {
+    return _.extend({
+      'radius' : this.parameters.radius,
+      'height' : this.parameters.height,
+    }, getCommonExpressions(this));
+  }
+
+  Cone.prototype.validateSchema = function() {
+    if (this.parameters === undefined) {
+      return {parameters: 'missing'}
+    }
+    return {};
+  }
+
   // ---------- Extrude ----------
 
   var Extrude = function(options) {
@@ -427,6 +456,7 @@ define([
     Cube           : Cube,
     Sphere         : Sphere,
     Cylinder       : Cylinder,
+    Cone           : Cone,
     Extrude        : Extrude,
     Union          : Union,
     Subtract       : Subtract,
@@ -439,6 +469,7 @@ define([
       'cube'     : Cube,
       'sphere'   : Sphere,
       'cylinder' : Cylinder,
+      'cone'     : Cone,
       'extrude'  : Extrude,
       'union'    : Union,
       'subtract' : Subtract,

@@ -26,12 +26,22 @@ requirejs([
     'lathe/primitives/cube',
     'lathe/primitives/sphere',
     'lathe/primitives/cylinder',
+    'lathe/primitives/cone',
     'lathe/primitives/union3d',
     'lathe/primitives/subtract3d',
     'lathe/primitives/intersect3d',
     'lathe/conv',
   ],
-  function(BSP, Cube, Sphere, Cylinder, Union3D, Subtract3D, Intersect3D, Conv) {
+  function(
+    BSP,
+    Cube,
+    Sphere,
+    Cylinder,
+    Cone,
+    Union3D,
+    Subtract3D,
+    Intersect3D,
+    Conv) {
 
     var infoHandler = function(a,b,c,d) {
       postMessage({info: [a,b,c,d].join('')});
@@ -112,6 +122,9 @@ requirejs([
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cylinder) {
         var bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 20).bsp, e.data.transforms, e.data.workplane);
+        returnResult(e.data.id, e.data.sha, bsp);
+      } else if (e.data.cone) {
+        var bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 20).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cube) {
         var bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
