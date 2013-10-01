@@ -12,13 +12,14 @@ define([
         name: 'designs',
 
         initialize: function() {
-            this.icon = icons.list;
             Toolbar.ItemModel.prototype.initialize.call(this);
         },
 
         click: function() {
             window.location = '/_ui/' + globals.user + '/designs';
         },
+
+        icon: icons.list,
 
     });
 

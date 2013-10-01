@@ -26,7 +26,7 @@ define([
   'toolbars/intersectitemmodel',
   'toolbars/saveitemmodel',
   'toolbars/exititemmodel',
-  'toolbars/exportobjitemmodel',
+  'toolbars/exportstlitemmodel',
   ], function(
     VariableMV,
     WorkplaneMV,
@@ -55,7 +55,7 @@ define([
     IntersectItemModel,
     SaveItemModel,
     ExitItemModel,
-    ExportOBJItemModel) {
+    ExportSTLItemModel) {
 
   var init = function() {
 
@@ -81,9 +81,9 @@ define([
 
     var expander = new Toolbar.ExpanderItem();
     mainToolbar.addItem(new SaveItemModel());
+    mainToolbar.addItem(new ExportSTLItemModel()); 
     mainToolbar.addItem(new ExitItemModel());
-    mainToolbar.addItem(expander);
-    mainToolbar.addItem(new ExportOBJItemModel()); 
+    // mainToolbar.addItem(expander);
     expander.toggle();
 
   }

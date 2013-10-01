@@ -14,7 +14,7 @@ define([
     name: 'save',
 
     initialize: function() {
-      this.icon = icons.save;
+      
       Toolbar.ItemModel.prototype.initialize.call(this);
     },
 
@@ -43,6 +43,8 @@ define([
         }
       });
     },
+
+    icon: icons.save,
 
   });
 

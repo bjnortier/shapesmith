@@ -15,8 +15,6 @@ define([
 
   });
 
-
-
   return Model;
 
 });

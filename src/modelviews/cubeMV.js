@@ -311,19 +311,19 @@ define([
     },
 
     updateHint: function() {
-      if (this.vertex.proto) {
-        switch(this.stage) {
-          case 0: 
-            this.hintView.set('Click to add a corner.');
-            break;
-          case 1:
-            this.hintView.set('Click to add a corner diagonally opposite.');
-            break;
-          case 2:
-            this.hintView.set('Click to set the height.');
-            break;
-        }
-      }
+      // if (this.vertex.proto) {
+      //   switch(this.stage) {
+      //     case 0: 
+      //       this.hintView.set('Click to add a corner.');
+      //       break;
+      //     case 1:
+      //       this.hintView.set('Click to add a corner diagonally opposite.');
+      //       break;
+      //     case 2:
+      //       this.hintView.set('Click to set the height.');
+      //       break;
+      //   }
+      // }
     },
 
   });
