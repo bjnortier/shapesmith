@@ -121,10 +121,10 @@ requirejs([
         var bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cylinder) {
-        var bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 20).bsp, e.data.transforms, e.data.workplane);
+        var bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 24).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cone) {
-        var bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 20).bsp, e.data.transforms, e.data.workplane);
+        var bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 24).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cube) {
         var bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
