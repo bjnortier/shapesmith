@@ -152,6 +152,9 @@ input.field[type="text"] {
 #geometry .vertex .vertex {
   margin-left: 10px;
 }
+#geometry .vertex .vertex .delete {
+  display: none;
+}
 #geometry .vertex > .title > .actions,
 #geometry .vertex > .title > .dive {
   display: inline-block;
@@ -182,6 +185,9 @@ input.field[type="text"] {
 }
 #geometry .vertex .delete:hover {
   color: red;
+}
+#geometry .vertex .copy:hover {
+  color: green;
 }
 #geometry .vertex .showhide:hover {
   color: blue;

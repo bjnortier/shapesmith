@@ -190,6 +190,9 @@ input.field[type="text"] {
   .vertex {
     .vertex {
       margin-left: 10px;
+      .delete {
+        display: none;
+      }
     }
     background-color: rgba(255,255,255,0);
     >.title {
@@ -224,6 +227,7 @@ input.field[type="text"] {
       }
     }
     .delete   { &:hover { color: red; } }
+    .copy   { &:hover { color: green; } }
     .showhide { &:hover { color: blue; } }
     .ascend { display: none; }
     .dive, .ascend { &:hover { color: rgb(83, 167, 44); } }

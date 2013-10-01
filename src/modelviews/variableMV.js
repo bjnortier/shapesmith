@@ -36,7 +36,7 @@ define([
       VertexMV.EditingModel.prototype.initialize.call(this, original, vertex);
       this.domView = new EditingView({model: this});
       this.views.push(this.domView);
-      this.views.push(new SliderView({model: this}));
+      // this.views.push(new SliderView({model: this}));
       coordinator.on('sceneClick', this.tryCommit, this);
     },
 

@@ -109,7 +109,6 @@ define([
 
   }
 
-
   var tryCommitReplace = function(originalVertices, editingVertices) {
     var allOk = true;
     editingVertices.forEach(function(v) {
@@ -166,6 +165,39 @@ define([
     return commit([]);
 
   }
+
+  var tryCommitCopy = function(originalVertex) {
+    var newVertex = originalVertex.copy();
+    var newVertices = [newVertex];
+
+    var copyChildren = function(originalParent, newParent) {
+      var newChildren = geometryGraph.childrenOf(originalParent).map(function(originalChild) {
+        var newChild;
+        if (originalChild.category === 'geometry') {
+          newChild = originalChild.copy();
+        } else if (originalChild.type === 'variable') {
+          newChild = originalChild;
+        } else {
+          throw new Error('unknown type:' + child.type);
+        }
+
+        copyChildren(originalChild, newChild);
+        return newChild;
+      });
+        
+      geometryGraph.add(newParent, function() {
+        newChildren.forEach(function(child) {
+          geometryGraph.addEdge(newParent, child);
+        });
+      });
+
+      newVertices.concat(newChildren);
+    }
+
+    copyChildren(originalVertex, newVertex);
+
+    return commit(newVertices);
+  };
 
   var commitLayerTree = function(oldlayerTreeObj, newlayerTreeObj) {
     geometryGraph.setMetadata(newlayerTreeObj); 
@@ -228,18 +260,19 @@ define([
   }
 
   return {
-    defaultVertices  : defaultVertices,
-    edit       : edit,
-    commit       : commit,
-    tryCommitEdit  : tryCommitEdit,
-    tryCommitReplace : tryCommitReplace,
-    tryCommitAdd   : tryCommitAdd,
-    tryCommitCreate  : tryCommitCreate,
-    tryCommitDelete  : tryCommitDelete,
-    commitLayerTree  : commitLayerTree,
-    cancelEdit     : cancelEdit,
-    cancelCreate   : cancelCreate,
-    loadFromCommit   : loadFromCommit,
+    defaultVertices : defaultVertices,
+    edit            : edit,
+    commit          : commit,
+    tryCommitEdit   : tryCommitEdit,
+    tryCommitReplace: tryCommitReplace,
+    tryCommitAdd    : tryCommitAdd,
+    tryCommitCreate : tryCommitCreate,
+    tryCommitDelete : tryCommitDelete,
+    tryCommitCopy   : tryCommitCopy,
+    commitLayerTree : commitLayerTree,
+    cancelEdit      : cancelEdit,
+    cancelCreate    : cancelCreate,
+    loadFromCommit  : loadFromCommit,
   }
 
 });

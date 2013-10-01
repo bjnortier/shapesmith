@@ -454,6 +454,11 @@ define([
         selection.deselectAll();
       },
 
+      tryCopy: function() {
+        AsyncAPI.tryCommitCopy(this.vertex);
+        selection.deselectAll();
+      },
+
     });
 
     var DisplayDOMView = Backbone.View.extend({

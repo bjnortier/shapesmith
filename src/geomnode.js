@@ -117,6 +117,18 @@ define([
     return newNode;
   }
 
+  GeomNode.prototype.copy = function() {
+    var copyOptions = {
+      type        : this.type, 
+      implicit    : this.implicit,
+      transforms  : calc.copyObj(this.transforms),
+      workplane   : calc.copyObj(this.workplane),
+      parameters  : calc.copyObj(this.parameters),
+      inContext   : this.inContext,
+    };
+    return new this.constructor(copyOptions);
+  };
+
   GeomNode.prototype.validateSchema = function() {
     return {};
   }

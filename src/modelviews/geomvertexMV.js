@@ -570,9 +570,9 @@ define([
           //     '<div>z <input class="field workplane.origin.z" type="text" value="{{workplane.origin.z}}"></input></div>' +     
           //   '</div>' +
           // '</div>' +
-          '<div>centerx <input class="field centerx" type="text" value="{{center.x}}"></input></div>' +
-          '<div>centery <input class="field centery" type="text" value="{{center.y}}"></input></div>' +
-          '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' + 
+          // '<div>centerx <input class="field centerx" type="text" value="{{center.x}}"></input></div>' +
+          // '<div>centery <input class="field centery" type="text" value="{{center.y}}"></input></div>' +
+          // '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' + 
           '<div>axisx <input class="field axisx" type="text" value="{{axis.x}}"></input></div>' +
           '<div>axisy <input class="field axisy" type="text" value="{{axis.y}}"></input></div>' +
           '<div>axisz <input class="field axisz" type="text" value="{{axis.z}}"></input></div>' + 
@@ -742,10 +742,9 @@ define([
               '<div class="icon24" style="fill: {{color}}; stroke: {{color}};">{{{icon}}}</div>' +
               '<div class="name">{{name}}</div>' + 
               '<div class="actions">' +
-                '{{#isTopLevel}}' +
                 // '<i class="showhide icon-eye-open"></i>' +
-                '<i class="delete icon-remove"></i>' +
-                '{{/isTopLevel}}' +
+                '<i title="delete" class="delete icon-remove"></i>' +
+                '<i title="copy" class="copy icon-copy"></i>' +
               '</div>' +
             '</div>' +
             '<div class="children {{id}}"></div>';
@@ -771,6 +770,7 @@ define([
         'dblclick > .title .name': 'dblclickTitle',
         'dblclick > .title .icon24': 'dblclickTitle',
         'click > .title > .actions > .delete'  : 'delete',
+        'click > .title > .actions > .copy'  : 'copy',
         'click > .title > .dive'  : 'clickDive',
         'click > .title > .ascend'  : 'clickAscend',
       },
@@ -830,6 +830,11 @@ define([
       delete: function(event) {
         event.stopPropagation();
         this.model.tryDelete();
+      },
+
+      copy: function(event) {
+        event.stopPropagation();
+        this.model.tryCopy();
       },
 
     });
