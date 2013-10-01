@@ -155,7 +155,8 @@ define([
     },
 
     isDraggable: function() {
-      return true;
+      // Allow rotating when creating a new object
+      return !this.model.vertex.proto;
     },
 
     dragStarted: function() {
