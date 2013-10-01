@@ -199,6 +199,21 @@ input.field[type="text"] {
 #geometry .vertex .ascend:hover {
   color: #53a72c;
 }
+#geometry .vertex .transforms .expander {
+  padding-right: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+#geometry .vertex .transforms .expander i.arrow {
+  margin-right: 5px;
+}
+#geometry .vertex .transforms .expander i.clear {
+  margin-left: 5px;
+}
+#geometry .vertex .transforms .expander i.clear:hover {
+  color: red;
+}
 #geometry .vertex.dived > .title {
   /*>.icon24 {
         fill: #eee;

@@ -78,12 +78,11 @@ define([
 
       render: function() {
         GeomVertexMV.EditingDOMView.prototype.render.call(this);
-        var template = 
-          this.beforeTemplate +
-          '<div>dx<input class="field dx" type="text" value="{{dx}}"></input></div>' +
-          '<div>dy<input class="field dy" type="text" value="{{dy}}"></input></div>' +
-          '<div>dz<input class="field dz" type="text" value="{{dz}}"></input></div>' + 
-          this.afterTemplate;
+        var translationHtml = '<div class="parameter">dx<input class="field dx" type="text" value="{{dx}}"></input></div>' +
+          '<div class="parameter">dy<input class="field dy" type="text" value="{{dy}}"></input></div>' +
+          '<div class="parameter">dz<input class="field dz" type="text" value="{{dz}}"></input></div>';
+        var template = this.beforeTemplate + this.afterTemplate;
+        template = template.replace('icon-remove"></i></div>', 'icon-remove"></i></div>' + translationHtml);
 
         var translation = this.model.vertex.transforms.translation;
         var view = _.extend(this.baseView, {

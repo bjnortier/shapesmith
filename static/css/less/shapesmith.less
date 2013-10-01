@@ -231,6 +231,23 @@ input.field[type="text"] {
     .showhide { &:hover { color: blue; } }
     .ascend { display: none; }
     .dive, .ascend { &:hover { color: rgb(83, 167, 44); } }
+    .transforms {
+      .expander {
+        padding-right: 5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        cursor: pointer;
+        i.arrow {
+          margin-right: 5px;
+        }
+        i.clear {
+          margin-left: 5px;
+          &:hover {
+            color: red;
+          }
+        }
+      }
+    }
   }
   .vertex.dived {
     >.title {

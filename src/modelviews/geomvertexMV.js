@@ -544,7 +544,7 @@ define([
         } else if (options.replaceDomElement) {
           options.replaceDomElement.replaceWith(this.$el);
         }
-        
+        this.toggleTransforms();
       },
 
       render: function() {
@@ -570,14 +570,17 @@ define([
           //     '<div>z <input class="field workplane.origin.z" type="text" value="{{workplane.origin.z}}"></input></div>' +     
           //   '</div>' +
           // '</div>' +
-          // '<div>centerx <input class="field centerx" type="text" value="{{center.x}}"></input></div>' +
-          // '<div>centery <input class="field centery" type="text" value="{{center.y}}"></input></div>' +
-          // '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' + 
-          '<div>axisx <input class="field axisx" type="text" value="{{axis.x}}"></input></div>' +
-          '<div>axisy <input class="field axisy" type="text" value="{{axis.y}}"></input></div>' +
-          '<div>axisz <input class="field axisz" type="text" value="{{axis.z}}"></input></div>' + 
-          '<div>angle <input class="field angle" type="text" value="{{angle}}"></input></div>' +
-          '<div>scale <input class="field scale" type="text" value="{{scale}}"></input></div>';
+          '<div class="transforms">' +
+            '<div class="expander"><i class="arrow icon-caret-down"></i>transforms<i class="clear icon-remove"></i></div>' +
+            // '<div>centerx <input class="field centerx" type="text" value="{{center.x}}"></input></div>' +
+            // '<div>centery <input class="field centery" type="text" value="{{center.y}}"></input></div>' +
+            // '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' + 
+            '<div class="parameter">axisx <input class="field axisx" type="text" value="{{axis.x}}"></input></div>' +
+            '<div class="parameter">axisy <input class="field axisy" type="text" value="{{axis.y}}"></input></div>' +
+            '<div class="parameter">axisz <input class="field axisz" type="text" value="{{axis.z}}"></input></div>' + 
+            '<div class="parameter">angle <input class="field angle" type="text" value="{{angle}}"></input></div>' +
+            '<div class="parameter">scale <input class="field scale" type="text" value="{{scale}}"></input></div>' +
+          '</div>';
 
         var rotation = this.model.vertex.transforms.rotation;
         // var workplane = this.model.vertex.workplane;
@@ -603,8 +606,44 @@ define([
         };
       },
 
+      events: function() {
+        var vertexEvents = VertexMV.EditingDOMView.prototype.events.call(this);
+        return _.extend(vertexEvents, {
+          'click .transforms .expander' : 'toggleTransforms',
+          'click .transforms .clear' : 'clearTransforms',
+        });
+      },
+
       remove: function() {
         VertexMV.EditingDOMView.prototype.remove.call(this);
+      },
+
+      toggleTransforms: function(event) {
+        if (event) {
+          event.stopPropagation();
+        }
+        this.$el.find('.transforms .parameter').toggle();
+        var toggleIcon = this.$el.find('.transforms i.arrow');
+        if (toggleIcon.hasClass('icon-caret-right')) {
+          toggleIcon.removeClass('icon-caret-right');
+          toggleIcon.addClass('icon-caret-down');
+        } else {
+          toggleIcon.removeClass('icon-caret-down');
+          toggleIcon.addClass('icon-caret-right');
+        }
+      },
+
+      clearTransforms: function(event) {
+        event.stopPropagation();
+        this.model.vertex.transforms.translation.x = 0;
+        this.model.vertex.transforms.translation.y = 0;
+        this.model.vertex.transforms.translation.z = 0;
+        this.model.vertex.transforms.rotation.axis.x = 0;
+        this.model.vertex.transforms.rotation.axis.y = 0;
+        this.model.vertex.transforms.rotation.axis.z = 1;
+        this.model.vertex.transforms.rotation.angle = 0;
+        this.model.vertex.transforms.scale.factor = 1;
+        this.model.vertex.trigger('change', this.model.vertex);
       },
 
       update: function() {

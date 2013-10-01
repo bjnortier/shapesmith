@@ -1,5 +1,6 @@
 define([
     'jquery',
+    'underscore',
     'lib/mustache',
     'calculations',
     'worldcursor',
@@ -18,6 +19,7 @@ define([
   ], 
   function(
     $, 
+    _,
     Mustache,
     calc,
     worldCursor,
