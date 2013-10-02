@@ -8,9 +8,9 @@
   <link href="/css/shapesmith.css" rel="stylesheet" type="text/css"/>
 
    <script>
-        var globals = globals || {};
-        globals.user = '{{user}}';
-        globals.design = '{{design}}';
+        var Shapesmith = Shapesmith || {};
+        Shapesmith.user = '{{user}}';
+        Shapesmith.design = '{{design}}';
     </script>
   
   <script data-main="/ui/{{js_environment}}main.ui.js" src="/lib/require-jquery.js"></script>
@@ -23,6 +23,7 @@
   
   <script type="text/javascript" src="/lib/IndexedDBShim.min.js"></script>
   <script type="text/javascript" src="/lib/html5slider.js"></script>
+  <script type="text/javascript" src="/lib/FileSaver.js"></script>
 
 
 </head>

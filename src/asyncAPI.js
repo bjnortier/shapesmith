@@ -256,7 +256,7 @@ define([
     }
     
     // This is for webdriver to determine when things have loaded
-    globals.loadDone = true;
+    Shapesmith.loadDone = true;
   }
 
   return {

@@ -55,7 +55,7 @@ define([
 
     click: function() {
       
-      var stl = 'solid shapesmith\n';
+      var stl = 'solid ' + Shapesmith.design + '\n';
       
       var topModels = objectTree.getTopLevelModels();
       topModels.forEach(function(model) {
@@ -64,7 +64,10 @@ define([
       })
 
       stl += 'endsolid';
-      console.log(stl);
+
+      // https://github.com/eligrey/FileSaver.js
+      var blob = new Blob([stl], {type: 'text/plain;charset=utf-8'});
+      saveAs(blob, Shapesmith.design  + '.stl');
     },
 
     icon: icons['stl'],

@@ -72,7 +72,7 @@ client.addCommand('waitForUrlChange', function(commitFn, callback) {
 
 client.addCommand('waitForMainDone', function(callback) {
     var waitForDoneFn = function() {
-        client.execute('return globals.loadDone', function(result) {
+        client.execute('return Shapesmith.loadDone', function(result) {
             if (result.value === true) {
                 callback();
             } else {
