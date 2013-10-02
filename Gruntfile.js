@@ -26,18 +26,27 @@ module.exports = function(grunt) {
       },
       ui: {
         src: [
-          'src/modelviews/transforms/*.js',
-          'src/modelviews/vertexMV.js',
-          'src/modelviews/geomvertexMV.js',
-          'src/modelviews/booleanMV.js',
-          'src/modelviews/subtractMV.js',
-          'src/modelviews/actionsoverlayMV.js',
+          'src/api/**/*.js',
+          'src/casgraph/**/*.js',
+          'src/inspect/**/*.js',
+          'src/latheapi/**/*.js',
+          'src/layers/**/*.js',
+          'src/modelviews/**/*.js',
+          'src/scripting/**/*.js',
         ],
         options: {
           globals: {
             define: false,
             THREE: false,
             $: false,
+            postMessage: false,
+            indexedDB: false,
+            Worker: false,
+            importScripts: false,
+            self: false,
+            requirejs: false,
+            dat: false,
+            Stats: false,
           },
         },
       },
@@ -54,6 +63,10 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      gruntfile: {
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
+      },
       ui: {
         files: '<%= jshint.ui.src %>',
         tasks: ['jshint:ui']
@@ -80,8 +93,8 @@ module.exports = function(grunt) {
       },
       functional: { 
         src: [
-            'test/functional/points.test.js',
-            'test/functional/polylines.test.js',
+          'test/functional/points.test.js',
+          'test/functional/polylines.test.js',
         ],
       },
     },
@@ -104,12 +117,12 @@ module.exports = function(grunt) {
     },
 
     express: {
-        server: {
-          options: {
-            port: 8001,
-            server: path.resolve('./src/api/server.js')
-          }
+      server: {
+        options: {
+          port: 8001,
+          server: path.resolve('./src/api/server.js')
         }
+      }
     },
 
     chmod: {
@@ -131,7 +144,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-chmod');
 
   // Unit testing
-  grunt.registerTask('unit', ['simplemocha:unit']);
+  grunt.registerTask('test', ['jshint', 'simplemocha:unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';

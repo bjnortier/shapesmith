@@ -1,7 +1,5 @@
 importScripts('/lib/require.js');
 
-var worker = self;
-
 requirejs.config({
   baseUrl: "..",
   paths: {
@@ -43,14 +41,6 @@ requirejs([
     Intersect3D,
     Conv) {
 
-    var infoHandler = function(a,b,c,d) {
-      postMessage({info: [a,b,c,d].join('')});
-    }
-    
-    var errorHandler = function(a,b,c,d) {
-      postMessage({error: [a,b,c,d].join('')});
-    }
-
     var returnResult = function(id, sha, bsp) {
       if (!bsp) {
         postMessage({error: 'no BSP for ' + id});
@@ -68,10 +58,10 @@ requirejs([
         sha: sha,
         bsp: BSP.serialize(bsp),
         polygons: polygons,
-      }
+      };
       postMessage(jobResult);
       
-    }
+    };
 
     var applyReverseWorkplane = function(bsp, workplane) {
       if (!((workplane.origin.x === 0) && (workplane.origin.y === 0) && (workplane.origin.z === 0))) {  
@@ -85,7 +75,7 @@ requirejs([
           -workplane.angle/180*Math.PI);
       }
       return bsp;
-    }
+    };
 
     var applyTransformsAndWorkplane = function(bsp, transforms, workplane) {
       if (transforms.translation) {
@@ -112,22 +102,23 @@ requirejs([
         bsp = bsp.translate(workplane.origin.x, workplane.origin.y, workplane.origin.z); 
       }
       return bsp;
-    }
+    };
 
     this.addEventListener('message', function(e) {
 
       // Create new with the arguments
+      var bsp;
       if (e.data.sphere) {
-        var bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cylinder) {
-        var bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 24).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 24).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cone) {
-        var bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 24).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 24).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cube) {
-        var bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.union || e.data.subtract || e.data.intersect) {
 
@@ -135,8 +126,6 @@ requirejs([
         // and each SHA is replaced with the BSP from the DB
         var childBSPs = e.data.union || e.data.subtract || e.data.intersect;
         
-        var remaining = childBSPs.length;
-
         var primitiveBsp = BSP.deserialize(childBSPs[0]);
         for (var i = 1; i < childBSPs.length; ++i) {
           var other = BSP.deserialize(childBSPs[i]);
@@ -148,7 +137,7 @@ requirejs([
             primitiveBsp = new Intersect3D(primitiveBsp, other).bsp;
           }
         }
-        var bsp = applyReverseWorkplane(primitiveBsp, e.data.workplane);
+        bsp = applyReverseWorkplane(primitiveBsp, e.data.workplane);
         bsp = applyTransformsAndWorkplane(bsp, e.data.transforms, e.data.workplane);
 
         returnResult(e.data.id, e.data.sha, bsp);

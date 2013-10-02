@@ -18,6 +18,6 @@ define(['geometrygraphsingleton'], function(geometryGraph) {
     get: get,
     set: set,
     getGridSize: getGridSize,
-  }
+  };
 
 });
