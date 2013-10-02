@@ -277,16 +277,10 @@ define([
 
     updateFromDOM: function() {
       GeomVertexMV.EditingDOMView.prototype.updateFromDOM.call(this);
-      var that = this;
-      ['radius'].forEach(function(key) {
-        try {
-          var expression = that.$el.find('.field.' + key).val();
-          that.model.vertex.parameters[key] = expression;
-        } catch(e) {
-          console.error(e);
-        }
-      });
-      this.model.vertex.trigger('change', this.model.vertex);
+      this.updateFromField(
+        this.$el.find('.field.radius'), 
+        this.model.vertex.parameters, 
+        'radius');
     }
 
   }); 

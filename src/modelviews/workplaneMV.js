@@ -314,35 +314,20 @@ define([
     updateFromDOM: function() {
       var parameters = this.model.vertex.parameters;
       var workplane = this.model.vertex.workplane;
+      var field;
       ['x', 'y', 'z'].forEach(function(key) {
-        var expression;
-        try {
-          expression = this.$el.find('.field.origin' + key).val();
-          workplane.origin[key] = expression;
+        field = this.$el.find('.field.origin' + key);
+        this.updateFromField(field, workplane.origin, key);
 
-          expression = this.$el.find('.field.axis' + key).val();
-          workplane.axis[key] = expression;
-
-        } catch(e) {
-          console.error(e);
-        }
+        field = this.$el.find('.field.axis' + key);
+        this.updateFromField(field, workplane.axis, key);
       }, this);
 
-      try {
-        var expression = this.$el.find('.field.angle').val();
-        workplane.angle = expression;
-      } catch(e) {
-        console.error(e);
-      }
+      field = this.$el.find('.field.angle');
+      this.updateFromField(field, workplane, 'angle');
 
-      try {
-        var expression = this.$el.find('.field.gridsize').val();
-        parameters.gridsize = expression;
-      } catch(e) {
-        console.error(e);
-      }
-      this.model.vertex.trigger('change', this.model.vertex);
-
+      field = this.$el.find('.field.gridsize');
+      this.updateFromField(field, parameters, 'gridsize');
     },
 
   })

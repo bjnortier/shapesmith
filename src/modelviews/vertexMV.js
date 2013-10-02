@@ -409,8 +409,23 @@ define([
       fieldChange: function(event) {
         event.stopPropagation();
         if (this.updateFromDOM) {
+          this.updateFromDOMErrors = false;
           this.updateFromDOM();
-          this.model.vertex.trigger('change', this.model.vertex);
+          if (!this.updateFromDOMErrors) {
+            this.model.vertex.trigger('change', this.model.vertex);
+          }
+        }
+      },
+
+      updateFromField: function(field, obj, key) {
+        var expression = field.val();
+        try {
+          geometryGraph.evaluate(expression);
+          obj[key] = expression;
+          field.removeClass('error');
+        } catch(e) {
+          this.updateFromDOMErrors = true;
+          field.addClass('error');
         }
       },
 

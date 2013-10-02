@@ -97,16 +97,10 @@ define([
     },
 
     updateFromDOM: function() {
-      var that = this;
       ['x', 'y', 'z'].forEach(function(key) {
-        try {
-          var expression = that.$el.find('.field.' + key).val();
-          that.model.vertex.parameters.coordinate[key] = expression;
-        } catch(e) {
-          console.error(e);
-        }
-      });
-      this.model.vertex.trigger('change', this.model.vertex);
+        var field = this.$el.find('.field.' + key);
+        this.updateFromField(field, this.model.vertex.parameters.coordinate, key);
+      }, this);
     }
   });
  

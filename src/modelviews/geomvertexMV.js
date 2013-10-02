@@ -658,20 +658,19 @@ define([
 
       updateFromDOM: function() {
         ['x', 'y', 'z'].forEach(function(key) {
-          try {
-            var expression = this.$el.find('.field.axis' + key).val();
-            this.model.vertex.transforms.rotation.axis[key] = expression;
-          } catch(e) {
-            console.error(e);
-          }
+          var field = this.$el.find('.field.axis' + key);
+          this.updateFromField(field, this.model.vertex.transforms.rotation.axis, key);
         }, this);
-        try {
-          this.model.vertex.transforms.rotation.angle =  this.$el.find('.field.angle').val();
-          this.model.vertex.transforms.scale.factor =  this.$el.find('.field.scale').val();
-        } catch(e) {
-          console.error(e);
-        }
-        
+
+        this.updateFromField(
+          this.$el.find('.field.angle'),
+          this.model.vertex.transforms.rotation,
+          'angle');
+
+        this.updateFromField(
+          this.$el.find('.field.scale'),
+          this.model.vertex.transforms.scale,
+          'factor');
       }
 
     });

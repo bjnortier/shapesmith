@@ -106,18 +106,11 @@ define([
 
       updateFromDOM: function() {
         GeomVertexMV.EditingDOMView.prototype.updateFromDOM.call(this);
-        
-        var that = this;
         var translate = this.model.vertex.transforms.translation;
         ['x', 'y', 'z'].forEach(function(key) {
-          try {
-            var expression = that.$el.find('.field.d' + key).val();
-            translate[key] = expression;
-          } catch(e) {
-            console.error(e);
-          }
-        });
-        this.model.vertex.trigger('change', this.model.vertex);
+          var field = this.$el.find('.field.d' + key);
+          this.updateFromField(field, translate, key);
+        }, this);
       },
 
     });

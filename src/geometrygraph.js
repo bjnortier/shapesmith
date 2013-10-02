@@ -265,9 +265,8 @@ define([
       } catch (e) {
         if (e instanceof variableGraphLib.ParseError) {
           console.error('Exception when evaluating expression', expression, e);
-        } else {
-          throw e;
-        }
+        } 
+        throw e;
       }
     }
 

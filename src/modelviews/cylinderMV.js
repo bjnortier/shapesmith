@@ -314,14 +314,9 @@ define([
     updateFromDOM: function() {
       GeomVertexMV.EditingDOMView.prototype.updateFromDOM.call(this);
       ['radius', 'height'].forEach(function(key) {
-        try {
-          var expression = this.$el.find('.field.' + key).val();
-          this.model.vertex.parameters[key] = expression;
-        } catch(e) {
-          console.error(e);
-        }
+        var field = this.$el.find('.field.' + key);
+        this.updateFromField(field, this.model.vertex.parameters, key);
       }, this);
-      this.model.vertex.trigger('change', this.model.vertex);
     }
 
   }); 
