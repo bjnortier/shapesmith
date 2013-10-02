@@ -84,7 +84,7 @@ define([
     var gatherVariables = function() {
       var vars = {};
       var listener = function(vertex) {
-        if (vertex.type === 'variable') {
+        if ((vertex.type === 'variable') && (!vertex.editing)) {
           var variable = vertex.name;
           var expression = vertex.parameters.expression;
           var value = parseExpressionWithVariables(expression, vars);
