@@ -7,14 +7,14 @@ define([
     icons,
     BooleanItemModel) {
 
-  var Model = BooleanItemModel.extend({
-    
-    name: 'intersect',
-    VertexConstructor: GeomNode.Intersect,
-    icon: icons['intersect'],
+    var Model = BooleanItemModel.extend({
+      
+      name: 'intersect',
+      VertexConstructor: GeomNode.Intersect,
+      icon: icons['intersect'],
+
+    });
+
+    return Model;
 
   });
-
-  return Model;
-
-});

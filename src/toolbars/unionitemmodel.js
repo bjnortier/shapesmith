@@ -7,14 +7,14 @@ define([
     icons,
     BooleanItemModel) {
 
-  var Model = BooleanItemModel.extend({
-    
-    name: 'union',
-    VertexConstructor: GeomNode.Union,
-    icon: icons['union'],
+    var Model = BooleanItemModel.extend({
+      
+      name: 'union',
+      VertexConstructor: GeomNode.Union,
+      icon: icons['union'],
+
+    });
+
+    return Model;
 
   });
-
-  return Model;
-
-});

@@ -1,28 +1,28 @@
 define([
-        'toolbars/toolbar',
-        'icons',
-    ],
-    function(
-        Toolbar,
-        icons
-    ) {
+    'toolbars/toolbar',
+    'icons',
+  ],
+  function(
+    Toolbar,
+    icons
+  ) {
 
     var Model = Toolbar.ItemModel.extend({
 
-        name: 'designs',
+      name: 'designs',
 
-        initialize: function() {
-            Toolbar.ItemModel.prototype.initialize.call(this);
-        },
+      initialize: function() {
+        Toolbar.ItemModel.prototype.initialize.call(this);
+      },
 
-        click: function() {
-            window.location = '/_ui/' + Shapesmith.user + '/designs';
-        },
+      click: function() {
+        window.location = '/_ui/' + Shapesmith.user + '/designs';
+      },
 
-        icon: icons.list,
+      icon: icons.list,
 
     });
 
     return Model;
 
-});
+  });

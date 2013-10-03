@@ -1,53 +1,52 @@
 define([
-  'toolbars/toolbar',
-  'icons',
-  'scene',
+    'toolbars/toolbar',
+    'icons',
+    'scene',
   ],
   function(
     Toolbar,
     icons,
-    sceneModel
-  ) {
+    sceneModel) {
 
-  var Model = Toolbar.ItemModel.extend({
+    var Model = Toolbar.ItemModel.extend({
 
-    name: 'save',
+      name: 'save',
 
-    initialize: function() {
-      
-      Toolbar.ItemModel.prototype.initialize.call(this);
-    },
+      initialize: function() {
+        
+        Toolbar.ItemModel.prototype.initialize.call(this);
+      },
 
-    click: function() {
+      click: function() {
 
-      // sceneModel.view.renderer.autoClear = false;
-      sceneModel.view.updateScene = true;
-      sceneModel.view.render();
-      var screenshot = sceneModel.view.renderer.domElement.toDataURL();
+        // sceneModel.view.renderer.autoClear = false;
+        sceneModel.view.updateScene = true;
+        sceneModel.view.render();
+        var screenshot = sceneModel.view.renderer.domElement.toDataURL();
 
-      var commit = $.getQueryParam("commit");
-      $.ajax({
-        type: 'PUT',
-        url: '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/refs/heads/master/',
-        contentType: 'application/json',
-        data: JSON.stringify({commit: commit, screenshot: screenshot}),
-        success: function(response) {
-          console.info('SAVE: ' + commit);
-          // hintView.set('Saved.');
-          setTimeout(function() {
-            // hintView.clear();
-          }, 1000);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.error('could not save');
-        }
-      });
-    },
+        var commit = $.getQueryParam("commit");
+        $.ajax({
+          type: 'PUT',
+          url: '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/refs/heads/master/',
+          contentType: 'application/json',
+          data: JSON.stringify({commit: commit, screenshot: screenshot}),
+          success: function() {
+            console.info('SAVE: ' + commit);
+            // hintView.set('Saved.');
+            setTimeout(function() {
+              // hintView.clear();
+            }, 1000);
+          },
+          error: function() {
+            console.error('could not save');
+          }
+        });
+      },
 
-    icon: icons.save,
+      icon: icons.save,
+
+    });
+
+    return Model;
 
   });
-
-  return Model;
-
-});

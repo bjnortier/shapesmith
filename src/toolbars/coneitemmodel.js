@@ -13,41 +13,41 @@ define([
     toolbar,
     GeomNode) {
 
-  var Model = toolbar.ItemModel.extend({
-    
-    name: 'cone',   
-    
-    activate: function() {
-      toolbar.ItemModel.prototype.activate.call(this);
-
-      var workplane = Calc.copyObj(currentWorkplane.get().vertex.workplane);
-      var point = new GeomNode.Point({
-        editing   : true,
-        proto   : true,
-        implicit  : true, 
-        workplane : workplane,
-      });
-      geometryGraph.add(point);
+    var Model = toolbar.ItemModel.extend({
       
-      var coneOptions = {
-        editing    : true,
-        proto    : true,
-        workplane  : workplane,
-      }
-      var coneVertex = new GeomNode.Cone(coneOptions);
-      geometryGraph.add(coneVertex, function() {
-        geometryGraph.addEdge(coneVertex, point);
-      });
-    },
+      name: 'cone',   
+      
+      activate: function() {
+        toolbar.ItemModel.prototype.activate.call(this);
 
-    icon: icons['cone'],
+        var workplane = Calc.copyObj(currentWorkplane.get().vertex.workplane);
+        var point = new GeomNode.Point({
+          editing   : true,
+          proto   : true,
+          implicit  : true, 
+          workplane : workplane,
+        });
+        geometryGraph.add(point);
+        
+        var coneOptions = {
+          editing    : true,
+          proto    : true,
+          workplane  : workplane,
+        };
+        var coneVertex = new GeomNode.Cone(coneOptions);
+        geometryGraph.add(coneVertex, function() {
+          geometryGraph.addEdge(coneVertex, point);
+        });
+      },
 
-     createAnother: function(type) {
-      return type === 'cone';
-    } 
+      icon: icons['cone'],
+
+      createAnother: function(type) {
+        return type === 'cone';
+      },
+
+    });
+
+    return Model;
 
   });
-
-  return Model;
-
-});
