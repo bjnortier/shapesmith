@@ -2,14 +2,12 @@ define([
     'calculations',
     'scene',
     'geometrygraphsingleton',
-    'settings',
     'modelviews/geomvertexMV',
     'modelviews/currentworkplane'
   ], function(
     calc,
     sceneModel,
     geometryGraph,
-    settings,
     GeomVertexMV,
     currentWorkplane) {
 

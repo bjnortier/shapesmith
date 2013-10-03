@@ -58,32 +58,32 @@ requirejs([
     adapter,
     designer) {
 
-  $(document).ready(function() {
+    $(document).ready(function() {
 
-    designer.init();
+      designer.init();
 
-    var statsView = new StatsView();
+      new StatsView();
 
-    var vertexUrl = '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/vertex/';
-    var graphUrl = '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/graph/';
-    var replicator = new AJAXReplicator(vertexUrl, graphUrl);
-    geometryGraph.attachReplicator(replicator);
+      var vertexUrl = '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/vertex/';
+      var graphUrl = '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/graph/';
+      var replicator = new AJAXReplicator(vertexUrl, graphUrl);
+      geometryGraph.attachReplicator(replicator);
 
-    var commitSHA = $.getQueryParam("commit");
-    AsyncAPI.loadFromCommit(replicator, commitSHA, function() {
+      var commitSHA = $.getQueryParam("commit");
+      AsyncAPI.loadFromCommit(replicator, commitSHA, function() {
 
-      worldCursor.registerEvents();
-      window.onpopstate = function(event) { 
-      
-        var commit = (event.state && event.state.commit) || $.getQueryParam("commit");
-        if (!commandStack.pop(commit)) {
-          AsyncAPI.loadFromCommit(replicator, commit);
-        }  
-      }
+        worldCursor.registerEvents();
+        window.onpopstate = function(event) { 
+        
+          var commit = (event.state && event.state.commit) || $.getQueryParam("commit");
+          if (!commandStack.pop(commit)) {
+            AsyncAPI.loadFromCommit(replicator, commit);
+          }  
+        };
+      });
+
+      window.designer = new Designer();
+
     });
 
-    window.designer = new Designer();
-
   });
-
-});
