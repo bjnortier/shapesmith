@@ -58,6 +58,24 @@ module.exports = function(grunt) {
           },
         },
       },
+      unit: {
+        src: ['test/unit*.js', 'test/unit/**/*.js'],
+        options: {
+          globals: {
+            define: false,
+            describe: false, 
+            before: false, 
+            beforeEach: false, 
+            after: false,
+            afterEach: false,
+            it: false,
+            requirejs: true,
+            assert: true,
+            chai: true,
+            mocha: false,
+          },
+        },
+      },
     },
 
     less: {
@@ -78,6 +96,10 @@ module.exports = function(grunt) {
       ui: {
         files: '<%= jshint.ui.src %>',
         tasks: ['jshint:ui']
+      },
+      unit: {
+        files: '<%= jshint.unit.src %>',
+        tasks: ['jshint:unit', 'simplemocha:unit']
       },
       less: {
         files: 'static/css/**/*.less',
@@ -152,7 +174,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-chmod');
 
   // Unit testing
-  grunt.registerTask('test', ['jshint', 'simplemocha:unit']);
+  grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
+  grunt.registerTask('test', ['unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';
