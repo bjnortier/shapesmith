@@ -1,15 +1,14 @@
 var express = require('express');
-    fs = require('fs'),
-    path = require('path'),
-    nconf = require('nconf'),
-    app = express();
+var path = require('path');
+var nconf = require('nconf');
+var app = express();
 
-var requirejs = require('requirejs');
+var requireJS = require('requireJS');
 var rootDir = path.normalize(path.join(__dirname, '../..'));
 var baseUrl = path.join(__dirname, "..");
-requirejs.config({
-    baseUrl: baseUrl,
-    nodeRequire: require,
+requireJS.config({
+  baseUrl: baseUrl,
+  nodeRequire: require,
 });
 
 // ---------- Configuration ----------
@@ -20,14 +19,14 @@ nconf.env();
 
 var app_env = nconf.get('app_env') || 'devel';
 switch (app_env) {
-    case 'functional':
-        nconf.file({file: path.join(rootDir, 'config/functional.config.json')});
-        break;
-    case 'devel':
-        nconf.file({file: path.join(rootDir, 'config/devel.config.json')});
-        break;
-    default:
-        throw Error('invalid environment:' + env)
+case 'functional':
+  nconf.file({file: path.join(rootDir, 'config/functional.config.json')});
+  break;
+case 'devel':
+  nconf.file({file: path.join(rootDir, 'config/devel.config.json')});
+  break;
+default:
+  throw new Error('invalid environment:' + app_env);
 }
 
 var diskDBPath = path.normalize(path.join(rootDir, nconf.get('diskDBPath')));
@@ -49,7 +48,7 @@ console.info('baseUrl:     ', baseUrl);
 console.info('disk db path:', diskDBPath);
 
 // ---------- Create db ----------
-var DB = requirejs('api/disk_db');
+var DB = requireJS('api/disk_db');
 var db = new DB({root: diskDBPath});
 
 app.set('view engine', 'hbs');
@@ -65,10 +64,6 @@ app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 // app.use(express.logger());
 
 app.use(express.bodyParser());
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.send(500, 'Oops. An error occurred.');
-});
 
 app.get('/', function(req, res) {
   res.redirect('/_ui/local/designs');
@@ -118,7 +113,7 @@ app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
         vertices: [],
         edges: [],
         metadata: [],
-      }
+      };
 
       db.createGraph(user, design, emptyGraph, function(err, sha) {
         if (err) {
@@ -129,11 +124,11 @@ app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
             'heads' : {
               'master': sha
             }
-          }
+          };
 
           db.createRefs(user, design, refs, function(err) {
             if (err) {
-              res.send(500, err)
+              res.send(500, err);
             } else {
 
               db.addDesign(user, design, function(err) {
@@ -200,7 +195,7 @@ app.get(/^\/_api\/([\w%]+)\/([\w%]+)\/refs$/, function(req, res) {
   var design = decodeURI(req.params[1]);
   db.getRefs(user, design, function(err, data) {
     if (err) {
-      res.send(500, err)
+      res.send(500, err);
     } else {
       res.json(data);
     }
@@ -215,7 +210,7 @@ app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res
   var ref = req.params[3];
   db.updateRefs(user, design, type, ref, req.body, function(err, data) {
     if (err) {
-      res.send(500, err)
+      res.send(500, err);
     } else {
       res.json(data);
     }

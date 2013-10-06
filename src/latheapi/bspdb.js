@@ -1,93 +1,100 @@
 define([
-        'underscore',
-        'backbone-events',
-        'lathe/bsp',
-    ],
-    function(_, Events, BSP) {
+    'underscore',
+    'backbone-events',
+    'lathe/bsp',
+  ],
+  function(_, Events) {
 
     var DB = function(infoHandler, errorHandler) {
 
-        _.extend(this, Events);
-        var that = this;
-        var db;
+      _.extend(this, Events);
+      var that = this;
+      var db;
 
-        var openDBRequest = indexedDB.open("shapesmith", 1);
+      var openDBRequest = indexedDB.open('shapesmith', 1);
+      
+      openDBRequest.onerror = function() {
+        console.error('Could not create BSP database');
+      };
+
+      // Request success. Trigger initialized event if first success.
+      var successCount = 0;
+      openDBRequest.onsuccess = function(event) {
+        if (!successCount) {
+          that.trigger('initialized');
+          infoHandler('BSP DB initialized');
+          db = event.target.result;
+        } 
+        ++successCount;
+      };
+
+      // Will be called when the DB is created the first time or when
+      // the version is older than the existing version
+      openDBRequest.onupgradeneeded = function(event) {
+        infoHandler('creating/upgrading BSP db');
+        var db = event.target.result;
+        db.createObjectStore('bsp.cache', { keyPath: 'sha' });
+      };
+
+      this.read = function(sha, callback) {
+        var transaction = db.transaction(['bsp.cache'], 'readonly');
+
+        transaction.onerror = function(event) {
+          errorHandler('could not read bsp', event);
+          callback(event);
+        };
+
+        var request = transaction.objectStore('bsp.cache').get(sha);
+
+        request.onsuccess = function() {
+          // console.log('read success:', request.result && request.result.sha);
+          callback(undefined, request.result);
+        };
+
+      };
+
+      this.write = function(value, callback) {
+        var transaction = db.transaction(['bsp.cache'], 'readwrite');
         
-        openDBRequest.onerror = function(event) {
-            console.error('Could not create BSP database');
-        }
+        transaction.onerror = function(event) {
+          errorHandler('could not write bsp', event);
+          callback(event);
+        };
 
-        // Request success. Trigger initialized event if first success.
-        var successCount = 0;
-        openDBRequest.onsuccess = function(event) {
-            if (!successCount) {
-                that.trigger('initialized');
-                infoHandler('BSP DB initialized');
-                db = event.target.result;
-            } 
-            ++successCount;
-        }
+        transaction.oncomplete = function() {
+          // infoHandler('write transaction complete');
+        };
 
-        // Will be called when the DB is created the first time or when
-        // the version is older than the existing version
-        openDBRequest.onupgradeneeded = function(event) {
-            infoHandler('creating/upgrading BSP db');
-            var db = event.target.result;
-            bspStore = db.createObjectStore("bsp", { keyPath: "sha" });
-        }
+        var readRequest = transaction.objectStore('bsp.cache').get(value.sha);
 
-        this.read = function(sha, callback) {
-            var transaction = db.transaction(["bsp"], "readonly");
+        readRequest.onsuccess = function() {
+          if (readRequest.result) {
+            callback();
+          } else {
 
-            transaction.onerror = function(event) {
-                errorHandler('could not read bsp', event);
-                callback(event);
-            }
+            // BSP is serialized manually otherwise the IndexDB shim fails
+            // because JSON.stringify fails because of circular references 
+            var writeRequest = transaction.objectStore('bsp.cache').add(value);
 
-            var request = transaction.objectStore("bsp").get(sha);
-            request.onsuccess = function(event) {
-                // console.log('read success:', request.result && request.result.sha);
-                callback(undefined, request.result);
-            }
-
-        }
-
-        this.write = function(value, callback) {
-            var transaction = db.transaction(["bsp"], "readwrite");
-            transaction.onerror = function(event) {
-                errorHandler('could not write bsp', event);
-                callback(event);
+            writeRequest.onsuccess = function() {
+              // infoHandler('write success', value.sha);
+              callback();
             };
-            transaction.oncomplete = function() {
-                // infoHandler('write transaction complete');
-            }
 
-            var readRequest = transaction.objectStore("bsp").get(value.sha);
-            readRequest.onsuccess = function(event) {
-                if (readRequest.result) {
-                    callback();
-                } else {
+            writeRequest.onerror = function(event) {
+              errorHandler('write request error', event);
+            };
 
-                    // BSP is serialized manually otherwise the IndexDB shim fails
-                    // because JSON.stringify fails because of circular references 
-                    var writeRequest = transaction.objectStore("bsp").add(value);
-                    writeRequest.onsuccess = function(event) {
-                        // infoHandler('write success', value.sha);
-                        callback();
-                    }
-                    writeRequest.onerror = function(event) {
-                        errorHandler('write request error', event);
-                    }
-                }
-            }
+          }
+        };
 
-            readRequest.onerror = function(event) {
-                errorHandler('read error during write', event);
-            }
-        }
+        readRequest.onerror = function(event) {
+          errorHandler('read error during write', event);
+        };
+      };
 
-    }
+    };
 
     return DB;
 
-});
+  });

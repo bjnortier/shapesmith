@@ -16,7 +16,7 @@ body {
   border-bottom: solid thin #999;
 }
 #toolbar {
-  margin-left: -174px;
+  margin-left: -209px;
   background-color: rgba(255, 255, 255, 0.64);
   position: absolute;
   left: 50%;
@@ -80,6 +80,10 @@ body {
   fill: rgba(166, 219, 230, 0.42);
   stroke: #a6dbe6;
 }
+#geometry .selected .icon24 svg {
+  fill: #F8F037;
+  stroke: #D6CF2E;
+}
 .toolbar .icon32 svg {
   fill: #eee;
   stroke: #999;
@@ -99,8 +103,8 @@ body {
   stroke-opacity: 0.5;
 }
 /* Icon-specific overrides */
-.toolbar .designs path {
-  stroke-width: 1.2px;
+.stl .icon32 path {
+  stroke-width: 2.5px;
 }
 svg g[label=nofilldashed] {
   fill: none;
@@ -148,6 +152,9 @@ input.field[type="text"] {
 #geometry .vertex .vertex {
   margin-left: 10px;
 }
+#geometry .vertex .vertex .delete {
+  display: none;
+}
 #geometry .vertex > .title > .actions,
 #geometry .vertex > .title > .dive {
   display: inline-block;
@@ -179,6 +186,9 @@ input.field[type="text"] {
 #geometry .vertex .delete:hover {
   color: red;
 }
+#geometry .vertex .copy:hover {
+  color: green;
+}
 #geometry .vertex .showhide:hover {
   color: blue;
 }
@@ -188,6 +198,21 @@ input.field[type="text"] {
 #geometry .vertex .dive:hover,
 #geometry .vertex .ascend:hover {
   color: #53a72c;
+}
+#geometry .vertex .transforms .expander {
+  padding-right: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+#geometry .vertex .transforms .expander i.arrow {
+  margin-right: 5px;
+}
+#geometry .vertex .transforms .expander i.clear {
+  margin-left: 5px;
+}
+#geometry .vertex .transforms .expander i.clear:hover {
+  color: red;
 }
 #geometry .vertex.dived > .title {
   /*>.icon24 {
@@ -253,6 +278,16 @@ input.field[type="text"] {
   position: fixed;
   right: 20px;
   top: 20px;
+}
+#workplane-settings .planes input {
+  background-color: #636363;
+  border: none;
+  color: white;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 #workplane-settings .icon32 svg {
   fill: #eee;

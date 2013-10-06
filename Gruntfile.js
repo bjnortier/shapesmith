@@ -19,17 +19,60 @@ module.exports = function(grunt) {
         eqnull: true,
         node: true,
         loopfunc: true,
+        indent: 2,
       },
       gruntfile: {
         src: 'Gruntfile.js'
       },
       ui: {
-        src: ['src/modelviews/transforms/*.js'],
+        src: [
+          'src/api/**/*.js',
+          'src/casgraph/**/*.js',
+          'src/inspect/**/*.js',
+          'src/latheapi/**/*.js',
+          'src/layers/**/*.js',
+          'src/modelviews/**/*.js',
+          'src/scripting/**/*.js',
+          'src/toolbars/**/*.js',
+          'src/*.js',
+        ],
+        options: {
+          globals: {
+            "window": false,
+            "document": false,
+            "define": false,
+            "postMessage": false,
+            "indexedDB": false,
+            "Worker": false,
+            "importScripts": false,
+            "history": false,
+            "requestAnimationFrame": false,
+            "THREE": false,
+            "$": false,
+            "requirejs": false,
+            "dat": false,
+            "Stats": false,
+            "Shapesmith": false,
+            "Blob": false,
+            "saveAs": false
+          },
+        },
+      },
+      unit: {
+        src: ['test/unit*.js', 'test/unit/**/*.js'],
         options: {
           globals: {
             define: false,
-            THREE: false,
-            $: false,
+            describe: false, 
+            before: false, 
+            beforeEach: false, 
+            after: false,
+            afterEach: false,
+            it: false,
+            requirejs: true,
+            assert: true,
+            chai: true,
+            mocha: false,
           },
         },
       },
@@ -46,9 +89,17 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      gruntfile: {
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
+      },
       ui: {
         files: '<%= jshint.ui.src %>',
-        tasks: ['jshint:ui']
+        tasks: ['jshint:ui', 'simplemocha:unit']
+      },
+      unit: {
+        files: '<%= jshint.unit.src %>',
+        tasks: ['jshint:unit', 'simplemocha:unit']
       },
       less: {
         files: 'static/css/**/*.less',
@@ -72,8 +123,8 @@ module.exports = function(grunt) {
       },
       functional: { 
         src: [
-            'test/functional/points.test.js',
-            'test/functional/polylines.test.js',
+          'test/functional/points.test.js',
+          'test/functional/polylines.test.js',
         ],
       },
     },
@@ -96,12 +147,12 @@ module.exports = function(grunt) {
     },
 
     express: {
-        server: {
-          options: {
-            port: 8001,
-            server: path.resolve('./src/api/server.js')
-          }
+      server: {
+        options: {
+          port: 8001,
+          server: path.resolve('./src/api/server.js')
         }
+      }
     },
 
     chmod: {
@@ -123,7 +174,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-chmod');
 
   // Unit testing
-  grunt.registerTask('unit', ['simplemocha:unit']);
+  grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
+  grunt.registerTask('test', ['jshint:ui', 'unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';

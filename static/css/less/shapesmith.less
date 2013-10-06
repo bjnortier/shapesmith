@@ -20,7 +20,7 @@ body {
 } 
 
 #toolbar {
-  margin-left: -174px;
+  margin-left: -209px;
   background-color: rgba(255, 255, 255, 0.64);
 
   position: absolute;
@@ -87,6 +87,8 @@ body {
   }
 }
 
+
+
 .icon24 {
   svg {
     path, rect {
@@ -98,6 +100,11 @@ body {
 #geometry .editing .icon24 svg {
   fill: rgba(166, 219, 230, 0.42);
   stroke: rgb(166, 219, 230);
+}
+
+#geometry .selected .icon24 svg {
+  fill: #F8F037;
+  stroke: #D6CF2E;
 }
 
 .toolbar .icon32 svg {
@@ -126,7 +133,15 @@ body {
 
 /* Icon-specific overrides */
 .toolbar .designs path {
-  stroke-width:1.2px;
+  // stroke-width:1.2px;
+}
+
+.stl {
+  .icon32 {
+    path {
+      stroke-width:2.5px;
+    }
+  }
 }
 
 svg g[label=nofilldashed] {
@@ -185,6 +200,9 @@ input.field[type="text"] {
   .vertex {
     .vertex {
       margin-left: 10px;
+      .delete {
+        display: none;
+      }
     }
     background-color: rgba(255,255,255,0);
     >.title {
@@ -219,9 +237,27 @@ input.field[type="text"] {
       }
     }
     .delete   { &:hover { color: red; } }
+    .copy   { &:hover { color: green; } }
     .showhide { &:hover { color: blue; } }
     .ascend { display: none; }
     .dive, .ascend { &:hover { color: rgb(83, 167, 44); } }
+    .transforms {
+      .expander {
+        padding-right: 5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        cursor: pointer;
+        i.arrow {
+          margin-right: 5px;
+        }
+        i.clear {
+          margin-left: 5px;
+          &:hover {
+            color: red;
+          }
+        }
+      }
+    }
   }
   .vertex.dived {
     >.title {
@@ -296,6 +332,18 @@ input.field[type="text"] {
   position: fixed;
   right: 20px;
   top: 20px;
+  .planes {
+    input {
+      background-color: rgb(99, 99, 99);
+      border: none;
+      color: white;
+      padding: 5px;
+      margin-right: 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+  }
   .icon32 {
     svg {
       fill:#eee;

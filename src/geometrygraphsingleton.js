@@ -1,5 +1,5 @@
 define(['commandstack', 'geometrygraph'], function(commandStack, geometryGraph) {
 
-    return new geometryGraph.Graph();
+  return new geometryGraph.Graph();
 
 });

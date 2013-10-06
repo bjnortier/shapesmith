@@ -2,10 +2,11 @@ define([
     'modelviews/variableMV',
     'modelviews/workplaneMV',
     'modelviews/pointMV',
-    'modelviews/polylineMV',
     'modelviews/cubeMV',
     'modelviews/sphereMV',
-    'modelviews/subtractMV',
+    'modelviews/cylinderMV',
+    'modelviews/coneMV',
+    'modelviews/booleanMV',
     'modelviews/modelgraph',
     'modelviews/transforms/transforminitiator',
     'modelviews/actionsoverlayMV',
@@ -14,64 +15,77 @@ define([
     'toolbars/geomtoolbar',
     'toolbars/maintoolbar',
     'toolbars/pointitemmodel',
-    'toolbars/polylineitemmodel',
     'toolbars/cubeitemmodel',
     'toolbars/sphereitemmodel',
+    'toolbars/cylinderitemmodel',
+    'toolbars/coneitemmodel',
+    'toolbars/unionitemmodel',
     'toolbars/subtractitemmodel',
-    'toolbars/settingsitemmodel',
+    'toolbars/intersectitemmodel',
     'toolbars/saveitemmodel',
     'toolbars/exititemmodel',
-    'toolbars/exportobjitemmodel',
-    ], function(
-        VariableMV,
-        WorkplaneMV,
-        PointMV,
-        PolylineMV,
-        CubeMV,
-        SphereMV,
-        SubtractMV,
-        modelgraph,
-        transformInitiator,
-        actionsOverlayMV,
-        icons,
-        Toolbar,
-        geomToolbar,
-        mainToolbar,
-        PointItemModel,
-        PolylineItemModel,
-        CubeItemModel,
-        SphereItemModel,
-        SubtractItemModel,
-        SettingsItemModel,
-        SaveItemModel,
-        ExitItemModel,
-        ExportOBJItemModel) {
+    'toolbars/exportstlitemmodel',
+  ], function(
+    VariableMV,
+    WorkplaneMV,
+    PointMV,
+    CubeMV,
+    SphereMV,
+    CylinderMV,
+    ConeMV,
+    BooleanMV,
+    modelgraph,
+    transformInitiator,
+    actionsOverlayMV,
+    icons,
+    Toolbar,
+    geomToolbar,
+    mainToolbar,
+    PointItemModel,
+    CubeItemModel,
+    SphereItemModel,
+    CylinderItemModel,
+    ConeItemModel,
+    UnionItemModel,
+    SubtractItemModel,
+    IntersectItemModel,
+    SaveItemModel,
+    ExitItemModel,
+    ExportSTLItemModel) {
 
     var init = function() {
 
-        modelgraph.addWrapper('variable', VariableMV);
-        modelgraph.addWrapper('workplane', WorkplaneMV);
-        modelgraph.addWrapper('point', PointMV);
-        modelgraph.addWrapper('cube', CubeMV);
-        modelgraph.addWrapper('sphere', SphereMV);
-        modelgraph.addWrapper('subtract', SubtractMV);
+      modelgraph.addWrapper('variable', VariableMV);
+      modelgraph.addWrapper('workplane', WorkplaneMV);
+      modelgraph.addWrapper('point', PointMV);
+      modelgraph.addWrapper('cube', CubeMV);
+      modelgraph.addWrapper('sphere', SphereMV);
+      modelgraph.addWrapper('cylinder', CylinderMV);
+      modelgraph.addWrapper('cone', ConeMV);
+      modelgraph.addWrapper('union', BooleanMV);
+      modelgraph.addWrapper('subtract', BooleanMV);
+      modelgraph.addWrapper('intersect', BooleanMV);
 
-        // geomToolbar.addItem(new PointItemModel());
-        geomToolbar.addItem(new CubeItemModel());
-        geomToolbar.addItem(new SphereItemModel());
-        geomToolbar.addItem(new SubtractItemModel());
+      // geomToolbar.addItem(new PointItemModel());
+      geomToolbar.addItem(new CubeItemModel());
+      geomToolbar.addItem(new SphereItemModel());
+      geomToolbar.addItem(new CylinderItemModel());
+      geomToolbar.addItem(new ConeItemModel());
+      geomToolbar.addItem(new UnionItemModel());
+      geomToolbar.addItem(new IntersectItemModel());
+      geomToolbar.addItem(new SubtractItemModel());
 
-        var expander = new Toolbar.ExpanderItem();
-        mainToolbar.addItem(new SettingsItemModel());
-        mainToolbar.addItem(new SaveItemModel());
-        mainToolbar.addItem(new ExitItemModel());
-        mainToolbar.addItem(expander);
-        mainToolbar.addItem(new ExportOBJItemModel());
-        expander.toggle();
+      var expander = new Toolbar.ExpanderItem();
+      mainToolbar.addItem(new SaveItemModel());
+      mainToolbar.addItem(new ExportSTLItemModel()); 
+      mainToolbar.addItem(new ExitItemModel());
+      // mainToolbar.addItem(expander);
+      expander.toggle();
 
-    }
+    };
 
     return {
-        init: init
-    }
-});
+      init: init
+    };
+
+  });
