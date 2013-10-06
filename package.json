@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jashkenas/underscore.git"
+    "url": "git://github.com/bjnortier/shapesmith.next.git"
   },
   "contributors": [],
   "engines": [
