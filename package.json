@@ -1,21 +1,24 @@
 {
   "name": "shapesmith",
   "description": "Shapesmith - Parametric, Open-Source 3D Modeling in your browser",
-  "private": true,
   "tags": [],
-  "version": "2.0.0",
+  "keywords": ["3d modelling", "webgl", "cad"],
+  "version": "0.11.0",
   "author": {
     "name": "Benjamin Nortier",
     "email": "bjnortier@shapesmith.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jashkenas/underscore.git"
   },
   "contributors": [],
   "engines": [
     "node"
   ],
-  "directories": {
-    "lib": "./lib"
+  "scripts": {
+    "test": "grunt test"
   },
-  "keywords": [],
   "dependencies": {
     "express": "3.x",
     "hbs": "2.0.1",
@@ -25,8 +28,7 @@
     "backbone-events": "git://github.com/bjnortier/backbone-events.git#0.9.9",
     "node-supervisor": "git://github.com/bjnortier/node-supervisor.git#exit-on-EOF",
     "backbone": "= 0.9.9",
-    "lathe": ">= 0.2.0",
-    "grunt": "~0.4.1"
+    "lathe": "= 0.4.0"
   },
   "devDependencies": {
     "mocha": "= 1.7.4",
@@ -34,6 +36,8 @@
     "libxmljs": ">= 0.7.1",
     "grunt-simple-mocha": "~0.4.0",
     "webdriverjs": "git://github.com/bjnortier/webdriverjs.git#feature/disable-request-pooling",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
     "grunt-express": "~0.3.2",
     "grunt-contrib-requirejs": "~0.4.0",
     "grunt-chmod": "~1.0.3",

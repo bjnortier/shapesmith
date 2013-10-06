@@ -95,7 +95,7 @@ module.exports = function(grunt) {
       },
       ui: {
         files: '<%= jshint.ui.src %>',
-        tasks: ['jshint:ui']
+        tasks: ['jshint:ui', 'simplemocha:unit']
       },
       unit: {
         files: '<%= jshint.unit.src %>',
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
 
   // Unit testing
   grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
-  grunt.registerTask('test', ['unit']);
+  grunt.registerTask('test', ['jshint:ui', 'unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';
