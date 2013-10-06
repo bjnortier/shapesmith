@@ -17,7 +17,8 @@
     "node"
   ],
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "app": "nodemon src/api/app.js"
   },
   "dependencies": {
     "express": "3.x",

@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-basedir=`dirname "$0"`/..
-pushd $basedir
-echo $PWD
-nodemon src/api/app.js
