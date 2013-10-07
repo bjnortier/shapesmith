@@ -1,5 +1,5 @@
 define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsingleton'], 
-  function(_, calc, Backbone, sceneModel, geometryGraph) {
+  function(_, Backbone, calc, sceneModel, geometryGraph) {
 
     var EventGenerator = function() {
       _.extend(this, Backbone.Events);
