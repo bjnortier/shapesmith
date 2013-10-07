@@ -58,13 +58,52 @@ app.use('/ui/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 
-// app.use(express.logger());
-
+app.use(express.cookieParser());
+app.use(express.session({secret: '1234567890QWERTY'}));
 app.use(express.bodyParser());
 
+// app.use(express.logger());
+
+app.use(function(req, res, next) {
+  var isUIOrAPICall = ((req.path.indexOf('/_ui') === 0) || (req.path.indexOf('/_api') === 0));
+  if(isUIOrAPICall) {
+    if (req.session.username) {
+      next();
+    } else if (req.path === '/_ui/login') {
+      next();
+    } else {
+      res.redirect('/_ui/login');
+    }
+  } else {
+    next();
+  }
+});
+
+// Index
 app.get('/', function(req, res) {
   res.redirect('/_ui/local/designs');
 });
+
+// Login
+app.get(/^\/_ui\/login\/?$/, function(req, res) {
+  res.render('login');
+});
+
+app.post(/^\/_ui\/login\/?$/, function(req, res) {
+  if ((req.body.username === 'a') && (req.body.password === 'a')) {
+    req.session.username = 'a';
+    res.redirect('/');
+  } else {
+    res.render('login');
+  }
+});
+
+// Logout
+app.get(/^\/_ui\/logout\/?$/, function(req, res) {
+  req.session.username = undefined;
+  res.redirect('/');
+});
+
 
 // Designs UI
 app.get(/^\/_ui\/([\w%]+)\/designs\/?$/, function(req, res) {

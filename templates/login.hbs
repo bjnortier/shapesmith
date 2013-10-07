@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Shapesmith</title>
+  <link rel="stylesheet" href="/css/login.css" type="text/css" media="screen" />
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+
+  <div class="left">&nbsp;</div>
+  <div class="maincolumn">
+    <form method="POST">
+        <input name="username" id="username" placeholder="username" type="text" required="required"/>
+        <input name="password" id="password" placeholder="password" type="password" required="required"/>
+      <input type="submit" value="login"/>
+    </form>
+
+  </div>
+  <div class="right">&nbsp;</div>
+
+  <script>
+    (function() {
+      function resizeInputs() {
+        var width = $('form').width();
+        $('input#username, input#password').width(width - 24);
+      };
+      window.onresize = resizeInputs;
+      resizeInputs();
+    })();
+  </script>
+
+
+  
+</body>
+</html>
