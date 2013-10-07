@@ -3,7 +3,7 @@
   "description": "Shapesmith - Parametric, Open-Source 3D Modeling in your browser",
   "tags": [],
   "keywords": ["3d modelling", "webgl", "cad"],
-  "version": "0.11.0",
+  "version": "0.11.1",
   "author": {
     "name": "Benjamin Nortier",
     "email": "bjnortier@shapesmith.net"
