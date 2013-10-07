@@ -2,8 +2,6 @@
 @import 'grid.less';
 
 
-
-
 //////////
 // GRID //
 //////////
@@ -23,68 +21,68 @@
 
 // header
 #logo {
-    .column(6);
-    margin-top: 1em;
+  .column(6);
+  margin-top: 1em;
 }
 #create {
-    .column(6);
-    margin-top: 1em;
-    margin-bottom: 1em;
+  .column(6);
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 // main column & sidebar
 .maincolumn {
 	.column(12);
-    // #logo {
-    //     .column(6);
-    // }
-    // #create {
-    //     .column(6);
-    //     margin-bottom: 2em;
-    // }
-    ul#designs {
-        .row(12);
+  // #logo {
+  //   .column(6);
+  // }
+  // #create {
+  //   .column(6);
+  //   margin-bottom: 2em;
+  // }
+  ul#designs {
+    .row(12);
 
-        li {
-            .column(3,12);
-            margin-bottom: 1em;
-        }
+    li {
+      .column(3,12);
+      margin-bottom: 1em;
     }
+  }
 }
 
 
 @media screen and (max-width: 720px) {
-    .maincolumn,
-    .left,
-    .right {
-        .column(12);
+  .maincolumn,
+  .left,
+  .right {
+    .column(12);
+  }
+  .maincolumn {
+    ul#designs {
+      .row(12);
+      li {
+        .column(6,12);
+        margin-bottom: 1em;
+      }
     }
-    .maincolumn {
-        ul#designs {
-            .row(12);
-            li {
-                .column(6,12);
-                margin-bottom: 1em;
-            }
-        }
-    }
+  }
 }
 
 @media screen and (max-width: 480px) {
 	.maincolumn,
 	.left,
-    .right {
+  .right {
 		.column(12);
 	}
-    .maincolumn {
-        ul#designs {
-            .row(12);
-            li {
-                .column(12,12);
-                margin-bottom: 1em;
-            }
-        }
+  .maincolumn {
+    ul#designs {
+      .row(12);
+      li {
+        .column(12,12);
+        margin-bottom: 1em;
+      }
     }
+  }
 }
 
 ///////////
@@ -94,113 +92,135 @@
 @border-color: #ccc;
 
 body {
-    background-color: #f0ebef;
-    background-position: 100% -50%;
-    background-repeat: no-repeat;
-    color: #090909;
-    font-family: Helvetica, Arial, sans-serif;
-    font-style: normal;
-    font-size: 15px;
+  background-color: #EBECF0;;
+  background-position: 100% -50%;
+  background-repeat: no-repeat;
+  color: #090909;
+  font-family: Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-size: 15px;
 }
 
 #create {
-    // .button {
-    //     display: inline-block;
-    // }
-    .input-container {
-        margin-right: 23px;
-        #new-design-name {
-            vertical-align: middle;
-            border: solid thin #2D5FAA;
-            width: 100%;
-            padding: 10px;
-            font-size: 15px;
-        }
-        #hidden-button {
-            position: absolute;
-            top: -100px;
-        }
+  // .button {
+  //   display: inline-block;
+  // }
+  .input-container {
+    margin-right: 23px;
+    text-align: right;
+    width: 100%;
+    #new-design-name {
+      vertical-align: middle;
+      border: solid thin #2D5FAA;
+      width: 75%;
+      padding: 10px;
+      font-size: 15px;
+      margin-top: -4px;
+      margin-right: 1px;
     }
+    #hidden-button {
+      border: none;
+      padding: 10px;
+      margin-left: 10px;
+      margin-right: -1px;
+      font-size: 15px;
+      cursor: pointer;
+      background-color: #B4E2FC;
+      border-bottom: solid 1px rgb(201, 197, 197);
+      &:hover {
+        background-color: #D2EFFF;;
+      }
+    }
+  }
 
 }
 
 input.rename {
-    padding: 5px;
-    font-size: 15px;
+  padding: 5px;
+  font-size: 15px;
 }
 
 input.error {
-    color: red;
+  color: red;
 }
 
 .design {
-    background-color: #fff;
-    border: solid thin @border-color;
-    &:hover {
-        background-color: #ffc;
-        border-color: #2D5FAA;
-        .delete {
-            background: url('/images/icons/delete16x16.disabled.png') no-repeat;
-            &:hover {
-                background: url('/images/icons/delete16x16.png') no-repeat;
-            }
-        }
+  background-color: #fff;
+  border: solid thin @border-color;
+  &:hover {
+    background-color: #ffc;
+    border-color: #2D5FAA;
+    .delete {
+      background: url('/images/icons/delete16x16.disabled.png') no-repeat;
+      &:hover {
+        background: url('/images/icons/delete16x16.png') no-repeat;
+      }
     }
-    h2 {
-        padding: 10px;
-        .name {
-            cursor: text;
-        }
+  }
+  h2 {
+    padding: 10px;
+    .name {
+      cursor: text;
     }
-    .delete {   
-        display: inline-block;
-        width: 16px;
-        height: 16px;  
-        background-image: none;
-        float: right;
-        margin: 8px;
+  }
+  .delete {   
+    display: inline-block;
+    width: 16px;
+    height: 16px;  
+    background-image: none;
+    float: right;
+    margin: 8px;
+  }
+  .confirm {
+    .question {
+      padding: 2px;
+      color: red;
     }
-    .confirm {
-        .question {
-            padding: 2px;
-            color: red;
-        }
-        .buttons {
-            margin-top: 5px;
-        }
-        background-color: #ffecec;
-        border: solid thin red;
-        border-radius: 4px;
-        margin: 5px;
-        padding: 3px;
-    }
-    .preview {
+    .buttons {
+      margin-top: 5px;
+      input {
+        padding: 5px;
+        border: none;
+        background-color: #f33;
+        color: white;
         cursor: pointer;
-        .nopreview {
-            color: #ccc;
-            font-size: 0.8em;
-            margin: 10px;
+        &:hover {
+          background-color: #f00;
         }
-        .screenshot {
-            width: 100%;
-            height: 220px;
-            display: inline-block;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-color: #eee;
-            border-top: solid thin @border-color;
-            margin-bottom: -2px;
-        }
-        .screenshot.loading{
-            color: #ccc;
-            text-align: center;
-            margin-bottom: 0px;
-            div {
-                padding: 20px;
-            }
-        }
+      }
     }
+    background-color: #ffecec;
+    border: solid thin red;
+    margin: 5px;
+    padding: 3px;
+  }
+  .preview {
+    cursor: pointer;
+    .nopreview {
+      color: #ccc;
+      font-size: 0.8em;
+      margin: 10px;
+    }
+    .screenshot {
+      width: 100%;
+      height: 220px;
+      display: inline-block;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: #eee;
+      border-top: solid thin @border-color;
+      margin-bottom: -2px;
+    }
+    .screenshot.loading{
+      color: #ccc;
+      text-align: center;
+      margin-bottom: 0px;
+      div {
+        padding: 20px;
+      }
+    }
+  }
 }
 
 

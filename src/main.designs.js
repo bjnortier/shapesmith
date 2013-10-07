@@ -40,7 +40,7 @@ requirejs([
 
       render: function() {
         var html = 
-          '<input id="new-design-name" placeholder="new project (press return to create)" class="field" required="required"/>' +
+          '<input id="new-design-name" placeholder="new project" class="field" required="required"/>' +
           '<input id="hidden-button" type="submit" value="create"/>';
         this.$el.html(html);
       },

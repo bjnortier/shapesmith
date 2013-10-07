@@ -36,9 +36,6 @@ console.info("    .                           .  .   ");
 console.info(",-. |-. ,-. ,-. ,-. ,-. ,-,-. . |- |-. ");
 console.info("`-. | | ,-| | | |-' `-. | | | | |  | | ");
 console.info("`-' ' ' `-^ |-' `-' `-' ' ' ' ' `' ' ' ");
-console.info("            |                          ");
-console.info("");
-
 
 console.info('\n\nconfiguration:');
 console.info('--------------');

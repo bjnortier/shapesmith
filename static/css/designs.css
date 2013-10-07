@@ -116,7 +116,7 @@ body:after {
   }
 }
 body {
-  background-color: #f0ebef;
+  background-color: #EBECF0;
   background-position: 100% -50%;
   background-repeat: no-repeat;
   color: #090909;
@@ -126,17 +126,30 @@ body {
 }
 #create .input-container {
   margin-right: 23px;
+  text-align: right;
+  width: 100%;
 }
 #create .input-container #new-design-name {
   vertical-align: middle;
   border: solid thin #2D5FAA;
-  width: 100%;
+  width: 75%;
   padding: 10px;
   font-size: 15px;
+  margin-top: -4px;
+  margin-right: 1px;
 }
 #create .input-container #hidden-button {
-  position: absolute;
-  top: -100px;
+  border: none;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: -1px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #B4E2FC;
+  border-bottom: solid 1px #c9c5c5;
+}
+#create .input-container #hidden-button:hover {
+  background-color: #D2EFFF;
 }
 input.rename {
   padding: 5px;
@@ -176,7 +189,6 @@ input.error {
 .design .confirm {
   background-color: #ffecec;
   border: solid thin red;
-  border-radius: 4px;
   margin: 5px;
   padding: 3px;
 }
@@ -186,6 +198,16 @@ input.error {
 }
 .design .confirm .buttons {
   margin-top: 5px;
+}
+.design .confirm .buttons input {
+  padding: 5px;
+  border: none;
+  background-color: #f33;
+  color: white;
+  cursor: pointer;
+}
+.design .confirm .buttons input:hover {
+  background-color: #f00;
 }
 .design .preview {
   cursor: pointer;
