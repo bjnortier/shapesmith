@@ -4,18 +4,20 @@
 <head>
   <meta charset="utf-8" />
   <title>Shapesmith</title>
-  <link rel="stylesheet" href="/css/login.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/css/signin.css" type="text/css" media="screen" />
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 <body>
 
   <div class="left">&nbsp;</div>
   <div class="maincolumn">
+    <div>Welcome! Please sign in...</div>
     <form method="POST">
         <input name="username" id="username" placeholder="username" type="text" required="required"/>
         <input name="password" id="password" placeholder="password" type="password" required="required"/>
-      <input type="submit" value="login"/>
+      <input type="submit" value="signin"/>
     </form>
+    <div>Not registered? <a href="/signup">Sign up here.<a/></div>
 
   </div>
   <div class="right">&nbsp;</div>

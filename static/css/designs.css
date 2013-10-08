@@ -117,14 +117,14 @@ body {
   font-style: normal;
   font-size: 15px;
 }
-#logout {
+#signout {
   text-align: right;
   padding: 10px;
 }
-#logout a {
+#signout a {
   color: black;
 }
-#logout a:visited {
+#signout a:visited {
   color: black;
 }
 #create .input-container #new-design-name {

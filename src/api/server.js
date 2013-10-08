@@ -68,10 +68,10 @@ app.use(express.bodyParser());
 var authMiddleware = function(req, res, next) {
   if (req.session.username) {
     next();
-  } else if (req.path === '/login') {
+  } else if (req.path === '/signin') {
     next();
   } else {
-    res.redirect('/login');
+    res.redirect('/signin');
   }
 };
 
@@ -83,22 +83,22 @@ app.get('/', function(req, res) {
   res.redirect('/ui/local/designs');
 });
 
-// Login
-app.get(/^\/login\/?$/, function(req, res) {
-  res.render('login');
+// signin
+app.get(/^\/signin\/?$/, function(req, res) {
+  res.render('signin');
 });
 
-app.post(/^\/login\/?$/, function(req, res) {
+app.post(/^\/signin\/?$/, function(req, res) {
   if ((req.body.username === 'a') && (req.body.password === 'a')) {
     req.session.username = 'a';
     res.redirect('/');
   } else {
-    res.render('login');
+    res.render('signin');
   }
 });
 
 // Logout
-app.get(/^\/logout\/?$/, function(req, res) {
+app.get(/^\/signout\/?$/, function(req, res) {
   req.session.username = undefined;
   res.redirect('/');
 });
