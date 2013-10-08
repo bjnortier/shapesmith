@@ -49,7 +49,7 @@ module.exports = function(grunt) {
             "requestAnimationFrame": false,
             "THREE": false,
             "$": false,
-            "requirejs": false,
+            "requirejs": true,
             "dat": false,
             "Stats": false,
             "Shapesmith": false,

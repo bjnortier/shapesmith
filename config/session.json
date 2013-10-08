@@ -1,0 +1,9 @@
+{
+  "port": 8000,
+  "dbType": "sqlite",
+  "dbArgs": {
+    "filename" : "db/session.db"
+  },
+  "authEngine" : "session"
+}
+

@@ -4,11 +4,11 @@ define(['jquery', 'casgraph/replicator'], function($, Replicator) {
 
     var writeVertex = function(hash, vertex, callback) {
       write(vertexUrl, hash, vertex, callback);
-    };
+    }
 
     var writeGraph = function(hash, graph, callback) {
       write(graphUrl, hash, graph, callback);
-    };
+    }
     
     var write = function(url, hash, object, callback) {
       
@@ -30,19 +30,19 @@ define(['jquery', 'casgraph/replicator'], function($, Replicator) {
         }
       });
 
-    };
+    }
 
     var readVertex = function(hash, callback) {
       read(vertexUrl, hash, callback);
-    };
+    }
 
     var readGraph = function(hash, callback) {
       read(graphUrl, hash, callback);
-    };
+    }
     
     var read = function(url, hash, callback) {
 
-      $.ajax({
+       $.ajax({
         type: 'GET',
         url: url + hash,
         dataType: 'json',
@@ -54,21 +54,23 @@ define(['jquery', 'casgraph/replicator'], function($, Replicator) {
         }
       });
 
-    };
+    }
+
 
     var readers = {
       graph: readGraph,
       vertex: readVertex,
-    };
+    }
 
     var writers = {
       vertex: writeVertex,
       graph: writeGraph,
-    };
+    }
 
     Replicator.prototype.constructor.call(this, readers, writers);
-  };
+  }
 
   return AJAXReplicator;
+
 
 });
