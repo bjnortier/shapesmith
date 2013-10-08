@@ -63,6 +63,8 @@ form div.row {
   width: 100%;
 }
 input {
+  display: block;
+  box-sizing: border-box;
   width: 100%;
   font-size: 15px;
   padding: 10px;

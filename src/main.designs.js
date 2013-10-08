@@ -67,12 +67,12 @@ requirejs([
           var that = this;
           $.ajax({
             type: 'put',
-            url: '/_api/' + encodeURIComponent(Shapesmith.user)  + '/' + encodeURIComponent(newDesignName) + '/',
+            url: '/api/' + encodeURIComponent(Shapesmith.user)  + '/' + encodeURIComponent(newDesignName) + '/',
             data: '{}',
             dataType: 'json',
             contentType: 'application/json',
             success: function(response) {
-              window.location.href = '/_ui/' + encodeURIComponent(Shapesmith.user) + 
+              window.location.href = '/ui/' + encodeURIComponent(Shapesmith.user) + 
                 '/' + encodeURIComponent(newDesignName) + 
                 '/modeller?commit=' + response.heads.master + 
                 '&splash=true';
@@ -182,7 +182,7 @@ requirejs([
         var that = this;
         $.ajax({
           type: 'DELETE',
-          url: '/_api/' + encodeURIComponent(Shapesmith.user)  + '/' + encodeURIComponent(this.model.name) + '/',
+          url: '/api/' + encodeURIComponent(Shapesmith.user)  + '/' + encodeURIComponent(this.model.name) + '/',
           success: function() {
             that.model.destroy();
           },
@@ -222,7 +222,7 @@ requirejs([
         if (newName.length) {
           $.ajax({
             type: 'POST',
-            url: '/_api/' + encodeURIComponent(Shapesmith.user)  + '/' + encodeURIComponent(this.model.name) + '/',
+            url: '/api/' + encodeURIComponent(Shapesmith.user)  + '/' + encodeURIComponent(this.model.name) + '/',
             data: JSON.stringify({newName: newName}),
             dataType: 'json',
             contentType: 'application/json',
@@ -238,7 +238,7 @@ requirejs([
       },
 
       open: function() {
-        window.location = '/_ui/' + encodeURIComponent(Shapesmith.user) + 
+        window.location = '/ui/' + encodeURIComponent(Shapesmith.user) + 
                   '/' + encodeURIComponent(this.model.name) + 
                   '/modeller?commit=' + this.model.commit;
       },
@@ -251,14 +251,14 @@ requirejs([
       new CreateModel();
 
       // Create models for designs
-      $.getJSON('/_api/' + encodeURIComponent(Shapesmith.user) + '/designs', function(designs) {
+      $.getJSON('/api/' + encodeURIComponent(Shapesmith.user) + '/designs', function(designs) {
         
         $('#designs .placeholder').remove();
         var designModels = {};
         designs.map(function(name) {
           designModels[name] = new DesignModel({name: name});
 
-          var designURL = '/_api/' + encodeURIComponent(Shapesmith.user) +
+          var designURL = '/api/' + encodeURIComponent(Shapesmith.user) +
                   '/' + encodeURIComponent(name) + '/refs';
 
           $.getJSON(designURL, function(data) {

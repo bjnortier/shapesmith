@@ -27,7 +27,7 @@ define([
         var commit = $.getQueryParam("commit");
         $.ajax({
           type: 'PUT',
-          url: '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/refs/heads/master/',
+          url: '/api/' + Shapesmith.user + '/' + Shapesmith.design + '/refs/heads/master/',
           contentType: 'application/json',
           data: JSON.stringify({commit: commit, screenshot: screenshot}),
           success: function() {

@@ -36,6 +36,7 @@ console.info("    .                           .  .   ");
 console.info(",-. |-. ,-. ,-. ,-. ,-. ,-,-. . |- |-. ");
 console.info("`-. | | ,-| | | |-' `-. | | | | |  | | ");
 console.info("`-' ' ' `-^ |-' `-' `-' ' ' ' ' `' ' ' ");
+console.info("            '                          ");
 
 console.info('\n\nconfiguration:');
 console.info('--------------');
@@ -53,8 +54,8 @@ app.set('views', path.join(rootDir, 'templates'));
 
 app.use('/images', express.static(path.join(rootDir, 'static', 'images')));
 app.use('/css', express.static(path.join(rootDir, 'static', 'css')));
-app.use('/ui/', express.static(path.join(rootDir, 'src')));
-app.use('/ui/node_modules', express.static(path.join(rootDir, 'node_modules')));
+app.use('/src/', express.static(path.join(rootDir, 'src')));
+app.use('/src/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 
@@ -64,32 +65,30 @@ app.use(express.bodyParser());
 
 // app.use(express.logger());
 
-app.use(function(req, res, next) {
-  var isUIOrAPICall = ((req.path.indexOf('/_ui') === 0) || (req.path.indexOf('/_api') === 0));
-  if(isUIOrAPICall) {
-    if (req.session.username) {
-      next();
-    } else if (req.path === '/_ui/login') {
-      next();
-    } else {
-      res.redirect('/_ui/login');
-    }
-  } else {
+var authMiddleware = function(req, res, next) {
+  if (req.session.username) {
     next();
+  } else if (req.path === '/login') {
+    next();
+  } else {
+    res.redirect('/login');
   }
-});
+};
+
+app.use('/ui', authMiddleware);
+app.use('/api', authMiddleware);
 
 // Index
 app.get('/', function(req, res) {
-  res.redirect('/_ui/local/designs');
+  res.redirect('/ui/local/designs');
 });
 
 // Login
-app.get(/^\/_ui\/login\/?$/, function(req, res) {
+app.get(/^\/login\/?$/, function(req, res) {
   res.render('login');
 });
 
-app.post(/^\/_ui\/login\/?$/, function(req, res) {
+app.post(/^\/login\/?$/, function(req, res) {
   if ((req.body.username === 'a') && (req.body.password === 'a')) {
     req.session.username = 'a';
     res.redirect('/');
@@ -99,20 +98,20 @@ app.post(/^\/_ui\/login\/?$/, function(req, res) {
 });
 
 // Logout
-app.get(/^\/_ui\/logout\/?$/, function(req, res) {
+app.get(/^\/logout\/?$/, function(req, res) {
   req.session.username = undefined;
   res.redirect('/');
 });
 
 
 // Designs UI
-app.get(/^\/_ui\/([\w%]+)\/designs\/?$/, function(req, res) {
+app.get(/^\/ui\/([\w%]+)\/designs\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   res.render('designs', {user: user});
 });
 
 // Designs API
-app.get(/^\/_api\/([\w%]+)\/designs\/?$/, function(req, res) {
+app.get(/^\/api\/([\w%]+)\/designs\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   db.getDesigns(user, function(err, data) {
     if (err) {
@@ -126,7 +125,7 @@ app.get(/^\/_api\/([\w%]+)\/designs\/?$/, function(req, res) {
 // Create design
 // TODO: Name doesn't exist
 // TODO: Name is valid
-app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
+app.put(/^\/api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
 
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
@@ -185,7 +184,7 @@ app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
 // Rename design.
 // NB! This is not safe if multiple requests change
 // the list of designs at the same time!
-app.post(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
+app.post(/^\/api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   if (!req.body.newName) {
@@ -209,7 +208,7 @@ app.post(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
 });
 
 // Delete design
-app.delete(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
+app.delete(/^\/api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   db.deleteDesign(user, design, function(err, data) {
@@ -226,7 +225,7 @@ app.delete(/^\/_api\/([\w%]+)\/([\w%]+)\/?$/, function(req, res) {
 });
 
 // Get Refs
-app.get(/^\/_api\/([\w%]+)\/([\w%]+)\/refs$/, function(req, res) {
+app.get(/^\/api\/([\w%]+)\/([\w%]+)\/refs$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   db.getRefs(user, design, function(err, data) {
@@ -239,7 +238,7 @@ app.get(/^\/_api\/([\w%]+)\/([\w%]+)\/refs$/, function(req, res) {
 });
 
 // Update ref
-app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
+app.put(/^\/api\/([\w%]+)\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   var type = req.params[2];
@@ -255,7 +254,7 @@ app.put(/^\/_api\/([\w%]+)\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res
 });
 
 // Modeller UI
-app.get(/^\/_ui\/([\w%]+)\/([\w%]+)\/modeller$/, function(req, res) {
+app.get(/^\/ui\/([\w%]+)\/([\w%]+)\/modeller$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   res.render('modeller', {user: user, design: design});
@@ -263,7 +262,7 @@ app.get(/^\/_ui\/([\w%]+)\/([\w%]+)\/modeller$/, function(req, res) {
 
 
 // Create graph
-app.post(/^\/_api\/([\w%]+)\/([\w%]+)\/graph\/?$/, function(req, res) {
+app.post(/^\/api\/([\w%]+)\/([\w%]+)\/graph\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   var graph = req.body;
@@ -277,7 +276,7 @@ app.post(/^\/_api\/([\w%]+)\/([\w%]+)\/graph\/?$/, function(req, res) {
 });
 
 // Get graph
-app.get(/^\/_api\/([\w%]+)\/([\w%]+)\/graph\/([\w%]+)\/?$/, function(req, res) {
+app.get(/^\/api\/([\w%]+)\/([\w%]+)\/graph\/([\w%]+)\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   var sha = req.params[2];
@@ -291,7 +290,7 @@ app.get(/^\/_api\/([\w%]+)\/([\w%]+)\/graph\/([\w%]+)\/?$/, function(req, res) {
 });
 
 // Create vertex
-app.post(/^\/_api\/([\w%]+)\/([\w%]+)\/vertex\/?$/, function(req, res) {
+app.post(/^\/api\/([\w%]+)\/([\w%]+)\/vertex\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   var vertex = req.body;
@@ -305,7 +304,7 @@ app.post(/^\/_api\/([\w%]+)\/([\w%]+)\/vertex\/?$/, function(req, res) {
 });
 
 // Get vertex
-app.get(/^\/_api\/([\w%]+)\/([\w%]+)\/vertex\/([\w%]+)\/?$/, function(req, res) {
+app.get(/^\/api\/([\w%]+)\/([\w%]+)\/vertex\/([\w%]+)\/?$/, function(req, res) {
   var user = decodeURI(req.params[0]);
   var design = decodeURI(req.params[1]);
   var sha = req.params[2];
