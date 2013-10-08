@@ -23,7 +23,7 @@ requirejs([
 
     var CreateModel = Backbone.Model.extend({
 
-      initialize: function(options) {
+      initialize: function() {
         this.view = new CreateView({model: this});
       },
 
@@ -58,7 +58,7 @@ requirejs([
         }
       },
 
-      click: function(event) {
+      click: function() {
         this.createDesign();
       },
 
@@ -77,7 +77,7 @@ requirejs([
                 '/' + encodeURIComponent(newDesignName) + 
                 '/modeller?commit=' + response.heads.master;
             },
-            error: function(response) {
+            error: function() {
               that.$el.find('#new-design-name').addClass('error');
             }
           });
@@ -133,7 +133,7 @@ requirejs([
 
       tagName: 'li',
 
-      initialize: function(options) {
+      initialize: function() {
         this.render();
       },
 
@@ -183,7 +183,7 @@ requirejs([
         $.ajax({
           type: 'DELETE',
           url: '/api/' + encodeURIComponent(Shapesmith.user)  + '/design/' + encodeURIComponent(this.model.name) + '/',
-          success: function(response) {
+          success: function() {
             that.model.destroy();
           },
           error: function(response) {
@@ -226,11 +226,11 @@ requirejs([
             data: JSON.stringify({newName: newName}),
             dataType: 'json',
             contentType: 'application/json',
-            success: function(response) {
+            success: function() {
               that.model.name = newName;
               that.render();
             },
-            error: function(response) {
+            error: function() {
               that.$el.find('input').addClass('error');
             }
           });
