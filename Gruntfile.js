@@ -83,6 +83,7 @@ module.exports = function(grunt) {
         files: {
           './static/css/designs.css'     : 'static/css/less/designs.less',
           './static/css/signinsignup.css': 'static/css/less/signinsignup.less',
+          './static/css/landing.css'     : 'static/css/less/landing.less',
           './static/css/grid.css'        : 'static/css/less/grid.less',
           './static/css/shapesmith.css'  : 'static/css/less/shapesmith.less',
         },
