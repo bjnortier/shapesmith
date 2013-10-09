@@ -81,10 +81,10 @@ module.exports = function(grunt) {
     less: {
       all: {
         files: {
-          './static/css/designs.css'    : 'static/css/less/designs.less',
-          './static/css/signin.css'     : 'static/css/less/signin.less',
-          './static/css/grid.css'       : 'static/css/less/grid.less',
-          './static/css/shapesmith.css' : 'static/css/less/shapesmith.less',
+          './static/css/designs.css'     : 'static/css/less/designs.less',
+          './static/css/signinsignup.css': 'static/css/less/signinsignup.less',
+          './static/css/grid.css'        : 'static/css/less/grid.less',
+          './static/css/shapesmith.css'  : 'static/css/less/shapesmith.less',
         },
       },
     },

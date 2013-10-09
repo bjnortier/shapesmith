@@ -4,7 +4,11 @@ define([
   function(bcrypt) {
 
     var validateUsername = function(username) {
-      return !!/^[a-zA-Z0-9._]+$/.exec(username);
+      return !!/^[a-zA-Z][a-zA-Z0-9._]*$/.exec(username);
+    };
+
+    var validateEmailAddress = function(emailAddress) {
+      return !!/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/.exec(emailAddress);
     };
 
     var validatePassword = function(password) {
@@ -21,7 +25,7 @@ define([
 
       var userData = {
         username: username,
-        password_bcrypt: bcrypt.hashSync(password, 20),
+        password_bcrypt: bcrypt.hashSync(password, 12),
       };
       db.set(key, userData, function(err) {
         if (err) {
@@ -52,11 +56,12 @@ define([
     };
 
     return {
-      validateUsername: validateUsername,
-      validatePassword: validatePassword,
-      get             : get,
-      create          : create,
-      checkPassword   : checkPassword,
+      validateUsername    : validateUsername,
+      validateEmailAddress: validateEmailAddress,
+      validatePassword    : validatePassword,
+      get                 : get,
+      create              : create,
+      checkPassword       : checkPassword,
     };
 
   });

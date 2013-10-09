@@ -8,13 +8,7 @@ define([
       // Get all the user's designs
       app.get(/^\/api\/([\w.]+)\/designs\/?$/, function(req, res) {
 
-
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canRead(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-          
         Designs.getAll(db, username, function(err, list) {
           if (err) {
             res.json(500, err);
@@ -31,11 +25,6 @@ define([
       app.get(/^\/api\/([\w.]+)\/design\/([\w%]+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canRead(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var design = decodeURIComponent(req.params[1]);
         Designs.get(db, username, design, function(err, refs) {
           if (err) {
@@ -53,11 +42,6 @@ define([
       app.post(/^\/api\/([\w.]+)\/design\/?$/, function(req, res) {
         
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canWrite(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var design = req.body.name && req.body.name.trim();
         if (design === undefined) {
           res.json(400, {errors: [{missing: 'name'}]});
@@ -94,11 +78,6 @@ define([
       app.delete(/^\/api\/([\w.]+)\/design\/([\w%]+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canWrite(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var design = decodeURIComponent(req.params[1]);
         Designs.del(db, username, design, function(err) {
           if (err === 'notFound') {
@@ -116,11 +95,6 @@ define([
       app.put(/^\/api\/([\w.]+)\/design\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canWrite(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var design = decodeURIComponent(req.params[1]);
         var type = req.params[2];
         var ref = req.params[3];
@@ -159,11 +133,6 @@ define([
       app.post(/^\/api\/([\w%@.]+)\/design\/([\w%]+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canWrite(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var design = decodeURIComponent(req.params[1]);
         var newName = req.body.newName && req.body.newName.trim();
         if (newName === undefined) {

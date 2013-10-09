@@ -76,32 +76,34 @@ var SessionAuth = function() {
       res.render('landing');
     }
   };
-  this.unauthorizedRedirect = function() {
-    return '/';
+  this.unauthorizedRedirect = function(res) {
+    res.redirect('/signin');
   };
 };
 
 var LocalAuth = function() {
-  this.canRead = function(username, req) {
-    return true;
+
+  this.canRead = function(username) {
+    return username === 'local';
   };
-  this.canWrite = function(username, req) {
-    return true;
+  this.canWrite = function(username) {
+    return username === 'local';
   };
   this.renderLanding = function(req, res) {
     res.redirect('/ui/local/designs');
   };
-  this.unauthorizedRedirect = function() {
-    return '/ui/local/designs';
+  this.unauthorizedRedirect = function(res) {
+    res.redirect('/ui/local/designs');
   };
 };
 
+var authProvider;
 if (authEngine === 'session') {
-  app.set('authEngine', new SessionAuth());
+  authProvider = new SessionAuth();
 } else {
-  app.set('authEngine', new LocalAuth());
+  authProvider = new LocalAuth();
 }
-
+app.set('authEngine', authProvider);
 
 var db = new ueberDB.database(dbType, dbArgs);
 db.init(function(err) {
@@ -115,22 +117,41 @@ db.init(function(err) {
   new requirejs('api/objectapi')(app, db);
 });
 
-var authMiddleware = function(req, res, next) {
-  if (req.session.username) {
-    next();
-  } else if (req.path === '/signin') {
-    next();
+// Authentication for /ui
+app.use('/ui', function(req, res, next) {
+  var match = /\/([\w.]+)\//.exec(req.path);
+  if (match) {
+    // Ensure the username matches the session username
+    var username = match[1];
+    if (authProvider.canRead(username, req)) {
+      next();
+    } else {
+      authProvider.unauthorizedRedirect(res);
+    }
   } else {
-    res.redirect('/signin');
+    authProvider.unauthorizedRedirect(res);
   }
-};
+});
 
-// app.use('/ui', authMiddleware);
-// app.use('/api', authMiddleware);
+// Authentication for /api
+app.use('/api', function(req, res, next) {
+  var match = /\/([\w.]+)\//.exec(req.path);
+  if (match) {
+    // Ensure the username matches the session username
+    var username = match[1];
+    if (authProvider.canRead(username, req)) {
+      next();
+    } else {
+      res.json(401, 'unauthorized');
+    }
+  } else {
+    res.json(401, 'unauthorized');
+  }
+});
 
 // Index
 app.get('/', function(req, res) {
-  res.redirect('/ui/local/designs');
+  authProvider.renderLanding(req, res);
 });
 
 // Signin
@@ -138,40 +159,28 @@ app.get(/^\/signin\/?$/, function(req, res) {
   res.render('signin');
 });
 
-app.post(/^\/signin\/?$/, function(req, res) {
-  if ((req.body.username === 'a') && (req.body.password === 'a')) {
-    req.session.username = 'a';
-    res.redirect('/');
-  } else {
-    res.render('signin');
-  }
+// Signup
+app.get(/^\/signup\/?$/, function(req, res) {
+  res.render('signup');
 });
 
 // Signout
 app.get(/^\/signout\/?$/, function(req, res) {
   req.session.username = undefined;
-  res.redirect('/');
+  res.redirect('/signin');
 });
 
 // Designs 
 app.get(/^\/ui\/([\w.]+)\/designs\/?$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
-  if (app.get('authEngine').canRead(username, req)) {
-    res.render('designs', {user: username, sessionAuth: (authEngine === 'session')});
-  } else {
-    res.redirect(app.get('authEngine').unauthorizedRedirect());
-  }
+  res.render('designs', {user: username, sessionAuth: (authEngine === 'session')});
 });
 
 // Modeller 
 app.get(/^\/ui\/([\w.]+)\/([\w%]+)\/modeller$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
-  if (app.get('authEngine').canRead(username, req)) {
-    var design = decodeURIComponent(req.params[1]);
-    res.render('modeller', {user: username, design: design});
-  } else {
-    res.redirect(app.get('authEngine').unauthorizedRedirect());
-  }
+  var design = decodeURIComponent(req.params[1]);
+  res.render('modeller', {user: username, design: design});
 });
 
 // For controlling the process (e.g. via Erlang) - stop the server

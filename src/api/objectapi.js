@@ -6,48 +6,27 @@ define([
     var ObjectAPI = function(app, db) {
 
       // Create graph
-      app.post(/^\/api\/([\w%@.]+)\/graph\/?$/, function(req, res) {
+      app.post(/^\/api\/([\w.]+)\/graph\/?$/, function(req, res) {
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canWrite(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         create(username, 'graph', req.body, res);
       });
 
       // Get graph
-      app.get(/^\/api\/([\w%@.]+)\/graph\/([\w%]+)\/?$/, function(req, res) {
+      app.get(/^\/api\/([\w.]+)\/graph\/([\w%]+)\/?$/, function(req, res) {
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canRead(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var sha = req.params[1];
-        console.log('2', sha);
         get(username, 'graph', sha, res);
       });
 
       // Create vertex
-      app.post(/^\/api\/([\w%@.]+)\/vertex\/?$/, function(req, res) {
+      app.post(/^\/api\/([\w.]+)\/vertex\/?$/, function(req, res) {
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canWrite(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         create(username, 'vertex', req.body, res);
       });
 
       // Get vertex
-      app.get(/^\/api\/([\w%@.]+)\/vertex\/([\w%]+)\/?$/, function(req, res) {
+      app.get(/^\/api\/([\w.]+)\/vertex\/([\w%]+)\/?$/, function(req, res) {
         var username = decodeURIComponent(req.params[0]);
-        if (!app.get('authEngine').canRead(username, req)) {
-          res.json(401, 'Unauthorized');
-          return;
-        }
-
         var sha = req.params[1];
         get(username, 'vertex', sha, res);
       });
