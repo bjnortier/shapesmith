@@ -35,7 +35,8 @@
     "backbone": "= 0.9.9",
     "lathe": "= 0.4.0",
     "sqlite3": "~2.1.17",
-    "ueberDB": "~0.2.0"
+    "ueberDB": "~0.2.0",
+    "node-uuid": "~1.4.1"
   },
   "devDependencies": {
     "mocha": "= 1.7.4",

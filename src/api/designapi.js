@@ -6,7 +6,7 @@ define([
     var DesignAPI = function(app, db) {
 
       // Get all the user's designs
-      app.get(/^\/api\/([\w.]+)\/designs\/?$/, function(req, res) {
+      app.get(/^\/api\/([\w._-]+)\/designs\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
         Designs.getAll(db, username, function(err, list) {
@@ -22,7 +22,7 @@ define([
       });
 
       // Get the design refs
-      app.get(/^\/api\/([\w.]+)\/design\/([\w%]+)\/?$/, function(req, res) {
+      app.get(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
         var design = decodeURIComponent(req.params[1]);
@@ -39,7 +39,7 @@ define([
       });
 
       // Create a new design
-      app.post(/^\/api\/([\w.]+)\/design\/?$/, function(req, res) {
+      app.post(/^\/api\/([\w._-]+)\/design\/?$/, function(req, res) {
         
         var username = decodeURIComponent(req.params[0]);
         var design = req.body.name && req.body.name.trim();
@@ -75,7 +75,7 @@ define([
       });
 
       // Delete
-      app.delete(/^\/api\/([\w.]+)\/design\/([\w%]+)\/?$/, function(req, res) {
+      app.delete(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
         var design = decodeURIComponent(req.params[1]);
@@ -92,7 +92,7 @@ define([
       });
 
       // Update ref
-      app.put(/^\/api\/([\w.]+)\/design\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
+      app.put(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
         var design = decodeURIComponent(req.params[1]);
@@ -130,7 +130,7 @@ define([
       });
 
       // Rename
-      app.post(/^\/api\/([\w%@.]+)\/design\/([\w%]+)\/?$/, function(req, res) {
+      app.post(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/?$/, function(req, res) {
 
         var username = decodeURIComponent(req.params[0]);
         var design = decodeURIComponent(req.params[1]);

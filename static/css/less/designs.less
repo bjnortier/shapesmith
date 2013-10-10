@@ -97,14 +97,28 @@ body {
   font-size: 15px;
 }
 
-#signout {
+#signout, #signup {
   text-align: right;
-  padding: 10px;
+  margin-top: 20px;
+  margin-right: 10px;
   a {
+    padding: 10px;
     color: black;
+    text-decoration: none;
     &:visited {
       color: black;
+      text-decoration: none;
     }
+    border: none;
+    border-bottom: solid 1px #B6B6B6;
+    cursor: pointer;
+  }
+}
+
+#signup a {
+  background-color: #FFD589;
+  &:hover {
+    background-color: #F7B949;
   }
 }
 

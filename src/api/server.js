@@ -77,7 +77,7 @@ var SessionAuth = function() {
     }
   };
   this.unauthorizedRedirect = function(res) {
-    res.redirect('/signin');
+    res.redirect('/');
   };
 };
 
@@ -119,7 +119,7 @@ db.init(function(err) {
 
 // Authentication for /ui
 app.use('/ui', function(req, res, next) {
-  var match = /\/([\w.]+)\//.exec(req.path);
+  var match = /\/([\w._-]+)\//.exec(req.path);
   if (match) {
     // Ensure the username matches the session username
     var username = match[1];
@@ -135,7 +135,7 @@ app.use('/ui', function(req, res, next) {
 
 // Authentication for /api
 app.use('/api', function(req, res, next) {
-  var match = /\/([\w.]+)\//.exec(req.path);
+  var match = /\/([\w._-]+)\//.exec(req.path);
   if (match) {
     // Ensure the username matches the session username
     var username = match[1];
@@ -161,23 +161,27 @@ app.get(/^\/signin\/?$/, function(req, res) {
 
 // Signup
 app.get(/^\/signup\/?$/, function(req, res) {
-  res.render('signup');
+  res.render('signup', {temporary: req.session.temporary});
 });
 
 // Signout
 app.get(/^\/signout\/?$/, function(req, res) {
   req.session.username = undefined;
-  res.redirect('/signin');
+  res.redirect('/');
 });
 
 // Designs 
-app.get(/^\/ui\/([\w.]+)\/designs\/?$/, function(req, res) {
+app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
-  res.render('designs', {user: username, sessionAuth: (authEngine === 'session')});
+  res.render('designs', {
+    user: username, 
+    temporary: req.session.temporary,
+    signoutButton: ((authEngine === 'session') && !req.session.temporary),
+  });
 });
 
 // Modeller 
-app.get(/^\/ui\/([\w.]+)\/([\w%]+)\/modeller$/, function(req, res) {
+app.get(/^\/ui\/([\w._-]+)\/([\w%]+)\/modeller$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   var design = decodeURIComponent(req.params[1]);
   res.render('modeller', {user: username, design: design});

@@ -16,7 +16,8 @@
 </head>
 <body>
     
-    {{#sessionAuth}}<div id="signout"><a href="/signout">sign out</a></div>{{/sessionAuth}}
+    {{#temporary}}<div class="button" id="signup"><a href="/signup">Sign up</a></div>{{/temporary}}
+    {{#signoutButton}}<div class="button" id="signout"><a href="/signout">Sign out</a></div>{{/signoutButton}}
     <div id="create"></div>
     <div class="maincolumn">
         <ul id="designs"><li class="placeholder">loading...</li></ul>

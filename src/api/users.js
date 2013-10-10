@@ -4,7 +4,7 @@ define([
   function(bcrypt) {
 
     var validateUsername = function(username) {
-      return !!/^[a-zA-Z][a-zA-Z0-9._]*$/.exec(username);
+      return !!/^[a-zA-Z][a-zA-Z0-9._-]*$/.exec(username);
     };
 
     var validateEmailAddress = function(emailAddress) {
@@ -20,13 +20,8 @@ define([
       db.get(key, callback);
     };
 
-    var create = function(db, username, password, callback) {
-      var key = keyFromUsername(username);
-
-      var userData = {
-        username: username,
-        password_bcrypt: bcrypt.hashSync(password, 12),
-      };
+    var create = function(db, userData, callback) {
+      var key = keyFromUsername(userData.username);
       db.set(key, userData, function(err) {
         if (err) {
           callback(err);

@@ -11,8 +11,9 @@
 
   <div class="left">&nbsp;</div>
   <div class="maincolumn">
-    <div>Welcome! Please sign up...</div>
-    <form method="POST">
+    {{#temporary}}<div>Upgrade your temporary account...</div>{{/temporary}}
+    {{^temporary}}<div>Welcome! Please sign up...</div>{{/temporary}}
+    <form method="post" {{#temporary}}action="/signuptemp" {{/temporary}}>
         <input name="username" id="username" placeholder="username" type="text" value="{{username}}"/>
         {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
         <input name="emailAddress" id="emailAddress" placeholder="email address" type="email" value="{{emailAddress}}"/>
@@ -21,7 +22,7 @@
         {{#errors.password}}<div class="error">{{.}}</div>{{/errors.password}}
       <input type="submit" value="Sign up"/>
     </form>
-    <div>Already registered? <a href="/signin">Sign in here<a/></div>
+    {{^temporary}}<div>Already registered? <a href="/signin">Sign in here<a/></div>{{/temporary}}
 
   </div>
   <div class="right">&nbsp;</div>

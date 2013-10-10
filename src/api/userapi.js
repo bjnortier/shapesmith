@@ -1,9 +1,11 @@
 define(
   [
     'underscore',
+    'bcrypt',
+    'node-uuid',
     './users'
   ], 
-  function(_, users) {
+  function(_, bcrypt, uuid, users) {
 
     var UserAPI = function(app, db) {
 
@@ -25,14 +27,14 @@ define(
           errors.username = 'please provide a valid username (only letters and numbers)';
         }
         if (emailAddress === undefined) {
-          errors.emailAddress = 'please provide a valid username (only letters and numbers)';
+          errors.emailAddress = 'please provide a valid email address';
         }
         if (password === undefined) {
           errors.password = 'please provide a password with a minimum of 6 characters';
         }
 
         if (!users.validateUsername(username)) {
-          errors.username = 'please provide a valid username';
+          errors.username = 'please provide a valid username (only letters and numbers)';
         }
         if (!users.validateEmailAddress(emailAddress)) {
           errors.emailAddress = 'please provide a valid email address';
@@ -47,14 +49,18 @@ define(
           return;
         }
 
-        users.get(db, username, function(err, userData) {
+        users.get(db, username, function(err, existingUserData) {
           if (err) {
             res.render(500, 'signup');
-          } else if (userData !== null) {
+          } else if (existingUserData !== null) {
             view.errors.username = 'sorry, this username is taken';
             res.render('signup', view);
           } else {
-            users.create(db, username, password, function(err) {
+            var userData = {
+              username: username, 
+              password_bcrypt: bcrypt.hashSync(password, 12),
+            };
+            users.create(db, userData, function(err) {
               if (err) {
                 res.render(500, 'signup');
               } else {
@@ -62,6 +68,27 @@ define(
                 res.redirect('/ui/' + username + '/designs');
               }
             });
+          }
+        });
+
+      });
+
+      // Create a new temporary user
+      app.post(/^\/createtemp\/?$/, function(req, res) {
+
+        var username = uuid.v4();
+        var userData = {
+          username: username,
+          temporary: true, 
+        };
+        users.create(db, userData, function(err) {
+          if (err) {
+            res.render(500, 'signup');
+          } else {
+            req.session.username = username;
+            req.session.temporary = true;
+            console.log('>>>>', req.session);
+            res.redirect('/ui/' + username + '/designs');
           }
         });
 

@@ -117,15 +117,31 @@ body {
   font-style: normal;
   font-size: 15px;
 }
-#signout {
+#signout,
+#signup {
   text-align: right;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+#signout a,
+#signup a {
   padding: 10px;
-}
-#signout a {
   color: black;
+  text-decoration: none;
+  border: none;
+  border-bottom: solid 1px #B6B6B6;
+  cursor: pointer;
 }
-#signout a:visited {
+#signout a:visited,
+#signup a:visited {
   color: black;
+  text-decoration: none;
+}
+#signup a {
+  background-color: #FFD589;
+}
+#signup a:hover {
+  background-color: #F7B949;
 }
 #create .input-container #new-design-name {
   width: 300px;

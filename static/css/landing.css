@@ -55,17 +55,18 @@ input {
   padding: 10px;
   margin: 20px 0 0 0;
 }
-input[type="button"] {
+input[type="button"],
+input[type="submit"] {
   width: 100%;
   border: none;
   border-bottom: solid 1px #B6B6B6;
   cursor: pointer;
   margin-bottom: 20px;
 }
-.try input[type="button"] {
+.try input[type="submit"] {
   background-color: #FFD589;
 }
-.try input[type="button"]:hover {
+.try input[type="submit"]:hover {
   background-color: #F7B949;
 }
 .signin input[type="button"] {
