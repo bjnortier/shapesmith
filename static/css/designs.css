@@ -143,6 +143,12 @@ body {
 #signup a:hover {
   background-color: #F7B949;
 }
+#signout a {
+  background-color: #DFDFDF;
+}
+#signout a:hover {
+  background-color: #B4E2FC;
+}
 #create .input-container #new-design-name {
   width: 300px;
   vertical-align: middle;

@@ -1,9 +1,13 @@
 define([
+    'ueberDB',
+    'nconf',
     './objects'
   ],
-  function(Objects) {
+  function(ueberDB, nconf, Objects) {
 
-    var ObjectAPI = function(app, db) {
+    var ObjectAPI = function(app) {
+
+      var dbType = nconf.get('dbType') || 'sqlite';
 
       // Create graph
       app.post(/^\/api\/([\w._-]+)\/graph\/?$/, function(req, res) {
@@ -33,24 +37,38 @@ define([
 
 
       var create = function(username, type, object, res) {
-        Objects.create(db, username, type, object, function(err, sha) {
+        var db = new ueberDB.database(dbType, {filename: 'db/' + username + '.db'});
+        db.init(function(err) {
           if (err) {
-            res.json(500, err);
-          } else {
-            res.json(201, sha);
+            return res.json(500, err);
           }
+          
+          Objects.create(db, username, type, object, function(err, sha) {
+            if (err) {
+              res.json(500, err);
+            } else {
+              res.json(201, sha);
+            }
+          });
         });
       };
 
       var get = function(username, type, sha, res) {
-        Objects.get(db, username, type, sha, function(err, object) {
+        var db = new ueberDB.database(dbType, {filename: 'db/' + username + '.db'});
+        db.init(function(err) {
           if (err) {
-            res.send(500, err);
-          } else if (object === null) {
-            res.json(404, 'not found');
-          } else {
-            return res.json(object);
+            return res.send(500, err);
           }
+
+          Objects.get(db, username, type, sha, function(err, object) {
+            if (err) {
+              res.send(500, err);
+            } else if (object === null) {
+              res.json(404, 'not found');
+            } else {
+              return res.json(object);
+            }
+          });
         });
       };
 

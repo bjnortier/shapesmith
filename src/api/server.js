@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var nconf = require('nconf');
 var app = express();
-var ueberDB = require("ueberDB");
 
 var requirejs = require('requirejs');
 var rootDir = path.normalize(path.join(__dirname, '../..'));
@@ -22,7 +21,6 @@ var NODE_ENV = nconf.get('NODE_ENV') || 'development';
 nconf.file({file: path.join(rootDir, path.join('config', NODE_ENV + '.json'))});
 
 var dbType = nconf.get('dbType') || 'sqlite';
-var dbArgs = nconf.get('dbArgs') || {};
 var authEngine = nconf.get('authEngine') || 'local';
 
 console.info("");
@@ -38,7 +36,6 @@ console.info('environment: ', NODE_ENV);
 console.info('port:        ', nconf.get('port'));
 console.info('baseUrl:     ', baseUrl);
 console.info('dbtype:      ', dbType);
-console.info('dbargs:      ', dbArgs);
 
 // ---------- Create db ----------
 
@@ -62,6 +59,7 @@ app.use(express.bodyParser());
 var SessionAuth = function() {
 
   this.canRead = function(username, req) {
+    console.log(username, req.session);
     return (req.session.username === username);
   };
 
@@ -83,7 +81,8 @@ var SessionAuth = function() {
 
 var LocalAuth = function() {
 
-  this.canRead = function(username) {
+  this.canRead = function(username, req) {
+    console.log(username, req.session);
     return username === 'local';
   };
   this.canWrite = function(username) {
@@ -105,17 +104,6 @@ if (authEngine === 'session') {
 }
 app.set('authEngine', authProvider);
 
-var db = new ueberDB.database(dbType, dbArgs);
-db.init(function(err) {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-
-  new requirejs('api/userapi')(app, db);
-  new requirejs('api/designapi')(app, db);
-  new requirejs('api/objectapi')(app, db);
-});
 
 // Authentication for /ui
 app.use('/ui', function(req, res, next) {
@@ -148,6 +136,10 @@ app.use('/api', function(req, res, next) {
     res.json(401, 'unauthorized');
   }
 });
+
+new requirejs('api/userapi')(app);
+new requirejs('api/designapi')(app);
+new requirejs('api/objectapi')(app);
 
 // Index
 app.get('/', function(req, res) {

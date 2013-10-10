@@ -1,13 +1,17 @@
 define(
   [
     'underscore',
+    'ueberDB',
     'bcrypt',
     'node-uuid',
+    'nconf',
     './users'
   ], 
-  function(_, bcrypt, uuid, users) {
+  function(_, ueberDB, bcrypt, uuid, nconf, users) {
 
-    var UserAPI = function(app, db) {
+    var dbType = nconf.get('dbType') || 'sqlite';
+
+    var UserAPI = function(app) {
 
       // Create a new user
       app.post(/^\/signup\/?$/, function(req, res) {
@@ -49,26 +53,34 @@ define(
           return;
         }
 
-        users.get(db, username, function(err, existingUserData) {
+        var db = new ueberDB.database(dbType, {filename: 'db/' + username + '.db'});
+        db.init(function(err) {
           if (err) {
-            res.render(500, 'signup');
-          } else if (existingUserData !== null) {
-            view.errors.username = 'sorry, this username is taken';
-            res.render('signup', view);
-          } else {
-            var userData = {
-              username: username, 
-              password_bcrypt: bcrypt.hashSync(password, 12),
-            };
-            users.create(db, userData, function(err) {
-              if (err) {
-                res.render(500, 'signup');
-              } else {
-                req.session.username = username;
-                res.redirect('/ui/' + username + '/designs');
-              }
-            });
+            return res.render(500, 'signup');
           }
+
+          users.get(db, username, function(err, existingUserData) {
+            if (err) {
+              res.render(500, 'signup');
+            } else if (existingUserData !== null) {
+              view.errors.username = 'sorry, this username is taken';
+              res.render('signup', view);
+            } else {
+              var userData = {
+                username: username, 
+                password_bcrypt: bcrypt.hashSync(password, 12),
+              };
+              users.create(db, userData, function(err) {
+                if (err) {
+                  res.render(500, 'signup');
+                } else {
+                  req.session.username = username;
+                  res.redirect('/ui/' + username + '/designs');
+                }
+              });
+            }
+          });
+
         });
 
       });
@@ -81,15 +93,22 @@ define(
           username: username,
           temporary: true, 
         };
-        users.create(db, userData, function(err) {
+
+        var db = new ueberDB.database(dbType, {filename: 'db/' + username + '.db'});
+        db.init(function(err) {
           if (err) {
-            res.render(500, 'signup');
-          } else {
-            req.session.username = username;
-            req.session.temporary = true;
-            console.log('>>>>', req.session);
-            res.redirect('/ui/' + username + '/designs');
+            return res.render(500, 'signup');
           }
+          
+          users.create(db, userData, function(err) {
+            if (err) {
+              res.render(500, 'signup');
+            } else {
+              req.session.username = username;
+              req.session.temporary = true;
+              res.redirect('/ui/' + username + '/designs');
+            }
+          });
         });
 
       });
@@ -123,22 +142,30 @@ define(
       app.post(/^\/signin\/?$/, function(req, res) {
         var username = req.body.username;
         var password = req.body.password;
-        users.checkPassword(db, username, password, function(err, paswordMatches) {
+
+        var db = new ueberDB.database(dbType, {filename: 'db/' + username + '.db'});
+        db.init(function(err) {
           if (err) {
-            res.render('signin');
-          } else {
-            if (paswordMatches) {
-              req.session.username = username;
-              res.redirect('/ui/' + username + '/designs');
-            } else {
-              res.render('signin', {
-                errors: {
-                  username: 'username and password don\'t match',
-                  password: 'username and password don\'t match',
-                }
-              });
-            }
+            return res.render(500, 'signin');
           }
+          
+          users.checkPassword(db, username, password, function(err, paswordMatches) {
+            if (err) {
+              res.render('signin');
+            } else {
+              if (paswordMatches) {
+                req.session.username = username;
+                res.redirect('/ui/' + username + '/designs');
+              } else {
+                res.render('signin', {
+                  errors: {
+                    username: 'username and password don\'t match',
+                    password: 'username and password don\'t match',
+                  }
+                });
+              }
+            }
+          });
         });
       });
 
