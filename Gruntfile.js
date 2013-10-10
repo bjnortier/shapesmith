@@ -24,9 +24,13 @@ module.exports = function(grunt) {
       gruntfile: {
         src: 'Gruntfile.js'
       },
-      ui: {
+      api: {
         src: [
           'src/api/**/*.js',
+        ]
+      },
+      ui: {
+        src: [
           'src/casgraph/**/*.js',
           'src/inspect/**/*.js',
           'src/latheapi/**/*.js',
@@ -94,6 +98,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+      api: {
+        files: '<%= jshint.api.src %>',
+        tasks: ['jshint:api', 'simplemocha:unit'],
       },
       ui: {
         files: '<%= jshint.ui.src %>',
@@ -177,7 +185,7 @@ module.exports = function(grunt) {
 
   // Unit testing
   grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
-  grunt.registerTask('test', ['jshint:ui', 'unit']);
+  grunt.registerTask('test', ['jshint:api', 'jshint:ui', 'unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';

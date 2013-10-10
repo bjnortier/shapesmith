@@ -1,15 +1,9 @@
 var express = require('express');
 var path = require('path');
 var nconf = require('nconf');
-var app = express();
+var app = express();  
 
-var requirejs = require('requirejs');
 var rootDir = path.normalize(path.join(__dirname, '../..'));
-var baseUrl = path.join(__dirname, "..");
-requirejs.config({
-  baseUrl: baseUrl,
-  nodeRequire: require,
-});
 
 // ---------- Configuration ----------
 
@@ -34,7 +28,7 @@ console.info('\n\nconfiguration:');
 console.info('--------------');
 console.info('environment: ', NODE_ENV);
 console.info('port:        ', nconf.get('port'));
-console.info('baseUrl:     ', baseUrl);
+// console.info('baseUrl:     ', baseUrl);
 console.info('dbtype:      ', dbType);
 
 // ---------- Create db ----------
@@ -137,9 +131,9 @@ app.use('/api', function(req, res, next) {
   }
 });
 
-new requirejs('api/userapi')(app);
-new requirejs('api/designapi')(app);
-new requirejs('api/objectapi')(app);
+new require('./userapi')(app);
+new require('./designapi')(app);
+new require('./objectapi')(app);
 
 // Index
 app.get('/', function(req, res) {
