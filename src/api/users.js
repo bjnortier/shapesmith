@@ -20,7 +20,6 @@ module.exports.get = function(db, username, callback) {
 };
 
 module.exports.create = function(db, userData, callback) {
-  console.log('creating in ', userData, JSON.stringify(db));
   db.set(userKey, userData, function(err) {
     if (err) {
       callback(err);
