@@ -2,21 +2,18 @@ var objects = require('./objects');
 
 
 var createDesignKey = function(username, design) {
-  return username + '/design/' + design;
+  return 'design/' + design;
 };
 
-var createAllDesignsKey = function(username) {
-  return username + '/designs';
-};
+var allDesignsKeys = 'designs';
 
 var updateAllList = function(db, username, updateFn, callback) {
-  var allKey = createAllDesignsKey(username);
-  db.get(allKey, function(err, list) {
+  db.get(allDesignsKeys, function(err, list) {
     if (err) {
       callback(err);
     } else {
       var newList = updateFn(list || []);
-      db.set(allKey, newList, callback);
+      db.set(allDesignsKeys, newList, callback);
     }
   });
 };
@@ -26,8 +23,7 @@ module.exports.validate = function(name) {
 };
 
 module.exports.getAll = function(db, username, callback) {
-  var key = createAllDesignsKey(username);
-  db.get(key, callback);
+  db.get(allDesignsKeys, callback);
 };
 
 module.exports.get = function(db, username, design, callback) {

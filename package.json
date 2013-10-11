@@ -35,7 +35,7 @@
     "backbone": "= 0.9.9",
     "lathe": "= 0.4.0",
     "sqlite3": "~2.1.17",
-    "ueberDB": "~0.2.0",
+    "ueberDB": "git://github.com/bjnortier/ueberDB.git#feature/buffer-per-instance",
     "node-uuid": "~1.4.1"
   },
   "devDependencies": {

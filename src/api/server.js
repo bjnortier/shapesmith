@@ -53,7 +53,6 @@ app.use(express.bodyParser());
 var SessionAuth = function() {
 
   this.canRead = function(username, req) {
-    console.log(username, req.session);
     return (req.session.username === username);
   };
 
@@ -75,8 +74,7 @@ var SessionAuth = function() {
 
 var LocalAuth = function() {
 
-  this.canRead = function(username, req) {
-    console.log(username, req.session);
+  this.canRead = function(username) {
     return username === 'local';
   };
   this.canWrite = function(username) {

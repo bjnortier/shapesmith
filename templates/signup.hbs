@@ -11,9 +11,9 @@
 
   <div class="left">&nbsp;</div>
   <div class="maincolumn">
-    {{#temporary}}<div>Upgrade your temporary account...</div>{{/temporary}}
+    {{#temporary}}<div>Upgrade your temporary account. Your will keep any models you've created</div>{{/temporary}}
     {{^temporary}}<div>Welcome! Please sign up...</div>{{/temporary}}
-    <form method="post" {{#temporary}}action="/signuptemp" {{/temporary}}>
+    <form method="post">
         <input name="username" id="username" placeholder="username" type="text" value="{{username}}"/>
         {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
         <input name="emailAddress" id="emailAddress" placeholder="email address" type="email" value="{{emailAddress}}"/>

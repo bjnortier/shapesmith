@@ -13,18 +13,15 @@ module.exports.validatePassword = function(password) {
   return !!/^.{6,}$/.exec(password);
 };
 
-var keyFromUsername = function(username) {
-  return '_user/' + username;
-};
+var userKey = 'user';
 
 module.exports.get = function(db, username, callback) {
-  var key = keyFromUsername(username);
-  db.get(key, callback);
+  db.get(userKey, callback);
 };
 
 module.exports.create = function(db, userData, callback) {
-  var key = keyFromUsername(userData.username);
-  db.set(key, userData, function(err) {
+  console.log('creating in ', userData, JSON.stringify(db));
+  db.set(userKey, userData, function(err) {
     if (err) {
       callback(err);
     } else {
@@ -35,8 +32,7 @@ module.exports.create = function(db, userData, callback) {
 };
 
 module.exports.checkPassword = function(db, username, password, callback) {
-  var key = keyFromUsername(username);
-  db.get(key, function(err, userData) {
+  db.get(userKey, function(err, userData) {
     if (err) {
       callback(err);
     } else if (userData === null) {
@@ -47,5 +43,3 @@ module.exports.checkPassword = function(db, username, password, callback) {
     }
   });
 };
-
-module.exports.keyFromUsername = keyFromUsername;

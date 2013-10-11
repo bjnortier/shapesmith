@@ -41,39 +41,60 @@ var UserAPI = function(app) {
       errors.password = 'please provide a password with a minimum of 6 characters';
     }
 
+    if (userDB.userExists(username)) {
+      errors.username = 'sorry, this username is taken';
+    }
+
     if (_.keys(errors).length) {
       res.render('signup', view);
       return;
     }
 
-    userDB.init(username, function(err, db) {
-      if (err) {
-        return res.render(500, 'signup');
-      }
-
-      users.get(db, username, function(err, existingUserData) {
+    function createUser() {
+      userDB.init(username, function(err, db) {
         if (err) {
-          res.render(500, 'signup');
-        } else if (existingUserData !== null) {
-          view.errors.username = 'sorry, this username is taken';
-          res.render('signup', view);
+          console.err(err);
+          return res.render('signup');
+        }
+
+        var userData = {
+          username: username, 
+          password_bcrypt: bcrypt.hashSync(password, 12),
+          createdAt: new Date().toISOString(),
+        };
+        if (req.session.temporary) {
+          userData.upgradedFrom = req.session.username;
+          userData.upgratedAt = new Date().toISOString();
+          req.session.temporary = undefined;
+        }
+
+        users.create(db, userData, function(err) {
+          if (err) {
+            console.err(err);
+            res.render('signup');
+          } else {
+            req.session.username = username;
+            res.redirect('/ui/' + username + '/designs');
+          }
+        });
+      });
+    }
+
+    // Copy the db to the new user
+    if (req.session.temporary) {
+      userDB.copy(req.session.username, username, function(err) {
+        if (err) {
+          console.log(err);
+          res.render('signup');
         } else {
-          var userData = {
-            username: username, 
-            password_bcrypt: bcrypt.hashSync(password, 12),
-          };
-          users.create(db, userData, function(err) {
-            if (err) {
-              res.render(500, 'signup');
-            } else {
-              req.session.username = username;
-              res.redirect('/ui/' + username + '/designs');
-            }
-          });
+          createUser();
         }
       });
+    } else {
+      createUser();
+    }
 
-    });
+   
 
   });
 
@@ -88,12 +109,14 @@ var UserAPI = function(app) {
 
     userDB.init(username, function(err, db) {
       if (err) {
-        return res.render(500, 'signup');
+        console.err(err);
+        return res.render('signup');
       }
       
       users.create(db, userData, function(err) {
         if (err) {
-          res.render(500, 'signup');
+          console.err(err);
+          res.render('signup');
         } else {
           req.session.username = username;
           req.session.temporary = true;
@@ -136,11 +159,13 @@ var UserAPI = function(app) {
 
     userDB.init(username, function(err, db) {
       if (err) {
-        return res.render(500, 'signin');
+        console.err(err);
+        return res.render('signin');
       }
       
       users.checkPassword(db, username, password, function(err, paswordMatches) {
         if (err) {
+          console.err(err);
           res.render('signin');
         } else {
           if (paswordMatches) {

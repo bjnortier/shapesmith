@@ -9,7 +9,7 @@ requirejs.config({
 var graphapi = requirejs('graphapi');
 
 var createKey = function(username, type, sha) {
-  return username + '/' + type + '/' + sha;
+  return type + '/' + sha;
 };
 
 var create = function(db, username, type, object, callback) {
