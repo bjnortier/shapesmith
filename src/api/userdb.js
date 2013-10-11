@@ -41,10 +41,10 @@ function copyFile(source, target, cb) {
   }
 }
 
-module.exports.copy = function(previoususername, newusername, callback) {
-  copyFile(
+module.exports.rename = function(previoususername, newusername) {
+  fs.renameSync(
     sqliteFileFromUsername(previoususername),
-    sqliteFileFromUsername(newusername), callback);
+    sqliteFileFromUsername(newusername));
 };
 
 module.exports.userExists = function(username) {

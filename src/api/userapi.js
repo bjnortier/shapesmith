@@ -50,51 +50,38 @@ var UserAPI = function(app) {
       return;
     }
 
-    function createUser() {
-      userDB.init(username, function(err, db) {
+    // Rename the db to the new user
+    if (req.session.temporary) {
+      userDB.rename(req.session.username, username);
+    }
+
+    userDB.init(username, function(err, db) {
+      if (err) {
+        console.err(err);
+        return res.render('signup');
+      }
+
+      var userData = {
+        username: username, 
+        password_bcrypt: bcrypt.hashSync(password, 12),
+        createdAt: new Date().toISOString(),
+      };
+      if (req.session.temporary) {
+        userData.upgradedFrom = req.session.username;
+        userData.upgratedAt = new Date().toISOString();
+        req.session.temporary = undefined;
+      }
+
+      users.create(db, userData, function(err) {
         if (err) {
           console.err(err);
-          return res.render('signup');
-        }
-
-        var userData = {
-          username: username, 
-          password_bcrypt: bcrypt.hashSync(password, 12),
-          createdAt: new Date().toISOString(),
-        };
-        if (req.session.temporary) {
-          userData.upgradedFrom = req.session.username;
-          userData.upgratedAt = new Date().toISOString();
-          req.session.temporary = undefined;
-        }
-
-        users.create(db, userData, function(err) {
-          if (err) {
-            console.err(err);
-            res.render('signup');
-          } else {
-            req.session.username = username;
-            res.redirect('/ui/' + username + '/designs');
-          }
-        });
-      });
-    }
-
-    // Copy the db to the new user
-    if (req.session.temporary) {
-      userDB.copy(req.session.username, username, function(err) {
-        if (err) {
-          console.log(err);
           res.render('signup');
         } else {
-          createUser();
+          req.session.username = username;
+          res.redirect('/ui/' + username + '/designs');
         }
       });
-    } else {
-      createUser();
-    }
-
-   
+    });
 
   });
 
