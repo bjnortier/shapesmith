@@ -1,0 +1,89 @@
+@import '/css/reset.css';
+@import 'grid.less';
+
+
+//////////
+// GRID //
+//////////
+
+// Specify the number of columns and set column and gutter widths
+@columns: 12;
+@column-width: 60;
+@gutter-width: 20;
+
+// Remove the definition below for a pixel-based layout
+@total-width: 100%;
+
+
+////////////
+// LAYOUT //
+////////////
+
+
+// main column & sidebar
+.left, .right {
+  .column(4);
+}
+.try, .signin { 
+  .column(2);
+  margin-top: 200px;
+}
+
+@media screen and (max-width: 640px) {
+  .left,
+  .right {
+    .column(3);
+  }
+  .try, .signin { 
+    .column(3);
+    margin-top: 200px;
+  }
+}
+
+
+// ---------- Style ----------
+
+body {
+  background-color: #FCFCFF;
+  font-family: 'Lucida Grande', 'Helvetica', sans;
+}
+
+
+input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 15px;
+  padding: 10px;
+  margin: 20px 0 0 0;
+}
+
+input[type="button"], input[type="submit"] {
+  width: 100%;
+  border: none;
+  border-bottom: solid 1px #B6B6B6;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.try input[type="submit"] {
+  background-color: #FFD589;
+  &:hover {
+    background-color: #F7B949;
+  }
+}
+
+.signin {
+  input[type="button"] {
+    background-color: #DFDFDF;
+    &:hover {
+      background-color: #B4E2FC;
+    }
+  }
+  a {
+    &:visited {
+      text-decoration: none;
+    }
+    text-decoration: none;
+  }
+}

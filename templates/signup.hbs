@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Shapesmith</title>
+  <link rel="stylesheet" href="/css/signinsignup.css" type="text/css" media="screen" />
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+
+  <div class="left">&nbsp;</div>
+  <div class="maincolumn">
+    {{#temporary}}<div>Upgrade your temporary account. Your will keep any models you've created</div>{{/temporary}}
+    {{^temporary}}<div>Welcome! Please sign up...</div>{{/temporary}}
+    <form method="post">
+        <input name="username" id="username" placeholder="username" type="text" value="{{username}}"/>
+        {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
+        <input name="emailAddress" id="emailAddress" placeholder="email address" type="email" value="{{emailAddress}}"/>
+        {{#errors.emailAddress}}<div class="error">{{.}}</div>{{/errors.emailAddress}}
+        <input name="password" id="password" placeholder="password" type="password" value="{{password}}"/>
+        {{#errors.password}}<div class="error">{{.}}</div>{{/errors.password}}
+      <input type="submit" value="Sign up"/>
+    </form>
+    {{^temporary}}<div>Already registered? <a href="/signin">Sign in here<a/></div>{{/temporary}}
+
+  </div>
+  <div class="right">&nbsp;</div>
+
+  <script>
+  </script>
+  
+</body>
+</html>

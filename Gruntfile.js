@@ -24,9 +24,13 @@ module.exports = function(grunt) {
       gruntfile: {
         src: 'Gruntfile.js'
       },
-      ui: {
+      api: {
         src: [
           'src/api/**/*.js',
+        ]
+      },
+      ui: {
+        src: [
           'src/casgraph/**/*.js',
           'src/inspect/**/*.js',
           'src/latheapi/**/*.js',
@@ -49,7 +53,7 @@ module.exports = function(grunt) {
             "requestAnimationFrame": false,
             "THREE": false,
             "$": false,
-            "requirejs": false,
+            "requirejs": true,
             "dat": false,
             "Stats": false,
             "Shapesmith": false,
@@ -81,9 +85,11 @@ module.exports = function(grunt) {
     less: {
       all: {
         files: {
-          './static/css/designs.css'    : 'static/css/less/designs.less',
-          './static/css/grid.css'       : 'static/css/less/grid.less',
-          './static/css/shapesmith.css' : 'static/css/less/shapesmith.less',
+          './static/css/designs.css'     : 'static/css/less/designs.less',
+          './static/css/signinsignup.css': 'static/css/less/signinsignup.less',
+          './static/css/landing.css'     : 'static/css/less/landing.less',
+          './static/css/grid.css'        : 'static/css/less/grid.less',
+          './static/css/shapesmith.css'  : 'static/css/less/shapesmith.less',
         },
       },
     },
@@ -92,6 +98,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+      api: {
+        files: '<%= jshint.api.src %>',
+        tasks: ['jshint:api', 'simplemocha:unit'],
       },
       ui: {
         files: '<%= jshint.ui.src %>',
@@ -175,7 +185,7 @@ module.exports = function(grunt) {
 
   // Unit testing
   grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
-  grunt.registerTask('test', ['jshint:ui', 'unit']);
+  grunt.registerTask('test', ['jshint:api', 'jshint:ui', 'unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';

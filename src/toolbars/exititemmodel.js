@@ -16,7 +16,7 @@ define([
       },
 
       click: function() {
-        window.location = '/_ui/' + Shapesmith.user + '/designs';
+        window.location = '/ui/' + Shapesmith.user + '/designs';
       },
 
       icon: icons.list,

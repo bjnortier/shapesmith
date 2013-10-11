@@ -64,8 +64,8 @@ requirejs([
 
       new StatsView();
 
-      var vertexUrl = '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/vertex/';
-      var graphUrl = '/_api/' + Shapesmith.user + '/' + Shapesmith.design + '/graph/';
+      var vertexUrl = '/api/' + Shapesmith.user + '/vertex/';
+      var graphUrl = '/api/' + Shapesmith.user + '/graph/';
       var replicator = new AJAXReplicator(vertexUrl, graphUrl);
       geometryGraph.attachReplicator(replicator);
 

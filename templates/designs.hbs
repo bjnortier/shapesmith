@@ -11,12 +11,13 @@
         var Shapesmith = Shapesmith || {};
         Shapesmith.user = '{{user}}';
     </script>
-    <script data-main="/ui/main.designs.js" src="/ui/lib/require-jquery.js"></script>
+    <script data-main="/src/main.designs.js" src="/src/lib/require-jquery.js"></script>
 
 </head>
 <body>
     
-    <div id="logo"><img src="/images/logo_small.png"/></div>
+    {{#temporary}}<div class="button" id="signup"><a href="/signup">Sign up</a></div>{{/temporary}}
+    {{#signoutButton}}<div class="button" id="signout"><a href="/signout">Sign out</a></div>{{/signoutButton}}
     <div id="create"></div>
     <div class="maincolumn">
         <ul id="designs"><li class="placeholder">loading...</li></ul>

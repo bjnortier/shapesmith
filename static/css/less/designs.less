@@ -20,12 +20,8 @@
 ////////////
 
 // header
-#logo {
-  .column(6);
-  margin-top: 1em;
-}
 #create {
-  .column(6);
+  .column(12);
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -92,7 +88,7 @@
 @border-color: #ccc;
 
 body {
-  background-color: #EBECF0;;
+  background-color: #EBECF0;
   background-position: 100% -50%;
   background-repeat: no-repeat;
   color: #090909;
@@ -101,34 +97,63 @@ body {
   font-size: 15px;
 }
 
+#signout, #signup {
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 10px;
+  a {
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    &:visited {
+      color: black;
+      text-decoration: none;
+    }
+    border: none;
+    border-bottom: solid 1px #B6B6B6;
+    cursor: pointer;
+  }
+}
+
+#signup a {
+  background-color: #FFD589;
+  &:hover {
+    background-color: #F7B949;
+  }
+}
+
+#signout a {
+  background-color: #DFDFDF;
+  &:hover {
+    background-color: #B4E2FC;
+  }
+}
+
 #create {
   // .button {
   //   display: inline-block;
   // }
   .input-container {
-    margin-right: 23px;
-    text-align: right;
-    width: 100%;
     #new-design-name {
+      width: 300px;
       vertical-align: middle;
       border: solid thin #2D5FAA;
-      width: 75%;
       padding: 10px;
       font-size: 15px;
-      margin-top: -4px;
+      margin-top: -2px;
       margin-right: 1px;
     }
     #hidden-button {
       border: none;
       padding: 10px;
       margin-left: 10px;
-      margin-right: -1px;
+      margin-right: 1px;
       font-size: 15px;
       cursor: pointer;
-      background-color: #B4E2FC;
+      background-color: #DADBDB;
       border-bottom: solid 1px rgb(201, 197, 197);
       &:hover {
-        background-color: #D2EFFF;;
+        background-color: #B4E2FC;
       }
     }
   }

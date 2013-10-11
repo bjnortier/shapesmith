@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Shapesmith</title>
+  <link rel="stylesheet" href="/css/signinsignup.css" type="text/css" media="screen" />
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+
+  <div class="left">&nbsp;</div>
+  <div class="maincolumn">
+    <div>Welcome! Please sign in...</div>
+    <form method="post">
+        <input name="username" id="username" placeholder="username" type="text"/>
+        {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
+        <input name="password" id="password" placeholder="password" type="password"/>
+        {{#errors.password}}<div class="error">{{.}}</div>{{/errors.password}}
+      <input type="submit" value="Sign in"/>
+    </form>
+    <div>Not registered? <a href="/signup">Sign up here.<a/></div>
+
+  </div>
+  <div class="right">&nbsp;</div>
+
+  <script>
+  </script>
+  
+</body>
+</html>
