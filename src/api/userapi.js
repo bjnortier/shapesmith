@@ -57,29 +57,46 @@ var UserAPI = function(app) {
 
     userDB.init(username, function(err, db) {
       if (err) {
-        console.err(err);
+        console.error(err);
         return res.render('signup');
       }
 
-      var userData = {
-        username: username, 
-        password_bcrypt: bcrypt.hashSync(password, 12),
-        createdAt: new Date().toISOString(),
-      };
-      if (req.session.temporary) {
-        userData.upgradedFrom = req.session.username;
-        userData.upgratedAt = new Date().toISOString();
-        req.session.temporary = undefined;
+      function createIfNotTemporary(callback) {
+        if (!req.session.temporary) {
+          userDB.create(db, callback);
+        } else {
+          callback(null);
+        }
       }
 
-      users.create(db, userData, function(err) {
+      createIfNotTemporary(function(err) {
         if (err) {
-          console.err(err);
-          res.render('signup');
-        } else {
-          req.session.username = username;
-          res.redirect('/ui/' + username + '/designs');
+          console.error(err);
+          return res.render('signup');
         }
+
+        var userData = {
+          username: username, 
+          password_bcrypt: bcrypt.hashSync(password, 12),
+          createdAt: new Date().toISOString(),
+        };
+
+        if (req.session.temporary) {
+          userData.upgradedFrom = req.session.username;
+          userData.upgratedAt = new Date().toISOString();
+          req.session.temporary = undefined;
+        }
+
+        users.create(db, userData, function(err) {
+          if (err) {
+            console.error(err);
+            res.render('signup');
+          } else {
+            req.session.username = username;
+            res.redirect('/ui/' + username + '/designs');
+          }
+        });
+
       });
     });
 
@@ -88,7 +105,7 @@ var UserAPI = function(app) {
   // Create a new temporary user
   app.post(/^\/createtemp\/?$/, function(req, res) {
 
-    var username = uuid.v4();
+    var username = 'tmp_' + uuid.v4();
     var userData = {
       username: username,
       temporary: true, 
@@ -96,19 +113,26 @@ var UserAPI = function(app) {
 
     userDB.init(username, function(err, db) {
       if (err) {
-        console.err(err);
+        console.error(err);
         return res.render('signup');
       }
-      
-      users.create(db, userData, function(err) {
+
+      userDB.create(db, function(err) {
         if (err) {
-          console.err(err);
-          res.render('signup');
-        } else {
-          req.session.username = username;
-          req.session.temporary = true;
-          res.redirect('/ui/' + username + '/designs');
+          console.error(err);
+          return res.render('signup');
         }
+      
+        users.create(db, userData, function(err) {
+          if (err) {
+            console.error(err);
+            res.render('signup');
+          } else {
+            req.session.username = username;
+            req.session.temporary = true;
+            res.redirect('/ui/' + username + '/designs');
+          }
+        });
       });
     });
 
@@ -146,13 +170,13 @@ var UserAPI = function(app) {
 
     userDB.init(username, function(err, db) {
       if (err) {
-        console.err(err);
+        console.error(err);
         return res.render('signin');
       }
       
       users.checkPassword(db, username, password, function(err, paswordMatches) {
         if (err) {
-          console.err(err);
+          console.error(err);
           res.render('signin');
         } else {
           if (paswordMatches) {

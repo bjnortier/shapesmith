@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "test": "grunt test",
-    "app": "nodemon src/api/app.js"
+    "app": "nodemon -e js,json src/api/app.js"
   },
   "dependencies": {
     "express": "3.x",
@@ -35,8 +35,9 @@
     "backbone": "= 0.9.9",
     "lathe": "= 0.4.0",
     "sqlite3": "~2.1.17",
-    "ueberDB": "git://github.com/bjnortier/ueberDB.git#feature/buffer-per-instance",
-    "node-uuid": "~1.4.1"
+    "ueberDB": "git://github.com/bjnortier/ueberDB.git#feature/encode-couch-gets",
+    "node-uuid": "~1.4.1",
+    "felix-couchdb": "~1.0.7"
   },
   "devDependencies": {
     "mocha": "= 1.7.4",

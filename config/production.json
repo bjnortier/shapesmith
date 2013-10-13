@@ -1,0 +1,7 @@
+{
+  "port": 8000,
+  "dbType": "couch",
+  "couchVarLib": "/usr/local/var/lib/couchdb/",
+  "authEngine" : "session"
+}
+
