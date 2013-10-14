@@ -44,7 +44,7 @@ app.use('/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 
 app.use(express.cookieParser());
-app.use(express.session({secret: '1234567890QWERTY'}));
+app.use(express.session({secret: '00564f4637dcb818688842dac6442fe0'}));
 app.use(express.bodyParser());
 
 // app.use(express.logger());
