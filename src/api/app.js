@@ -171,11 +171,4 @@ app.get(/^\/ui\/([\w._-]+)\/([\w%]+)\/modeller$/, function(req, res) {
   res.render('modeller', {user: username, design: design});
 });
 
-// For controlling the process (e.g. via Erlang) - stop the server
-// when stdin is closed
-process.stdin.resume();
-process.stdin.on('end', function() {
-  process.exit();
-});
-
 module.exports = app;
