@@ -31,13 +31,13 @@
     "requirejs": "~2.1.2",
     "underscore": "= 1.4.3",
     "backbone-events": "git://github.com/bjnortier/backbone-events.git#0.9.9",
-    "node-supervisor": "git://github.com/bjnortier/node-supervisor.git#exit-on-EOF",
     "backbone": "= 0.9.9",
     "lathe": "= 0.4.0",
     "sqlite3": "~2.1.17",
-    "ueberDB": "git://github.com/bjnortier/ueberDB.git#feature/encode-couch-gets",
+    "ueberDB": "git://github.com/bjnortier/ueberDB#feature/shapesmith",
     "node-uuid": "~1.4.1",
-    "felix-couchdb": "~1.0.7"
+    "felix-couchdb": "~1.0.7",
+    "bcrypt": "~0.7.7"
   },
   "devDependencies": {
     "mocha": "= 1.7.4",
