@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "test": "grunt test",
-    "app": "nodemon -e js,json src/api/app.js"
+    "start": "nodemon -e js,json src/api/server.js"
   },
   "dependencies": {
     "express": "3.x",

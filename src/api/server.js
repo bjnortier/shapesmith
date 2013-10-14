@@ -1,7 +1,12 @@
-var server = require('./server'),
-    nconf = require('nconf');
-   
+var http = require('http');
+var app = require('./app');
+var nconf = require('nconf');
+
+
 var port = nconf.get('port');
-server.listen(port);
-console.info('--------------');
-console.info('server started on :' + port + '\n');
+var server = http.createServer(app);
+server.listen(port, function() {
+  console.info('server started on :' + port + '\n');
+});
+   
+
