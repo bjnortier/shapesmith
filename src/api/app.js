@@ -150,8 +150,9 @@ app.get(/^\/signup\/?$/, function(req, res) {
 
 // Signout
 app.get(/^\/signout\/?$/, function(req, res) {
-  req.session.username = undefined;
-  res.redirect('/');
+  req.session.destroy(function(err) {
+    res.redirect('/');
+  });
 });
 
 // Designs 
