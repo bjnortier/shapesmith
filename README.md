@@ -8,16 +8,17 @@ You can find the original, stable, version at [http://github.com/bjnortier/shape
 
 ## What is Shapesmith?
 
-Shapemsith is a browser-based:
-
+Shapemsith is a:
+ 
+ * HTML5
  * Open Source
  * Parametric
  * 3D modelling application
 
-and also:
+And it is also:
 
- * Full-stack Javascript using Node.js
  * Aimed at 3D printing
+ * Written in pure Javascript 
 
 ## Installation
 
@@ -36,7 +37,10 @@ On Linux, there are different [instructions for your distribution](https://githu
 
 ### Install the dependencies
 
-    $ npm install -g grunt-cli nodemon
+    $ cd shapesmith.next
+
+    # If you're using Homebrew you won't need the sudo command
+    $ [sudo] npm install -g grunt-cli nodemon
     [...]
     
     $ npm install
@@ -52,9 +56,9 @@ On Linux, there are different [instructions for your distribution](https://githu
 
 ### Run the app
 
-    $ npm run-script app
+    $ npm start
     
-    > shapesmith@0.11.0 app /Users/bjnortier/development/shapesmith.next
+    > shapesmith@0.11.1 start /Users/bjnortier/development/shapesmith.next
     > nodemon src/api/app.js
     
     6 Oct 23:13:36 - [nodemon] v0.7.8
@@ -66,17 +70,15 @@ On Linux, there are different [instructions for your distribution](https://githu
     ,-. |-. ,-. ,-. ,-. ,-. ,-,-. . |- |-. 
     `-. | | ,-| | | |-' `-. | | | | |  | | 
     `-' ' ' `-^ |-' `-' `-' ' ' ' ' `' ' ' 
-                |                          
+                '                          
     
     
     
     configuration:
     --------------
-    environment:  devel
+    environment:  development
     port:         8000
-    baseUrl:      /Users/bjnortier/development/shapesmith.next/src
-    disk db path: /Users/bjnortier/development/shapesmith.next/db/
-    --------------
+    dbtype:       sqlite
     server started on :8000
 
 ### Open your browser
