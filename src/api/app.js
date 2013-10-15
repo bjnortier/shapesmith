@@ -14,8 +14,9 @@ nconf.env();
 var NODE_ENV = nconf.get('NODE_ENV') || 'development';
 nconf.file({file: path.join(rootDir, path.join('config', NODE_ENV + '.json'))});
 
-var dbType = nconf.get('dbType') || 'sqlite';
-var authEngine = nconf.get('authEngine') || 'local';
+var config = nconf.get();
+var dbType = config.dbType || 'sqlite';
+var authEngine = config.authEngine || 'local';
 
 console.info("");
 console.info("    .                           .  .   ");
@@ -24,12 +25,13 @@ console.info("`-. | | ,-| | | |-' `-. | | | | |  | | ");
 console.info("`-' ' ' `-^ |-' `-' `-' ' ' ' ' `' ' ' ");
 console.info("            '                          ");
 
-console.info('\n\nconfiguration:');
-console.info('--------------');
-console.info('environment: ', NODE_ENV);
-console.info('port:        ', nconf.get('port'));
-// console.info('baseUrl:     ', baseUrl);
-console.info('dbtype:      ', dbType);
+console.info('\nconfiguration:');
+console.info('---------------------------------------');
+console.info('environment:       ', NODE_ENV);
+console.info('port:              ', config.port);
+console.info('dbtype:            ', dbType);
+console.info('redisSessionStore: ', !!config.redisSessionStore);
+console.info('---------------------------------------');
 
 // ---------- Create db ----------
 
@@ -46,7 +48,7 @@ app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 
-if (NODE_ENV === 'production') {
+if (config.redisSessionStore) {
   var RedisStore = require('connect-redis')(express);
   app.use(express.session({
     store: new RedisStore({
@@ -73,7 +75,9 @@ var SessionAuth = function() {
     if (req.session.username) {
       res.redirect('/ui/' + req.session.username + '/designs');
     } else {
-      res.render('landing');
+      res.render('landing', {
+        track: config.redisSessionStore
+      });
     }
   };
   this.unauthorizedRedirect = function(res) {
@@ -153,13 +157,18 @@ app.get(/^\/signin\/?$/, function(req, res) {
     if (err) {
       console.err(err);
     }
-    res.render('signin');
+    res.render('signin', {
+      track: config.redisSessionStore
+    });
   });
 });
 
 // Signup
 app.get(/^\/signup\/?$/, function(req, res) {
-  res.render('signup', {temporary: req.session.temporary});
+  res.render('signup', {
+    temporary: req.session.temporary,
+    track: config.redisSessionStore,
+  });
 });
 
 // Signout
@@ -180,6 +189,7 @@ app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
     user: username, 
     temporary: req.session.temporary,
     signoutButton: ((authEngine === 'session') && !req.session.temporary),
+    track: config.redisSessionStore,
   });
 });
 
@@ -187,7 +197,11 @@ app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
 app.get(/^\/ui\/([\w._-]+)\/([\w%]+)\/modeller$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   var design = decodeURIComponent(req.params[1]);
-  res.render('modeller', {user: username, design: design});
+  res.render('modeller', {
+    user: username, 
+    design: design,
+    track: config.redisSessionStore,
+  });
 });
 
 module.exports = app;

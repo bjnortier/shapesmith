@@ -3,6 +3,8 @@ var bcrypt = require('bcrypt');
 var uuid = require('node-uuid');
 var users = require('./users');
 var userDB = require('./userdb');
+var nconf = require('nconf');
+var config = nconf.get();
 
 var UserAPI = function(app) {
 
@@ -17,7 +19,8 @@ var UserAPI = function(app) {
       username: username,
       emailAddress: emailAddress,
       password: password,
-      errors: errors
+      errors: errors,
+      track: config.track,
     };
 
     if (username === undefined) {
@@ -58,7 +61,9 @@ var UserAPI = function(app) {
     userDB.init(username, function(err, db) {
       if (err) {
         console.error(err);
-        return res.render('signup');
+        return res.render('signup', {
+          track: config.track
+        });
       }
 
       function createIfNotTemporary(callback) {
@@ -72,7 +77,9 @@ var UserAPI = function(app) {
       createIfNotTemporary(function(err) {
         if (err) {
           console.error(err);
-          return res.render('signup');
+          return res.render('signup', {
+            track: config.track
+          });
         }
 
         var userData = {
@@ -90,7 +97,9 @@ var UserAPI = function(app) {
         users.create(db, userData, function(err) {
           if (err) {
             console.error(err);
-            res.render('signup');
+            res.render('signup', {
+              track: config.track
+            });
           } else {
             req.session.username = username;
             res.redirect('/ui/' + username + '/designs');
@@ -114,19 +123,25 @@ var UserAPI = function(app) {
     userDB.init(username, function(err, db) {
       if (err) {
         console.error(err);
-        return res.render('signup');
+        return res.render('signup', {
+          track: config.track
+        });
       }
 
       userDB.create(db, function(err) {
         if (err) {
           console.error(err);
-          return res.render('signup');
+          return res.render('signup', {
+            track: config.track
+          });
         }
       
         users.create(db, userData, function(err) {
           if (err) {
             console.error(err);
-            res.render('signup');
+            res.render('signup', {
+              track: config.track
+            });
           } else {
             req.session.username = username;
             req.session.temporary = true;
@@ -171,13 +186,17 @@ var UserAPI = function(app) {
     userDB.init(username, function(err, db) {
       if (err) {
         console.error(err);
-        return res.render('signin');
+        return res.render('signin', {
+          track: config.track
+        });
       }
       
       users.checkPassword(db, username, password, function(err, paswordMatches) {
         if (err) {
           console.error(err);
-          res.render('signin');
+          res.render('signin', {
+            track: config.track
+          });
         } else {
           if (paswordMatches) {
             req.session.username = username;
@@ -187,7 +206,8 @@ var UserAPI = function(app) {
               errors: {
                 username: 'username and password don\'t match',
                 password: 'username and password don\'t match',
-              }
+              },
+              track: config.track,
             });
           }
         }
