@@ -24,7 +24,7 @@ and also:
 ### Requirements
 
 1. Nodejs > 0.10 (and NPM)
-1. Grunt-cli and Nodemon
+1. grunt-cli and nodemon
 1. A WebGL-capable browser
 
 On a Mac, I recommend using [Homebrew](http://mxcl.github.com/homebrew/) to install nodejs. When you have homebrew, install nodejs (npm is included):
@@ -52,10 +52,10 @@ On Linux, there are different [instructions for your distribution](https://githu
 
 ### Run the app
 
-    $ npm run-script app
+    $ npm start
     
     > shapesmith@0.11.0 app /Users/bjnortier/development/shapesmith.next
-    > nodemon src/api/app.js
+    > nodemon src/api/server.js
     
     6 Oct 23:13:36 - [nodemon] v0.7.8
     6 Oct 23:13:36 - [nodemon] to restart at any time, enter `rs`
@@ -66,7 +66,7 @@ On Linux, there are different [instructions for your distribution](https://githu
     ,-. |-. ,-. ,-. ,-. ,-. ,-,-. . |- |-. 
     `-. | | ,-| | | |-' `-. | | | | |  | | 
     `-' ' ' `-^ |-' `-' `-' ' ' ' ' `' ' ' 
-                |                          
+                '                          
     
     
     
