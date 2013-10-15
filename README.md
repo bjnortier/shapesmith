@@ -82,6 +82,10 @@ On Linux, there are different [instructions for your distribution](https://githu
 ### Open your browser
 
     http://localhost:8000
+    
+## LICENSE
+
+MIT
 
 
 
