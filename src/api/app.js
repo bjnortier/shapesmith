@@ -149,7 +149,12 @@ app.get('/', function(req, res) {
 
 // Signin
 app.get(/^\/signin\/?$/, function(req, res) {
-  res.render('signin');
+  req.session.destroy(function(err) {
+    if (err) {
+      console.err(err);
+    }
+    res.render('signin');
+  });
 });
 
 // Signup
