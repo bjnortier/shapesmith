@@ -163,6 +163,7 @@ app.get(/^\/signout\/?$/, function(req, res) {
     if (err) {
       console.err(err);
     }
+    req.session = undefined;
     res.redirect('/');
   });
 });
