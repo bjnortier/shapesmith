@@ -18,7 +18,7 @@ define([
       var worker;
       var i;
       for (i = 0; i < poolSize; ++i) {
-        worker = new Worker('/src/latheapi/worker.js');
+        worker = new Worker('/src/worker.js');
         worker.onerror = function () {
           console.error("worker error", arguments);
         };
