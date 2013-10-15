@@ -24,9 +24,13 @@ module.exports = function(grunt) {
       gruntfile: {
         src: 'Gruntfile.js'
       },
-      ui: {
+      api: {
         src: [
           'src/api/**/*.js',
+        ]
+      },
+      ui: {
+        src: [
           'src/casgraph/**/*.js',
           'src/inspect/**/*.js',
           'src/latheapi/**/*.js',
@@ -49,7 +53,7 @@ module.exports = function(grunt) {
             "requestAnimationFrame": false,
             "THREE": false,
             "$": false,
-            "requirejs": false,
+            "requirejs": true,
             "dat": false,
             "Stats": false,
             "Shapesmith": false,
@@ -81,9 +85,11 @@ module.exports = function(grunt) {
     less: {
       all: {
         files: {
-          './static/css/designs.css'    : 'static/css/less/designs.less',
-          './static/css/grid.css'       : 'static/css/less/grid.less',
-          './static/css/shapesmith.css' : 'static/css/less/shapesmith.less',
+          './static/css/designs.css'     : 'static/css/less/designs.less',
+          './static/css/signinsignup.css': 'static/css/less/signinsignup.less',
+          './static/css/landing.css'     : 'static/css/less/landing.less',
+          './static/css/grid.css'        : 'static/css/less/grid.less',
+          './static/css/shapesmith.css'  : 'static/css/less/shapesmith.less',
         },
       },
     },
@@ -92,6 +98,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+      api: {
+        files: '<%= jshint.api.src %>',
+        tasks: ['jshint:api', 'simplemocha:unit'],
       },
       ui: {
         files: '<%= jshint.ui.src %>',
@@ -109,7 +119,6 @@ module.exports = function(grunt) {
 
     simplemocha: {
       options: {
-        // globals: ['should'],
         timeout: 3000,
         slow: 5000,
         ignoreLeaks: false,
@@ -140,10 +149,35 @@ module.exports = function(grunt) {
           modules: [
             {
               name: "main.ui"
+            },
+            {
+              name: "main.designs",
+            },
+            {
+              name: "worker",
             }
-          ]
+          ],
+          fileExclusionRegExp: /(^\.|^bin$|^artwork$|^.*.db$|^.db$|^test|^grunt.*$|^mocha$|^chai$|^webdriverjs$)/,
         }
       }
+    },
+
+    uglify: {
+      main_ui: {
+        files: {
+          'build/src/main.ui.js': ['build/src/main.ui.js']
+        }
+      },
+      main_designs: {
+        files: {
+          'build/src/main.designs.js': ['build/src/main.designs.js']
+        }
+      },
+      worker: {
+        files: {
+          'build/src/worker.js': ['build/src/worker.js']
+        }
+      },
     },
 
     express: {
@@ -155,33 +189,32 @@ module.exports = function(grunt) {
       }
     },
 
-    chmod: {
-      options: {
-        mode: '755'
-      },
-      build: {
-        src: ['build/bin/start', 'build/node_modules/supervisor/lib/cli-wrapper.js']
+    exec: {
+      fix_worker: {
+        cmd: 'echo "importScripts(\'/lib/require.js\');" > /tmp/worker.js; cat build/src/worker.js >> /tmp/worker.js; mv /tmp/worker.js build/src/worker.js '
       }
-    }
+    },
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-express');
-  grunt.loadNpmTasks('grunt-chmod');
+  grunt.loadNpmTasks('grunt-exec');
 
   // Unit testing
   grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
-  grunt.registerTask('test', ['jshint:ui', 'unit']);
+  grunt.registerTask('test', ['jshint:api', 'jshint:ui', 'unit']);
   
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';
   grunt.registerTask('functional', ['express', 'simplemocha:functional']);
 
   // Build the single JS file
-  grunt.registerTask('build', ['requirejs', 'chmod:build']);
+  grunt.registerTask('build', ['requirejs', 'exec:fix_worker', 'uglify']);
 
 };

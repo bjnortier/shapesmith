@@ -130,22 +130,28 @@ define([
     };
 
     var normalizeVertex = function(vertex) {
-      switch (vertex.type) {
-      case 'cube':
-        return normalizeCube(vertex);
-      case 'sphere':
-        return normalizeSphere(vertex);
-      case 'cylinder':
-        return normalizeCylinder(vertex);
-      case 'cone':
-        return normalizeCone(vertex);
-      case 'union':
-      case 'subtract':
-      case 'intersect':
-        return normalizeBoolean(vertex);
-      default:
-        throw new Error('no normalization defined for ' + vertex.id);
-      }
+      var normalized = (function() {
+        switch (vertex.type) {
+        case 'cube':
+          return normalizeCube(vertex);
+        case 'sphere':
+          return normalizeSphere(vertex);
+        case 'cylinder':
+          return normalizeCylinder(vertex);
+        case 'cone':
+          return normalizeCone(vertex);
+        case 'union':
+        case 'subtract':
+        case 'intersect':
+          return normalizeBoolean(vertex);
+        default:
+          throw new Error('no normalization defined for ' + vertex.id);
+        }
+      })();
+      // Add the type so vertices with the same structure (e.g. cones and cylinders),
+      // will not sha to the same value and give the wrong cached BSP
+      normalized.type = vertex.type;
+      return normalized;
     };
 
     return {

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Shapesmith</title>
+  <link rel="stylesheet" href="/css/signinsignup.css" type="text/css" media="screen" />
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+
+  <div class="left">&nbsp;</div>
+  <div class="maincolumn">
+    <div>Welcome! Please sign in...</div>
+    <form method="post">
+        <input name="username" id="username" placeholder="username" type="text"/>
+        {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
+        <input name="password" id="password" placeholder="password" type="password"/>
+        {{#errors.password}}<div class="error">{{.}}</div>{{/errors.password}}
+      <input type="submit" value="Sign in"/>
+    </form>
+    <div>Not registered? <a href="/signup">Sign up here.<a/></div>
+
+  </div>
+  <div class="right">&nbsp;</div>
+
+{{#track}}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-22797822-2', 'shapesmith.net');
+  ga('send', 'pageview');
+</script>
+{{/track}}
+  
+</body>
+</html>

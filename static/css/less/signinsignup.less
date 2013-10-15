@@ -1,0 +1,95 @@
+@import '/css/reset.css';
+@import 'grid.less';
+
+
+//////////
+// GRID //
+//////////
+
+// Specify the number of columns and set column and gutter widths
+@columns: 12;
+@column-width: 60;
+@gutter-width: 20;
+
+// Remove the definition below for a pixel-based layout
+@total-width: 100%;
+
+
+////////////
+// LAYOUT //
+////////////
+
+
+// main column & sidebar
+.left, .right {
+  .column(4)
+}
+.maincolumn { 
+  .column(4);
+  margin-top: 200px;
+}
+
+@media screen and (max-width: 640px) {
+  .left,
+  .right {
+    .column(3);
+  }
+  .maincolumn {
+    .column(6);
+  }
+  .maincolumn {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .maincolumn,
+  .left,
+  .right {
+    .column(12);
+  }
+  .maincolumn {
+    margin-top: 0;
+  }
+}
+
+// ---------- Style ----------
+
+body {
+  background-color: #FCFCFF;
+  font-family: 'Lucida Grande', 'Helvetica', sans;
+}
+
+form div.row {
+  width: 100%;
+}
+
+input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 15px;
+  padding: 10px;
+  margin: 20px 0 0 0;
+}
+
+input[type="submit"] {
+  width: 100%;
+  border: none;
+  background-color: #DFDFDF;
+  border-bottom: solid 1px #B6B6B6;
+  cursor: pointer;
+  &:hover {
+    background-color: #B4E2FC;
+  }
+  margin-bottom: 20px;
+}
+
+.error {
+  color: red;
+  background-color: rgb(255, 152, 168);
+  border-left: solid thin red;
+  border-bottom: solid thin red;
+  border-right: solid thin red;
+  padding: 5px;
+}

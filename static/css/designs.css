@@ -11,17 +11,10 @@ body:after {
 body:after {
   clear: both;
 }
-#logo {
-  display: inline;
-  float: left;
-  width: 47.91666666666667%;
-  margin: 0 1.0416666666666665%;
-  margin-top: 1em;
-}
 #create {
   display: inline;
   float: left;
-  width: 47.91666666666667%;
+  width: 97.91666666666666%;
   margin: 0 1.0416666666666665%;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -116,7 +109,7 @@ body:after {
   }
 }
 body {
-  background-color: #f0ebef;
+  background-color: #EBECF0;
   background-position: 100% -50%;
   background-repeat: no-repeat;
   color: #090909;
@@ -124,19 +117,59 @@ body {
   font-style: normal;
   font-size: 15px;
 }
-#create .input-container {
-  margin-right: 23px;
+#signout,
+#signup {
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+#signout a,
+#signup a {
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  border: none;
+  border-bottom: solid 1px #B6B6B6;
+  cursor: pointer;
+}
+#signout a:visited,
+#signup a:visited {
+  color: black;
+  text-decoration: none;
+}
+#signup a {
+  background-color: #FFD589;
+}
+#signup a:hover {
+  background-color: #F7B949;
+}
+#signout a {
+  background-color: #DFDFDF;
+}
+#signout a:hover {
+  background-color: #B4E2FC;
 }
 #create .input-container #new-design-name {
+  width: 300px;
   vertical-align: middle;
   border: solid thin #2D5FAA;
-  width: 100%;
   padding: 10px;
   font-size: 15px;
+  margin-top: -2px;
+  margin-right: 1px;
 }
 #create .input-container #hidden-button {
-  position: absolute;
-  top: -100px;
+  border: none;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 1px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #DADBDB;
+  border-bottom: solid 1px #c9c5c5;
+}
+#create .input-container #hidden-button:hover {
+  background-color: #B4E2FC;
 }
 input.rename {
   padding: 5px;
@@ -176,7 +209,6 @@ input.error {
 .design .confirm {
   background-color: #ffecec;
   border: solid thin red;
-  border-radius: 4px;
   margin: 5px;
   padding: 3px;
 }
@@ -186,6 +218,16 @@ input.error {
 }
 .design .confirm .buttons {
   margin-top: 5px;
+}
+.design .confirm .buttons input {
+  padding: 5px;
+  border: none;
+  background-color: #f33;
+  color: white;
+  cursor: pointer;
+}
+.design .confirm .buttons input:hover {
+  background-color: #f00;
 }
 .design .preview {
   cursor: pointer;

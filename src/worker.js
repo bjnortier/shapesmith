@@ -1,7 +1,7 @@
 importScripts('/lib/require.js');
 
 requirejs.config({
-  baseUrl: "..",
+  baseUrl: ".",
   paths: {
     'underscore': '../node_modules/underscore/underscore',
     'backbone-events': '../node_modules/backbone-events/lib/backbone-events',
@@ -109,13 +109,13 @@ requirejs([
       // Create new with the arguments
       var bsp;
       if (e.data.sphere) {
-        bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere, 24).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cylinder) {
-        bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 24).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 36).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cone) {
-        bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 24).bsp, e.data.transforms, e.data.workplane);
+        bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 36).bsp, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, bsp);
       } else if (e.data.cube) {
         bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
