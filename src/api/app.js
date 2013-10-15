@@ -43,12 +43,21 @@ app.use('/src/node_modules', express.static(path.join(rootDir, 'node_modules')))
 app.use('/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 
-app.use(express.cookieParser());
-app.use(express.session({secret: '00564f4637dcb818688842dac6442fe0'}));
 app.use(express.bodyParser());
+app.use(express.cookieParser());
 
-// app.use(express.logger());
-
+if (NODE_ENV === 'production') {
+  var RedisStore = require('connect-redis')(express);
+  app.use(express.session({
+    store: new RedisStore({
+      host: 'localhost',
+      port: 6379,
+    }),
+    secret: 'cd68c833de39de4bbb924acd54d9c635'
+  }));
+} else {
+  app.use(express.session({secret: '00564f4637dcb818688842dac6442fe0'}));
+}
 
 var SessionAuth = function() {
 
@@ -151,6 +160,9 @@ app.get(/^\/signup\/?$/, function(req, res) {
 // Signout
 app.get(/^\/signout\/?$/, function(req, res) {
   req.session.destroy(function(err) {
+    if (err) {
+      console.err(err);
+    }
     res.redirect('/');
   });
 });

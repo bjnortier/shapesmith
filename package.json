@@ -37,7 +37,8 @@
     "ueberDB": "git://github.com/bjnortier/ueberDB#feature/shapesmith",
     "node-uuid": "~1.4.1",
     "felix-couchdb": "~1.0.7",
-    "bcrypt": "~0.7.7"
+    "bcrypt": "~0.7.7",
+    "connect-redis": "~1.4.5"
   },
   "devDependencies": {
     "mocha": "= 1.7.4",
