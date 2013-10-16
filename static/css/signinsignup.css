@@ -76,6 +76,7 @@ form div.row {
 input {
   display: block;
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
   width: 100%;
   font-size: 15px;
   padding: 10px;
@@ -91,6 +92,12 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
   background-color: #B4E2FC;
+}
+a {
+  color: #448791;
+}
+a:visited {
+  color: #448791;
 }
 .error {
   color: red;
