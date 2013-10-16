@@ -25,16 +25,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-185.31376"
-     inkscape:cy="-4767.3422"
+     inkscape:cx="53.389023"
+     inkscape:cy="-4995.9136"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showborder="false"
      inkscape:window-width="1160"
      inkscape:window-height="722"
-     inkscape:window-x="2103"
-     inkscape:window-y="50"
+     inkscape:window-x="1001"
+     inkscape:window-y="301"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -460,7 +460,7 @@
        xml:space="preserve"
        style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
        x="-336.16245"
-       y="6115.3979"
+       y="6109.6836"
        id="text3761-4-7-7-2-9-0"
        sodipodi:linespacing="125%"
        inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
@@ -469,12 +469,12 @@
          sodipodi:role="line"
          id="tspan3763-07-4-6-3-0-39"
          x="-336.16245"
-         y="6115.3979">pesmith</tspan></text>
+         y="6109.6836">pesmith</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
-       x="-817.5141"
-       y="6114.7212"
+       x="-833.67651"
+       y="6108.6602"
        id="text3761-6-1-9-1-9-2-6"
        sodipodi:linespacing="125%"
        inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
@@ -482,11 +482,11 @@
        inkscape:export-ydpi="14.996122"><tspan
          sodipodi:role="line"
          id="tspan3763-0-2-7-9-7-2-5"
-         x="-817.5141"
-         y="6114.7212">sh </tspan></text>
+         x="-833.67651"
+         y="6108.6602">sh </tspan></text>
     <g
        id="g3100"
-       transform="translate(-15.3644,93.018144)"
+       transform="translate(-19.40501,88.977534)"
        inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
        inkscape:export-xdpi="14.996122"
        inkscape:export-ydpi="14.996122">
