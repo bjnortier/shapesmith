@@ -7,6 +7,13 @@ body {
   border-top: solid thin #E0E0E0;
   border-left: solid thin #E0E0E0;
 }
+#no-webgl {
+  padding: 20px;
+  text-align: center;
+}
+#no-webgl .browser-icons {
+  margin-top: 10px;
+}
 #geometry {
   padding: 0;
   margin-left: 0;
