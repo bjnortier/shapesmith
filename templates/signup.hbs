@@ -11,8 +11,10 @@
 
   <div class="left">&nbsp;</div>
   <div class="maincolumn">
-    {{#temporary}}<div>Upgrade your temporary account. Your will keep any models you've created</div>{{/temporary}}
-    {{^temporary}}<div>Welcome! Please sign up...</div>{{/temporary}}
+    <div class="logo"><img src="/images/logo_small.png" alt="logo"></div>
+    <div class="instructions">
+      {{#temporary}}<div>Any models you've already created will be transferred to your account.</div>{{/temporary}}
+    </div>
     <form method="post">
         <input name="username" id="username" placeholder="username" type="text" value="{{username}}"/>
         {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
@@ -22,7 +24,7 @@
         {{#errors.password}}<div class="error">{{.}}</div>{{/errors.password}}
       <input type="submit" value="Sign up"/>
     </form>
-    {{^temporary}}<div>Already registered? <a href="/signin">Sign in here<a/></div>{{/temporary}}
+    <div class="alternative">Already registered? <a href="/signin">Sign in here<a/></div>
 
   </div>
   <div class="right">&nbsp;</div>

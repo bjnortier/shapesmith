@@ -1,5 +1,6 @@
 @import '/css/reset.css';
 @import 'grid.less';
+@import 'common.less';
 
 
 //////////
@@ -88,13 +89,19 @@
 @border-color: #ccc;
 
 body {
-  background-color: #EBECF0;
+  background-color: @background-color;
   background-position: 100% -50%;
   background-repeat: no-repeat;
   color: #090909;
   font-family: Helvetica, Arial, sans-serif;
   font-style: normal;
   font-size: 15px;
+}
+
+.logo {
+  position: absolute;
+  left: 10px;
+  top: 10px;
 }
 
 #signout, #signup {
@@ -130,6 +137,7 @@ body {
 }
 
 #create {
+  margin-top: 40px;
   // .button {
   //   display: inline-block;
   // }

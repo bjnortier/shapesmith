@@ -207,6 +207,7 @@ var UserAPI = function(app) {
                 username: 'username and password don\'t match',
                 password: 'username and password don\'t match',
               },
+              username: username,
               track: config.track,
             });
           }

@@ -24,24 +24,24 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="141.14227"
-     inkscape:cy="-1073.2875"
+     inkscape:zoom="0.35"
+     inkscape:cx="-185.31376"
+     inkscape:cy="-4767.3422"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showborder="false"
      inkscape:window-width="1160"
      inkscape:window-height="722"
-     inkscape:window-x="1932"
-     inkscape:window-y="141"
+     inkscape:window-x="2103"
+     inkscape:window-y="50"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
        id="grid3812"
        empspacing="5"
        visible="false"
-       enabled="true"
+       enabled="false"
        snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -278,5 +278,242 @@
        id="path2987-7-5-7-7-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
+    <g
+       id="g3911"
+       transform="translate(638.77759,-40.000122)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text3761-4-7-79"
+         y="4132.2642"
+         x="-1158.7776"
+         style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+         xml:space="preserve"><tspan
+           y="4132.2642"
+           x="-1158.7776"
+           id="tspan3763-07-4-3"
+           sodipodi:role="line">pesmith</tspan></text>
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-8"
+         d="m -1246.153,3962.7432 -77.5686,180.7897"
+         style="fill:none;stroke:#247727;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3761-6-1-9-0"
+         y="4135.3828"
+         x="-1654.2714"
+         style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+         xml:space="preserve"><tspan
+           y="4135.3828"
+           x="-1654.2714"
+           id="tspan3763-0-2-7-2"
+           sodipodi:role="line">sh </tspan></text>
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-3-4"
+         d="m -1323.4132,4142.2813 163.2803,-0.8527"
+         style="fill:none;stroke:#b6ffb9;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-7-8"
+         d="m -1161.217,4143.333 -85.7116,-179.937"
+         style="fill:none;stroke:#17b21b;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <path
+       style="fill:#d4ffd3;fill-opacity:0.30530976;stroke:none"
+       d="m -523.2847,4501.867 -85.7116,-179.9371 -77.5687,180.7898"
+       id="path2987-3-0-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+       x="-520"
+       y="4492.313"
+       id="text3761-4-7-7-2-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3763-07-4-6-3-0"
+         x="-520"
+         y="4492.313">pesmith</tspan></text>
+    <path
+       style="fill:none;stroke:#0ac111;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M -607.3754,4322.7923 -684.944,4503.582"
+       id="path2987-7-5-5-9-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+       x="-1015.4938"
+       y="4495.4321"
+       id="text3761-6-1-9-1-9-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3763-0-2-7-9-7-2"
+         x="-1015.4938"
+         y="4495.4321">sh </tspan></text>
+    <path
+       style="fill:none;stroke:#6befe0;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -684.6356,4502.3304 163.2803,-0.8527"
+       id="path2987-7-5-3-9-0-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#3692cd;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -522.4394,4503.3821 -85.7116,-179.937"
+       id="path2987-7-5-7-7-3-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g3930"
+       transform="translate(680,-2.4407031e-4)">
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path2987-3-0-3-0"
+         d="m -1203.2847,4901.9162 -85.7117,-179.9371 -77.5686,180.7898"
+         style="fill:none;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3761-4-7-7-2-9-2"
+         y="4892.3623"
+         x="-1200"
+         style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+         xml:space="preserve"><tspan
+           y="4892.3623"
+           x="-1200"
+           id="tspan3763-07-4-6-3-0-3"
+           sodipodi:role="line">pesmith</tspan></text>
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-5-9-5-9"
+         d="m -1287.3754,4722.8415 -77.5686,180.7897"
+         style="fill:none;stroke:#0ac111;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3761-6-1-9-1-9-2-9"
+         y="4895.4814"
+         x="-1695.4938"
+         style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+         xml:space="preserve"><tspan
+           y="4895.4814"
+           x="-1695.4938"
+           id="tspan3763-0-2-7-9-7-2-7"
+           sodipodi:role="line">sh </tspan></text>
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-7-7-3-3-3"
+         d="m -1202.4394,4903.4313 -85.7116,-179.937"
+         style="fill:none;stroke:#3692cd;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-3-9-0-7-0"
+         d="m -1364.6356,4902.3796 163.2803,-0.8527"
+         style="fill:none;stroke:#6befe0;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       id="g4014">
+      <text
+         sodipodi:linespacing="125%"
+         id="text3761-4-7-7-2-9-1"
+         y="5292.9404"
+         x="-1015.0247"
+         style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+         xml:space="preserve"><tspan
+           y="5292.9404"
+           x="-1015.0247"
+           id="tspan3763-07-4-6-3-0-5"
+           sodipodi:role="line">shApesmith</tspan></text>
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path2987-3-0-3-4"
+         d="m -480,5292.3622 -114.59603,-240.5751 -103.709,241.7151"
+         style="fill:#f1fff1;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-5-9-5-6"
+         d="m -592.42889,5052.9401 -103.70887,241.715"
+         style="fill:none;stroke:#0ac111;stroke-width:7.24237299;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-3-9-0-7-4"
+         d="m -695.72543,5292.9817 200.7007,-0.042"
+         style="fill:none;stroke:#6befe0;stroke-width:7.24237299;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-7-7-3-3-6"
+         d="m -495.02473,5292.9401 -98.44113,-239.1272"
+         style="fill:none;stroke:#3692cd;stroke-width:7.24237299;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+       x="-336.16245"
+       y="6115.3979"
+       id="text3761-4-7-7-2-9-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
+       inkscape:export-xdpi="14.996122"
+       inkscape:export-ydpi="14.996122"><tspan
+         sodipodi:role="line"
+         id="tspan3763-07-4-6-3-0-39"
+         x="-336.16245"
+         y="6115.3979">pesmith</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:333.23199463px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato Light"
+       x="-817.5141"
+       y="6114.7212"
+       id="text3761-6-1-9-1-9-2-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
+       inkscape:export-xdpi="14.996122"
+       inkscape:export-ydpi="14.996122"><tspan
+         sodipodi:role="line"
+         id="tspan3763-0-2-7-9-7-2-5"
+         x="-817.5141"
+         y="6114.7212">sh </tspan></text>
+    <g
+       id="g3100"
+       transform="translate(-15.3644,93.018144)"
+       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
+       inkscape:export-xdpi="14.996122"
+       inkscape:export-ydpi="14.996122">
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path2987-3-0-3-7"
+         d="m -323.2847,6021.9162 -85.7116,-179.9371 -77.5687,180.7898"
+         style="fill:#d4ffd3;fill-opacity:0.30530976;stroke:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-5-9-5-8"
+         d="m -407.3754,5842.8415 -77.5686,180.7897"
+         style="fill:none;stroke:#0ac111;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-3-9-0-7-7"
+         d="m -484.6356,6022.3796 163.2803,-0.8527"
+         style="fill:none;stroke:#6befe0;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-7-7-3-3-62"
+         d="m -322.4394,6023.4313 -85.7116,-179.937"
+         style="fill:none;stroke:#3692cd;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
   </g>
 </svg>

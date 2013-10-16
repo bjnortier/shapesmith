@@ -18,11 +18,10 @@ body:after {
   width: 31.25%;
   margin: 0 1.0416666666666665%;
 }
-.try,
-.signin {
+.tryorsignin {
   display: inline;
   float: left;
-  width: 14.583333333333334%;
+  width: 31.25%;
   margin: 0 1.0416666666666665%;
   margin-top: 200px;
 }
@@ -34,18 +33,20 @@ body:after {
     width: 22.916666666666664%;
     margin: 0 1.0416666666666665%;
   }
-  .try,
-  .signin {
+  .tryorsignin {
     display: inline;
     float: left;
-    width: 22.916666666666664%;
+    width: 47.91666666666667%;
     margin: 0 1.0416666666666665%;
     margin-top: 200px;
   }
 }
 body {
-  background-color: #FCFCFF;
+  background-color: #f7fff9;
   font-family: 'Lucida Grande', 'Helvetica', sans;
+}
+.logo {
+  text-align: center;
 }
 input {
   display: block;
