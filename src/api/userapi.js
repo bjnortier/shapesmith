@@ -154,7 +154,7 @@ var UserAPI = function(app) {
                   track: config.track
                 });
               } else {
-                res.redirect('/ui/' + username + '/first%20model/modeller?commit=' + refs.heads.master);
+                res.redirect('/ui/' + username + '/first%20model/modeller?tryit=true&commit=' + refs.heads.master);
               }
             });
           }

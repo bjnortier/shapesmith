@@ -25,6 +25,7 @@ define([
     'toolbars/saveitemmodel',
     'toolbars/exititemmodel',
     'toolbars/exportstlitemmodel',
+    'toolbars/helpitemmodel',
   ], function(
     VariableMV,
     WorkplaneMV,
@@ -51,7 +52,8 @@ define([
     IntersectItemModel,
     SaveItemModel,
     ExitItemModel,
-    ExportSTLItemModel) {
+    ExportSTLItemModel,
+    HelpItemModel) {
 
     var init = function() {
 
@@ -79,8 +81,15 @@ define([
       mainToolbar.addItem(new SaveItemModel());
       mainToolbar.addItem(new ExportSTLItemModel()); 
       mainToolbar.addItem(new ExitItemModel());
+
+      var helpItemModel = new HelpItemModel();
+      mainToolbar.addItem(helpItemModel);
       // mainToolbar.addItem(expander);
       expander.toggle();
+
+      if (window.location.href.indexOf("tryit=true") !== -1) {
+        helpItemModel.click();
+      }
 
     };
 

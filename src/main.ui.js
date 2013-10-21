@@ -20,6 +20,7 @@ requirejs.config({
 
 $(document).ready(function() {
 
+  $(".overlay-help").hide();
   // WebGL detector
   var hasWebGL = (function () { 
     try { 
