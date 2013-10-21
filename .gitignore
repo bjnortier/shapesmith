@@ -1,5 +1,5 @@
 .DS_Store
-db/
+db/*.sqlite
 node_modules/
 build/
 chromedriver.log
