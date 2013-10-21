@@ -78,28 +78,30 @@ requirejs([
     };
 
     var applyTransformsAndWorkplane = function(bsp, transforms, workplane) {
-      if (transforms.translation) {
-        bsp = bsp.translate(transforms.translation.x, transforms.translation.y, transforms.translation.z);
-      }
-      if (transforms.rotation.angle !== 0) {
-        bsp = bsp.translate(-transforms.rotation.origin.x, -transforms.rotation.origin.y, -transforms.rotation.origin.z); 
-        bsp = bsp.rotate(transforms.rotation.axis.x, transforms.rotation.axis.y, transforms.rotation.axis.z, transforms.rotation.angle/180*Math.PI);
-        bsp = bsp.translate(transforms.rotation.origin.x, transforms.rotation.origin.y, transforms.rotation.origin.z); 
-      }
-      if (transforms.scale.factor !== 1) {
-        bsp = bsp.translate(-transforms.scale.origin.x, -transforms.scale.origin.y, -transforms.scale.origin.z); 
-        bsp = bsp.scale(transforms.scale.factor);
-        bsp = bsp.translate(transforms.scale.origin.x, transforms.scale.origin.y, -transforms.scale.origin.z); 
-      }
-      if (workplane.angle !== 0) {
-        bsp = bsp.rotate(
-          workplane.axis.x, 
-          workplane.axis.y, 
-          workplane.axis.z, 
-          workplane.angle/180*Math.PI);
-      }
-      if (!((workplane.origin.x === 0) && (workplane.origin.y === 0) && (workplane.origin.z === 0))) {
-        bsp = bsp.translate(workplane.origin.x, workplane.origin.y, workplane.origin.z); 
+      if (bsp) {
+        if (transforms.translation) {
+          bsp = bsp.translate(transforms.translation.x, transforms.translation.y, transforms.translation.z);
+        }
+        if (transforms.rotation.angle !== 0) {
+          bsp = bsp.translate(-transforms.rotation.origin.x, -transforms.rotation.origin.y, -transforms.rotation.origin.z); 
+          bsp = bsp.rotate(transforms.rotation.axis.x, transforms.rotation.axis.y, transforms.rotation.axis.z, transforms.rotation.angle/180*Math.PI);
+          bsp = bsp.translate(transforms.rotation.origin.x, transforms.rotation.origin.y, transforms.rotation.origin.z); 
+        }
+        if (transforms.scale.factor !== 1) {
+          bsp = bsp.translate(-transforms.scale.origin.x, -transforms.scale.origin.y, -transforms.scale.origin.z); 
+          bsp = bsp.scale(transforms.scale.factor);
+          bsp = bsp.translate(transforms.scale.origin.x, transforms.scale.origin.y, -transforms.scale.origin.z); 
+        }
+        if (workplane.angle !== 0) {
+          bsp = bsp.rotate(
+            workplane.axis.x, 
+            workplane.axis.y, 
+            workplane.axis.z, 
+            workplane.angle/180*Math.PI);
+        }
+        if (!((workplane.origin.x === 0) && (workplane.origin.y === 0) && (workplane.origin.z === 0))) {
+          bsp = bsp.translate(workplane.origin.x, workplane.origin.y, workplane.origin.z); 
+        }
       }
       return bsp;
     };
