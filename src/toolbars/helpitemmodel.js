@@ -21,7 +21,7 @@ define([
         $('.overlay-help').toggle();
       },
 
-      icon: icons.save,
+      icon: icons.help,
 
     });
 

@@ -14,6 +14,7 @@ define([
     'lib/text!icons/list.svg',
     'lib/text!icons/workplane.svg',
     'lib/text!icons/stl.svg',
+    'lib/text!icons/help.svg',
   ], 
   function(
     point, 
@@ -30,7 +31,8 @@ define([
     save,
     list,
     workplane,
-    stl) {
+    stl,
+    help) {
 
     return {
       point    : point, 
@@ -48,6 +50,7 @@ define([
       list     : list,
       workplane: workplane,
       stl      : stl,
+      help     : help,
     };
 
   });

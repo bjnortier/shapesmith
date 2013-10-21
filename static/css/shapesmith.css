@@ -110,7 +110,8 @@ body {
   stroke-opacity: 0.5;
 }
 /* Icon-specific overrides */
-.stl .icon32 path {
+.stl .icon32 path,
+.help .icon32 path {
   stroke-width: 2.5px;
 }
 svg g[label=nofilldashed] {
