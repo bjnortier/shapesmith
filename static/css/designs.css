@@ -125,8 +125,9 @@ body {
 #signout,
 #signup {
   text-align: right;
-  margin-top: 20px;
-  margin-right: 10px;
+  position: absolute;
+  top: 20px;
+  right: 10px;
 }
 #signout a,
 #signup a {
@@ -155,7 +156,7 @@ body {
   background-color: #B4E2FC;
 }
 #create {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 #create .input-container #new-design-name {
   width: 300px;
