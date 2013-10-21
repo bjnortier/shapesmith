@@ -23,9 +23,9 @@ body:after {
   float: left;
   width: 31.25%;
   margin: 0 1.0416666666666665%;
-  margin-top: 200px;
+  margin-top: 100px;
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 720px) {
   .left,
   .right {
     display: inline;
@@ -57,15 +57,26 @@ body:after {
   }
 }
 body {
-  background-color: #FCFCFF;
+  background-color: #fbfffc;
   font-family: 'Lucida Grande', 'Helvetica', sans;
 }
 form div.row {
   width: 100%;
 }
+.logo {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.alternative {
+  text-align: center;
+}
+.instructions div {
+  margin-bottom: 10px;
+}
 input {
   display: block;
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
   width: 100%;
   font-size: 15px;
   padding: 10px;
@@ -81,6 +92,12 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
   background-color: #B4E2FC;
+}
+a {
+  color: #31AF4A;
+}
+a:visited {
+  color: #31AF4A;
 }
 .error {
   color: red;
