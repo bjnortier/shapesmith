@@ -11,15 +11,15 @@
 
   <div class="left">&nbsp;</div>
   <div class="maincolumn">
-    <div>Welcome! Please sign in...</div>
+    <div class="logo"><img src="/images/logo_small.png" alt="logo"></div>
     <form method="post">
-        <input name="username" id="username" placeholder="username" type="text"/>
+        <input name="username" id="username" placeholder="username" type="text" value="{{username}}"/>
         {{#errors.username}}<div class="error">{{.}}</div>{{/errors.username}}
         <input name="password" id="password" placeholder="password" type="password"/>
         {{#errors.password}}<div class="error">{{.}}</div>{{/errors.password}}
       <input type="submit" value="Sign in"/>
     </form>
-    <div>Not registered? <a href="/signup">Sign up here.<a/></div>
+    <div class="alternative">Not registered? <a href="/signup">Sign up here<a/></div>
 
   </div>
   <div class="right">&nbsp;</div>

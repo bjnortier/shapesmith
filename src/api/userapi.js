@@ -2,6 +2,7 @@ var _ = require('underscore');
 var bcrypt = require('bcrypt');
 var uuid = require('node-uuid');
 var users = require('./users');
+var designs = require('./designs');
 var userDB = require('./userdb');
 var nconf = require('nconf');
 var config = nconf.get();
@@ -145,7 +146,17 @@ var UserAPI = function(app) {
           } else {
             req.session.username = username;
             req.session.temporary = true;
-            res.redirect('/ui/' + username + '/designs');
+
+            designs.create(db, username, 'first model', function(err) {
+              if (err) {
+                console.error(err);
+                res.render('signup', {
+                  track: config.track
+                });
+              } else {
+                res.redirect('/ui/' + username + '/designs');
+              }
+            });
           }
         });
       });
@@ -207,6 +218,7 @@ var UserAPI = function(app) {
                 username: 'username and password don\'t match',
                 password: 'username and password don\'t match',
               },
+              username: username,
               track: config.track,
             });
           }

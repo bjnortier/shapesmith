@@ -7,6 +7,13 @@ body {
   border-top: solid thin #E0E0E0;
   border-left: solid thin #E0E0E0;
 }
+#no-webgl {
+  padding: 20px;
+  text-align: center;
+}
+#no-webgl .browser-icons {
+  margin-top: 10px;
+}
 #geometry {
   padding: 0;
   margin-left: 0;
@@ -16,7 +23,7 @@ body {
   border-bottom: solid thin #999;
 }
 #toolbar {
-  margin-left: -209px;
+  margin-left: -181px;
   background-color: rgba(255, 255, 255, 0.64);
   position: absolute;
   left: 50%;
@@ -103,7 +110,8 @@ body {
   stroke-opacity: 0.5;
 }
 /* Icon-specific overrides */
-.stl .icon32 path {
+.stl .icon32 path,
+.help .icon32 path {
   stroke-width: 2.5px;
 }
 svg g[label=nofilldashed] {
@@ -299,4 +307,65 @@ input.field[type="text"] {
 #workplane-settings .icon32:hover svg {
   fill: #A8F38A;
   stroke: #999;
+}
+.overlay-help {
+  position: absolute;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.89);
+  border: solid thin #B4E2FC;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.14);
+  z-index: 2;
+}
+.overlay-help .emph {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+.overlay-help p {
+  margin-top: 5px;
+}
+.overlay-help p:first-child {
+  color: black;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+.overlay-help.graphs {
+  left: 170px;
+  top: 20px;
+  max-width: 250px;
+}
+.overlay-help.workplane {
+  right: 70px;
+  top: 20px;
+  max-width: 250px;
+}
+.overlay-help.toolbar {
+  bottom: 80px;
+  position: absolute;
+  left: 50%;
+  margin-left: -181px;
+  width: 493px;
+}
+.overlay-help.main {
+  margin-left: -181px;
+  width: 493px;
+  left: 50%;
+  top: 250px;
+}
+.overlay-help .got-it {
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+  padding: 5px;
+}
+.overlay-help .got-it input {
+  background-color: #B4E2FC;
+  border: none;
+  border-bottom: solid 1px #509abd;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+.overlay-help .got-it input:hover {
+  background-color: #DFF1FF;
 }

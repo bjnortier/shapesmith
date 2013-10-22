@@ -107,9 +107,9 @@ define([
       return {
         x: center.x, 
         y: center.y,
-        z: center.z,
+        z: Math.min(center.z, center.z + height),
         r: radius,
-        h: height,
+        h: Math.abs(height),
         transforms: normalizeTransforms(cylinder.transforms),
         workplane: normalizeWorkplane(cylinder.workplane),
       };

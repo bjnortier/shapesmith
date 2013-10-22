@@ -18,47 +18,72 @@ requirejs.config({
   },
 });
 
-requirejs([
-    'jquery',
-    'lib/jquery.getQueryParam',
-    'scene',
-    'interactioncoordinator',
-    'worldcursor',
-    'trackball',
-    'commandstack',
-    'geometrygraphsingleton',
-    'casgraph/ajaxreplicator',
-    'variablemanager',     
-    'modelviews/modelgraph',
-    'modelviews/objecttree',
-    'webdriverutils',
-    'asyncAPI',
-    'hintview',
-    'inspect/statsview',
-    'scripting/designer',
-    'latheapi/adapter',
-    'designer',
-  ], function(
-    $, _$,
-    sceneModel,
-    coordinator,
-    worldCursor,
-    trackBall,
-    commandStack,
-    geometryGraph,
-    AJAXReplicator,
-    variableManager,
-    modelGraph,
-    objectTree,
-    wdutils,
-    AsyncAPI,
-    hintView,
-    StatsView,
-    Designer,
-    adapter,
-    designer) {
+$(document).ready(function() {
 
-    $(document).ready(function() {
+  $(".overlay-help").hide();
+  // WebGL detector
+  var hasWebGL = (function () { 
+    try { 
+      return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' );
+    } catch(e) { 
+      return false; 
+    } 
+  })();
+  if (!hasWebGL) {
+    $('#graphs').hide();
+    $('#scene').hide();
+    $('body').append(
+      '<div id="no-webgl">' + 
+        '<div>Your graphics card does not seem to support WebGL.</div>' + 
+        '<div>Find out how to get it <a href="http://get.webgl.org">here</a>.</div>' + 
+        '<div class="browser-icons">' + 
+          '<img src = "https://raw.github.com/paulirish/browser-logos/master/chrome/chrome_32x32.png">' +
+          '<img src = "https://raw.github.com/paulirish/browser-logos/master/safari/safari_32x32.png">' +
+          '<img src = "https://raw.github.com/paulirish/browser-logos/master/firefox/firefox_32x32.png">' +
+        '</div>' +
+      '</div>');
+    return;
+  }
+
+  requirejs([
+      'jquery',
+      'lib/jquery.getQueryParam',
+      'scene',
+      'interactioncoordinator',
+      'worldcursor',
+      'trackball',
+      'commandstack',
+      'geometrygraphsingleton',
+      'casgraph/ajaxreplicator',
+      'variablemanager',     
+      'modelviews/modelgraph',
+      'modelviews/objecttree',
+      'webdriverutils',
+      'asyncAPI',
+      'hintview',
+      'inspect/statsview',
+      'scripting/designer',
+      'latheapi/adapter',
+      'designer',
+    ], function(
+      $, _$,
+      sceneModel,
+      coordinator,
+      worldCursor,
+      trackBall,
+      commandStack,
+      geometryGraph,
+      AJAXReplicator,
+      variableManager,
+      modelGraph,
+      objectTree,
+      wdutils,
+      AsyncAPI,
+      hintView,
+      StatsView,
+      Designer,
+      adapter,
+      designer) {
 
       designer.init();
 
@@ -86,4 +111,4 @@ requirejs([
 
     });
 
-  });
+});

@@ -109,7 +109,7 @@ body:after {
   }
 }
 body {
-  background-color: #EBECF0;
+  background-color: #fbfffc;
   background-position: 100% -50%;
   background-repeat: no-repeat;
   color: #090909;
@@ -117,11 +117,17 @@ body {
   font-style: normal;
   font-size: 15px;
 }
+.logo {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
 #signout,
 #signup {
   text-align: right;
-  margin-top: 20px;
-  margin-right: 10px;
+  position: absolute;
+  top: 20px;
+  right: 10px;
 }
 #signout a,
 #signup a {
@@ -148,6 +154,9 @@ body {
 }
 #signout a:hover {
   background-color: #B4E2FC;
+}
+#create {
+  margin-top: 60px;
 }
 #create .input-container #new-design-name {
   width: 300px;

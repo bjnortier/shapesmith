@@ -10,6 +10,14 @@ body {
   border-left: solid thin #E0E0E0;
 }
 
+#no-webgl {
+  padding: 20px;
+  text-align: center; 
+  .browser-icons {
+    margin-top: 10px;
+  }
+}
+
 #geometry {
   padding: 0;
   margin-left: 0;
@@ -20,7 +28,7 @@ body {
 } 
 
 #toolbar {
-  margin-left: -209px;
+  margin-left: -181px;
   background-color: rgba(255, 255, 255, 0.64);
 
   position: absolute;
@@ -136,7 +144,7 @@ body {
   // stroke-width:1.2px;
 }
 
-.stl {
+.stl, .help {
   .icon32 {
     path {
       stroke-width:2.5px;
@@ -358,3 +366,67 @@ input.field[type="text"] {
     }
   }
 }
+
+.overlay-help {
+  position: absolute;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.89);
+  border: solid thin #B4E2FC;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.14);
+  z-index: 2;
+  .emph {
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  p {
+    &:first-child {
+      // margin-bottom: 5px;
+      color: black;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+    margin-top: 5px;
+  }
+  &.graphs {
+    left: 170px;
+    top: 20px;
+    max-width: 250px;
+  }
+  &.workplane {
+    right: 70px;
+    top: 20px;
+    max-width: 250px;
+  }
+  &.toolbar {
+    bottom: 80px;
+    position: absolute;
+    left: 50%;
+    margin-left: -181px;
+    width: 493px;
+  }
+  &.main {
+    margin-left: -181px;
+    width: 493px;
+    left: 50%;
+    top: 250px;
+  }
+  .got-it {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    padding: 5px;
+    input {
+      background-color: #B4E2FC;
+      border: none;
+      border-bottom: solid 1px rgb(80, 154, 189);
+      &:hover {
+        background-color: #DFF1FF;
+      }
+      padding: 5px;
+      cursor: pointer;
+      font-size: 1.1em;
+    }
+  }
+}
+

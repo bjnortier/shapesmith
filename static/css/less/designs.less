@@ -1,5 +1,6 @@
 @import '/css/reset.css';
 @import 'grid.less';
+@import 'common.less';
 
 
 //////////
@@ -88,7 +89,7 @@
 @border-color: #ccc;
 
 body {
-  background-color: #EBECF0;
+  background-color: @background-color;
   background-position: 100% -50%;
   background-repeat: no-repeat;
   color: #090909;
@@ -97,10 +98,17 @@ body {
   font-size: 15px;
 }
 
+.logo {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
 #signout, #signup {
   text-align: right;
-  margin-top: 20px;
-  margin-right: 10px;
+  position: absolute;
+  top: 20px;
+  right: 10px;
   a {
     padding: 10px;
     color: black;
@@ -130,6 +138,7 @@ body {
 }
 
 #create {
+  margin-top: 60px;
   // .button {
   //   display: inline-block;
   // }
