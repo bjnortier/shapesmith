@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="53.389023"
-     inkscape:cy="-4995.9136"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-372.43551"
+     inkscape:cy="-5433.4481"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showborder="false"
      inkscape:window-width="1160"
      inkscape:window-height="722"
-     inkscape:window-x="1001"
-     inkscape:window-y="301"
+     inkscape:window-x="492"
+     inkscape:window-y="98"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -60,6 +60,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:1.79485416000000009;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4305"
+       width="210.31688"
+       height="210.31688"
+       x="-506.18903"
+       y="6358.5913"
+       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+       inkscape:export-xdpi="89.846573"
+       inkscape:export-ydpi="89.846573" />
     <path
        style="fill:#d4ffd3;fill-opacity:0.30530976;stroke:none"
        d="m 358.13479,2294.7459 -85.71166,-179.9371 -77.56865,180.7898"
@@ -487,9 +497,9 @@
     <g
        id="g3100"
        transform="translate(-19.40501,88.977534)"
-       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/static/images/logo_small.png"
-       inkscape:export-xdpi="14.996122"
-       inkscape:export-ydpi="14.996122">
+       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+       inkscape:export-xdpi="89.846573"
+       inkscape:export-ydpi="89.846573">
       <path
          sodipodi:nodetypes="ccc"
          inkscape:connector-curvature="0"
@@ -514,6 +524,49 @@
          id="path2987-7-5-7-7-3-3-62"
          d="m -322.4394,6023.4313 -85.7116,-179.937"
          style="fill:none;stroke:#3692cd;stroke-width:5.41690159;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       id="g4299"
+       transform="translate(-3.8091462,3.4323982)"
+       inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+       inkscape:export-xdpi="89.846573"
+       inkscape:export-ydpi="89.846573">
+      <path
+         inkscape:export-ydpi="89.846573"
+         inkscape:export-xdpi="89.846573"
+         inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path2987-3-0-3-7-1"
+         d="m -317.51069,6549.2966 -85.7116,-179.9371 -77.5687,180.7898"
+         style="fill:#d4ffd3;fill-opacity:0.30530976;stroke:none" />
+      <path
+         inkscape:export-ydpi="89.846573"
+         inkscape:export-xdpi="89.846573"
+         inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-5-9-5-8-0"
+         d="m -402.67282,6370.9362 -75.78288,177.5754"
+         style="fill:none;stroke:#0ac111;stroke-width:5.41690159;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         inkscape:export-ydpi="89.846573"
+         inkscape:export-xdpi="89.846573"
+         inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-3-9-0-7-7-1"
+         d="m -478.86159,6549.76 163.2803,-0.8527"
+         style="fill:none;stroke:#6befe0;stroke-width:5.41690159;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         inkscape:export-ydpi="89.846573"
+         inkscape:export-xdpi="89.846573"
+         inkscape:export-filename="/Users/bjnortier/development/shapesmith.next/artwork/concept/favicon.png"
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2987-7-5-7-7-3-3-62-8"
+         d="m -315.9511,6548.6688 -86.42589,-177.7941"
+         style="fill:none;stroke:#3692cd;stroke-width:5.41690159;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
   </g>
 </svg>
