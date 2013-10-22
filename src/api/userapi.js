@@ -146,6 +146,7 @@ var UserAPI = function(app) {
           } else {
             req.session.username = username;
             req.session.temporary = true;
+            req.session.firstTry = true;
 
             designs.create(db, username, 'first model', function(err) {
               if (err) {

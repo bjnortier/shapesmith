@@ -188,6 +188,7 @@ app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
   res.render('designs', {
     user: username, 
     temporary: req.session.temporary,
+    firstTry: req.session.firstTry,
     signoutButton: ((authEngine === 'session') && !req.session.temporary),
     track: config.redisSessionStore,
   });
@@ -200,8 +201,12 @@ app.get(/^\/ui\/([\w._-]+)\/([\w%]+)\/modeller$/, function(req, res) {
   res.render('modeller', {
     user: username, 
     design: design,
+    firstTry: req.session.firstTry,
     track: config.redisSessionStore,
   });
+  if (req.session.firstTry) {
+    req.session.firstTry = false;
+  }
 });
 
 module.exports = app;

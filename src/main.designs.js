@@ -73,9 +73,10 @@ requirejs([
             dataType: 'json',
             contentType: 'application/json',
             success: function(response) {
-              window.location.href = '/ui/' + encodeURIComponent(Shapesmith.user) + 
+              var url = '/ui/' + encodeURIComponent(Shapesmith.user) + 
                 '/' + encodeURIComponent(newDesignName) + 
                 '/modeller?commit=' + response.heads.master;
+              window.location.href = url;
             },
             error: function() {
               that.$el.find('#new-design-name').addClass('error');

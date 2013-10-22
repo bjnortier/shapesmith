@@ -87,7 +87,7 @@ define([
       // mainToolbar.addItem(expander);
       expander.toggle();
 
-      if (window.location.href.indexOf("tryit=true") !== -1) {
+      if (Shapesmith.firstTry) {
         helpItemModel.click();
       }
 
