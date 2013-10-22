@@ -146,15 +146,16 @@ var UserAPI = function(app) {
           } else {
             req.session.username = username;
             req.session.temporary = true;
+            req.session.firstTry = true;
 
-            designs.create(db, username, 'first model', function(err, refs) {
+            designs.create(db, username, 'first model', function(err) {
               if (err) {
                 console.error(err);
                 res.render('signup', {
                   track: config.track
                 });
               } else {
-                res.redirect('/ui/' + username + '/first%20model/modeller?tryit=true&commit=' + refs.heads.master);
+                res.redirect('/ui/' + username + '/designs');
               }
             });
           }
