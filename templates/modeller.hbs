@@ -34,7 +34,7 @@
     <div class="geometry section">geometry</div>
     <div id="geometry"></div>
   </div>
-  <div class="overlay-help graphs">
+  <div class="overlay-help graphs" style="display: none">
     <p><i class="icon-long-arrow-left"></i> This is the tree view</p>
     <p>Your geometry objects and variables will be shown here.</p>
     <p>To create a new variable, click on the <span class="emph">+.</span></p>
@@ -45,7 +45,7 @@
 
   <div id="scene"></div>
   <div id="toolbar"></div>
-  <div class="overlay-help toolbar">
+  <div class="overlay-help toolbar" style="display: none">
     <p><i class="icon-long-arrow-down"></i> This is the toolbar</p>
     <p>Choose primitive shapes to create, then create them
       by clicking interactively on the workplane.</p>
@@ -55,14 +55,14 @@
   </div> 
 
   <div id="workplane-settings"></div>
-  <div class="overlay-help workplane">
+  <div class="overlay-help workplane" style="display: none">
     <p>Edit the workplane <i class="icon-long-arrow-right"></i></p>
     <p>You can change the current workplane by clicking on this icon,
       then dragging the origin or changing the angle.</p>
     <p>You can also enter the values manually.</p>
   </div>
 
-  <div class="overlay-help main">
+  <div class="overlay-help main" style="display: none">
     <p>Welcome to Shapesmith</p>
     <p>To help you get started:</p>
     <p>Click and drag to rotate; scroll to zoom.</p>
@@ -70,6 +70,12 @@
     <p>Click on the <span class="emph">?</span> in the toolbar to bring up this help.</p>
     <div class="got-it"><input type="button" value="Got it"/></div>
   </div>
+
+<script>
+  {{#firstTry}}
+  Shapesmith.firstTry = true;
+  {{/firstTry}}
+</script>
 
 {{#track}}
 <script>
