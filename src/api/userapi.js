@@ -85,6 +85,7 @@ var UserAPI = function(app) {
 
         var userData = {
           username: username, 
+          emailAddress: emailAddress,
           password_bcrypt: bcrypt.hashSync(password, 12),
           createdAt: new Date().toISOString(),
         };
