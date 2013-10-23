@@ -76,7 +76,7 @@ var SessionAuth = function() {
       res.redirect('/ui/' + req.session.username + '/designs');
     } else {
       res.render('landing', {
-        track: config.redisSessionStore
+        track: config.track
       });
     }
   };
@@ -158,7 +158,7 @@ app.get(/^\/signin\/?$/, function(req, res) {
       console.err(err);
     }
     res.render('signin', {
-      track: config.redisSessionStore
+      track: config.track
     });
   });
 });
@@ -167,7 +167,7 @@ app.get(/^\/signin\/?$/, function(req, res) {
 app.get(/^\/signup\/?$/, function(req, res) {
   res.render('signup', {
     temporary: req.session.temporary,
-    track: config.redisSessionStore,
+    track: config.track,
   });
 });
 
@@ -190,7 +190,7 @@ app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
     temporary: req.session.temporary,
     firstTry: req.session.firstTry,
     signoutButton: ((authEngine === 'session') && !req.session.temporary),
-    track: config.redisSessionStore,
+    track: config.track,
   });
 });
 
@@ -202,7 +202,9 @@ app.get(/^\/ui\/([\w._-]+)\/([\w%]+)\/modeller$/, function(req, res) {
     user: username, 
     design: design,
     firstTry: req.session.firstTry,
-    track: config.redisSessionStore,
+    track: config.track,
+    signoutButton: ((authEngine === 'session') && !req.session.temporary),
+    temporary: req.session.temporary,
   });
   if (req.session.firstTry) {
     req.session.firstTry = false;

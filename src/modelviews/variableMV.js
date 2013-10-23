@@ -101,11 +101,10 @@ define([
       },
 
       updateFromDOM: function() {
-        var name = this.$el.find('.var').val();
-        var expr = this.$el.find('.expr').val();
-        this.model.vertex.name = name;
-        this.model.vertex.parameters.expression = expr;
-        
+        var nameField = this.$el.find('.var');
+        var exprField = this.$el.find('.expr');
+        this.updateFromField(nameField, this.model.vertex, 'name');
+        this.updateFromField(exprField, this.model.vertex.parameters, 'expression');
       },
 
     });

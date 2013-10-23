@@ -54,7 +54,15 @@
       on the right.</p>
   </div> 
 
+  {{#temporary}}
+  <div class="button" id="signup"><a href="/signup">Sign up</a></div>
+  {{/temporary}}
+  {{#signoutButton}}
+  <div class="button" id="signout"><a href="/signout">Sign out</a></div>
+  {{/signoutButton}}
+
   <div id="workplane-settings"></div>
+    
   <div class="overlay-help workplane" style="display: none">
     <p>Edit the workplane <i class="icon-long-arrow-right"></i></p>
     <p>You can change the current workplane by clicking on this icon,

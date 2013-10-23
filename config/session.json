@@ -1,6 +1,8 @@
 {
   "port": 8000,
-  "dbType": "sqlite",
-  "authEngine" : "session"
+  "dbType": "couch",
+  "couchVarLib": "/usr/local/var/lib/couchdb/",
+  "authEngine" : "session",
+  "redisSessionStore": true
 }
 

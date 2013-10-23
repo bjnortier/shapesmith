@@ -180,12 +180,15 @@ define([
           copyChildren(originalChild, newChild);
           return newChild;
         });
-          
-        geometryGraph.add(newParent, function() {
-          newChildren.forEach(function(child) {
-            geometryGraph.addEdge(newParent, child);
+        
+        // Variable are already in the graph with their children
+        if (newParent.type !== 'variable') {
+          geometryGraph.add(newParent, function() {
+            newChildren.forEach(function(child) {
+              geometryGraph.addEdge(newParent, child);
+            });
           });
-        });
+        }
 
         newVertices.concat(newChildren);
       };
