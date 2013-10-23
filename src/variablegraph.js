@@ -83,11 +83,20 @@ define([
       var gatherVariables = function() {
         var vars = {};
         var listener = function(vertex) {
-          if ((vertex.type === 'variable') && (!vertex.editing)) {
+          if (vertex.type === 'variable') {
             var variable = vertex.name;
             var expression = vertex.parameters.expression;
-            var value = parseExpressionWithVariables(expression, vars);
-            vars[variable] = value;
+            var value;
+            // Support the case where var b is dependent on a,
+            // and a is being edited.
+            try {
+              value = parseExpressionWithVariables(expression, vars);
+              vars[variable] = value;
+            } catch (e) {
+              if (!vertex.editing) {
+                throw e;
+              }
+            }
           }
         };
         graph.leafFirstSearch(listener);

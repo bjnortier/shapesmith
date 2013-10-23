@@ -268,6 +268,10 @@ define([
 
 
       tryCommit: function() {
+        if (this.vertex.errors) {
+          return;
+        }
+        
         if (this.parentModel) {
           return this.parentModel.tryCommit();
         }
@@ -410,6 +414,7 @@ define([
         event.stopPropagation();
         if (this.updateFromDOM) {
           this.updateFromDOMErrors = false;
+          this.model.vertex.errors = undefined;
           this.updateFromDOM();
           if (!this.updateFromDOMErrors) {
             this.model.vertex.trigger('change', this.model.vertex);
@@ -424,6 +429,9 @@ define([
           obj[key] = expression;
           field.removeClass('error');
         } catch(e) {
+          this.model.vertex.errors = {
+            field: 'invalid expression'
+          };
           this.updateFromDOMErrors = true;
           field.addClass('error');
         }
