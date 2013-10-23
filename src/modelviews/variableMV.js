@@ -103,7 +103,7 @@ define([
       updateFromDOM: function() {
         var nameField = this.$el.find('.var');
         var exprField = this.$el.find('.expr');
-        this.updateFromField(nameField, this.model.vertex, 'name');
+        this.model.vertex.name = nameField.val();
         this.updateFromField(exprField, this.model.vertex.parameters, 'expression');
       },
 
