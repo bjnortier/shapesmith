@@ -17,8 +17,12 @@
 <body>
     
     <div class="logo"><img src="/images/logo_small.png" alt="logo"></div>
-    {{#temporary}}<div class="button" id="signup"><a href="/signup">Sign up</a></div>{{/temporary}}
-    {{#signoutButton}}<div class="button" id="signout"><a href="/signout">Sign out</a></div>{{/signoutButton}}
+    {{#temporary}}
+    <div class="button" id="signup"><a href="/signup">Sign up</a></div>
+    {{/temporary}}
+    {{#signoutButton}}
+    <div class="button" id="signout"><a href="/signout">Sign out</a></div>
+    {{/signoutButton}}
     <div id="create"></div>
     <div class="maincolumn">
         <ul id="designs"><li class="placeholder">loading...</li></ul>

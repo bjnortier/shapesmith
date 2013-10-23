@@ -1,7 +1,7 @@
 {
   "port": 8000,
   "dbType": "couch",
-  "couchVarLib": "/usr/local/var/lib/couchdb/",
+  "couchVarLib": "/var/lib/couchdb/1.0.1/",
   "authEngine" : "session",
   "redisSessionStore": true,
   "track": true

@@ -14,6 +14,39 @@ body {
 #no-webgl .browser-icons {
   margin-top: 10px;
 }
+#signout,
+#signup {
+  text-align: right;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+}
+#signout a,
+#signup a {
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  border: none;
+  border-bottom: solid 1px #B6B6B6;
+  cursor: pointer;
+}
+#signout a:visited,
+#signup a:visited {
+  color: black;
+  text-decoration: none;
+}
+#signup a {
+  background-color: #FFD589;
+}
+#signup a:hover {
+  background-color: #F7B949;
+}
+#signout a {
+  background-color: #DFDFDF;
+}
+#signout a:hover {
+  background-color: #B4E2FC;
+}
 #geometry {
   padding: 0;
   margin-left: 0;
@@ -285,7 +318,7 @@ input.field[type="text"] {
 #workplane-settings {
   position: fixed;
   right: 20px;
-  top: 20px;
+  top: 50px;
 }
 #workplane-settings .planes input {
   background-color: #636363;
@@ -335,8 +368,8 @@ input.field[type="text"] {
   max-width: 250px;
 }
 .overlay-help.workplane {
-  right: 70px;
-  top: 20px;
+  right: 60px;
+  top: 60px;
   max-width: 250px;
 }
 .overlay-help.toolbar {
