@@ -1,5 +1,4 @@
 {
-//  "port": 8000,
   "dbType": "couch",
   "couchVarLib": "/var/lib/couchdb/1.0.1/",
   "authEngine" : "session",
