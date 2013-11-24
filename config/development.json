@@ -1,3 +1,4 @@
 {
+    "port": 80,
     "dbType": "sqlite"
 }
