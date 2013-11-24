@@ -1,1 +1,1 @@
-web: node -e js,hbs,json src/api/server.js
+web: node  src/api/server.js
