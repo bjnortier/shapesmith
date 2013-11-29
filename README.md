@@ -2,6 +2,10 @@
 
 # Shapesmith.next
 
+you can test it live at [http://glacial-reef-8810.herokuapp.com/](http://glacial-reef-8810.herokuapp.com/)
+
+this fork has integrate modification for Heroku integretion (developpement profile)
+
 Welcome to Shapesmith.next, the next generation implementation of Shapesmith. 
 
 You can find the original, stable, version at [http://github.com/bjnortier/shapesmith](http://github.com/bjnortier/shapesmith)

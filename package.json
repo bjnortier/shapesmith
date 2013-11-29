@@ -17,9 +17,11 @@
     "url": "git://github.com/bjnortier/shapesmith.next.git"
   },
   "contributors": [],
-  "engines": [
-    "node"
-  ],
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
+,
   "scripts": {
     "test": "grunt test",
     "start": "nodemon -e js,hbs,json src/api/server.js"

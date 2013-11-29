@@ -3,3 +3,4 @@ db/*.db
 node_modules/
 build/
 chromedriver.log
+*~
