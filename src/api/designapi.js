@@ -28,7 +28,7 @@ var DesignAPI = function(app) {
   });
 
   // Get the design refs
-  app.get(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/?$/, function(req, res) {
+  app.get(/^\/api\/([\w._-]+)\/design\/([\w-%]+)\/?$/, function(req, res) {
 
     var username = decodeURIComponent(req.params[0]);
     var design = decodeURIComponent(req.params[1]);
@@ -118,7 +118,7 @@ var DesignAPI = function(app) {
   });
 
   // Update ref
-  app.put(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
+  app.put(/^\/api\/([\w._-]+)\/design\/([\w-%]+)\/refs\/(\w+)\/(\w+)\/?$/, function(req, res) {
 
     var username = decodeURIComponent(req.params[0]);
     var design = decodeURIComponent(req.params[1]);
