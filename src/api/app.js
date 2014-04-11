@@ -195,7 +195,7 @@ app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
 });
 
 // Modeller 
-app.get(/^\/ui\/([\w._-]+)\/([\w%]+)\/modeller$/, function(req, res) {
+app.get(/^\/ui\/([\w._-]+)\/([\w-%]+)\/modeller$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   var design = decodeURIComponent(req.params[1]);
   res.render('modeller', {
