@@ -94,7 +94,7 @@ var DesignAPI = function(app) {
   });
 
   // Delete
-  app.delete(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/?$/, function(req, res) {
+  app.delete(/^\/api\/([\w._-]+)\/design\/([\w-%]+)\/?$/, function(req, res) {
 
     var username = decodeURIComponent(req.params[0]);
     var design = decodeURIComponent(req.params[1]);
@@ -161,7 +161,7 @@ var DesignAPI = function(app) {
   });
 
   // Rename
-  app.post(/^\/api\/([\w._-]+)\/design\/([\w%]+)\/?$/, function(req, res) {
+  app.post(/^\/api\/([\w._-]+)\/design\/([\w-%]+)\/?$/, function(req, res) {
 
     var username = decodeURIComponent(req.params[0]);
     var design = decodeURIComponent(req.params[1]);
