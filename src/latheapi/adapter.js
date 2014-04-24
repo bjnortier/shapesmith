@@ -28,13 +28,23 @@ define([
 
     var bspdb = new BSPDB(infoHandler, errorHandler); 
 
+    function createSphere(sha, normalized) {
+      var sphere = CSG.sphere({ 
+        center: [normalized.x, normalized.y, normalized.z],
+        radius: normalized.r,
+        slices: 36,
+        stacks: 18,
+      });
+
+    }
+
     var getOrGenerate = function(sha, generator, callback) {
       // Read from the DB, or generate it if it doesn't exist
       bspdb.read(sha, function(err, jobResult) {
         if (err) {
           console.error('error reading from BSP DB', err);
         }
-        if (jobResult) {
+        if (false) {
           callback(undefined, jobResult);
         } else {
           var jobId = generator();
@@ -127,25 +137,21 @@ define([
       switch (vertex.type) {
       case 'sphere':
         normalized = Normalize.normalizeVertex(vertex);
-        var sphere = CSG.sphere({ 
-          center: [normalized.x, normalized.y, normalized.z],
-          radius: normalized.r,
-          slices: 36,
-          stacks: 18,
-        });
         sha = SHA1Hasher.hash(normalized);
-        callback(undefined, {csg: sphere, sha: sha});
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            return Lathe.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
+          }, performCallback);
+        }
         break;
       case 'cylinder':
         normalized = Normalize.normalizeVertex(vertex);
-        var cylinder = CSG.cylinder({
-          start: [normalized.x, normalized.y, normalized.z],
-          end: [normalized.x, normalized.y, normalized.z + normalized.h],
-          radius: normalized.r,
-          slices: 36,
-        });
         sha = SHA1Hasher.hash(normalized);
-        callback(undefined, {csg: cylinder, sha: sha});
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            return Lathe.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
+          }, performCallback);
+        }
         break;
       case 'cone':
         normalized = Normalize.normalizeVertex(vertex);
@@ -158,16 +164,12 @@ define([
         break;
       case 'cube':
         normalized = Normalize.normalizeVertex(vertex);
-        var cube = CSG.cube({
-          center: [
-            normalized.x + normalized.w/2, 
-            normalized.y + normalized.d/2, 
-            normalized.z + normalized.h/2,
-          ],
-          radius: [normalized.w/2, normalized.d/2, normalized.h/2],
-        });
         sha = SHA1Hasher.hash(normalized);
-        callback(undefined, {csg: cube, sha: sha});
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            return Lathe.createCube(sha, normalized, normalized.transforms, normalized.workplane);
+          }, performCallback);
+        }
         break;
       case 'union':
         generateBoolean(vertex, Lathe.createUnion, callback);

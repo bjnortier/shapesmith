@@ -13,7 +13,7 @@ define([
 
       // Create a worker pool and an event broker. The event broker
       // will be used by the caller to listen to the job results
-      var poolSize = 4;
+      var poolSize = 1;
       var workers = [];
       var worker;
       var i;
@@ -54,6 +54,7 @@ define([
             var jobResult = {
               serializedBSP: evt.data.bsp,
               polygons: evt.data.polygons,
+              csg: evt.data.csg,
             };
             broker.trigger(evt.data.id, jobResult);
 

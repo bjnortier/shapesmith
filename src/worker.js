@@ -8,6 +8,7 @@ requirejs.config({
     'backbone': '../node_modules/backbone/backbone',
     'lathe': '../node_modules/lathe/lib',
     'gl-matrix': '../node_modules/lathe/node_modules/gl-matrix/dist/gl-matrix',
+    'csg': 'lib/csg',
   },
   shim: {
     'underscore': {
@@ -17,9 +18,13 @@ requirejs.config({
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
     },
+    'csg': {
+      exports: 'CSG',
+    }
   },
 });
 requirejs([
+    'csg',
     'lathe/bsp',
     'lathe/primitives/cube',
     'lathe/primitives/sphere',
@@ -31,6 +36,7 @@ requirejs([
     'lathe/conv',
   ],
   function(
+    CSG,
     BSP,
     Cube,
     Sphere,
@@ -41,23 +47,28 @@ requirejs([
     Intersect3D,
     Conv) {
 
-    var returnResult = function(id, sha, bsp) {
-      if (!bsp) {
-        postMessage({error: 'no BSP for ' + id});
+    var returnResult = function(id, sha, bsp, csg) {
+      if (!bsp && !csg) {
+        postMessage({error: 'no BSP/CSG for ' + id});
         return;
       }
 
-      var brep = Conv.bspToBrep(bsp);
-      var polygons = brep.map(function(p) {
-        return p.toVertices().map(function(v) {
-          return v.toCoordinate();
+      var brep, polygons, serialized;
+      if (bsp) {
+        brep = Conv.bspToBrep(bsp);
+        polygons = brep.map(function(p) {
+          return p.toVertices().map(function(v) {
+            return v.toCoordinate();
+          });
         });
-      });
+        serialized = BSP.serialize(bsp);
+      }
       var jobResult = {
         id: id,
         sha: sha,
-        bsp: BSP.serialize(bsp),
+        bsp: serialized,
         polygons: polygons,
+        csg: csg,
       };
       postMessage(jobResult);
       
@@ -109,19 +120,43 @@ requirejs([
     this.addEventListener('message', function(e) {
 
       // Create new with the arguments
-      var bsp;
+      var bsp, csg, n;
       if (e.data.sphere) {
-        bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere, 24).bsp, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, bsp);
+        n = e.data.sphere;
+        csg = CSG.sphere({
+          center: [n.x, n.y, n.z],
+          radius: n.r,
+          slices: 36,
+          stacks: 18,
+        });
+        // bsp = applyTransformsAndWorkplane(new Sphere(e.data.sphere, 24).bsp, e.data.transforms, e.data.workplane);
+        returnResult(e.data.id, e.data.sha, undefined, csg);
       } else if (e.data.cylinder) {
-        bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 36).bsp, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, bsp);
+        n = e.data.cylinder;
+        var csg = CSG.cylinder({
+          start: [n.x, n.y, n.z],
+          end: [n.x, n.y, n.z + n.h],
+          radius: n.r,
+          slices: 36,
+        });
+        // bsp = applyTransformsAndWorkplane(new Cylinder(e.data.cylinder, 36).bsp, e.data.transforms, e.data.workplane);
+        returnResult(e.data.id, e.data.sha, undefined, csg);
       } else if (e.data.cone) {
-        bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 36).bsp, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, bsp);
+        throw Error('not supported');
+        // bsp = applyTransformsAndWorkplane(new Cone(e.data.cone, 36).bsp, e.data.transforms, e.data.workplane);
+        // returnResult(e.data.id, e.data.sha, undefined, csg);
       } else if (e.data.cube) {
-        bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, bsp);
+        n = e.data.cube;
+        var csg = CSG.cube({
+          center: [
+            n.x + n.w/2, 
+            n.y + n.d/2, 
+            n.z + n.h/2,
+          ],
+          radius: [n.w/2, n.d/2, n.h/2],
+        });
+        // bsp = applyTransformsAndWorkplane(new Cube(e.data.cube).bsp, e.data.transforms, e.data.workplane);
+        returnResult(e.data.id, e.data.sha, undefined, csg);
       } else if (e.data.union || e.data.subtract || e.data.intersect) {
 
         // The child BSPs start off as an array of SHAs, 
