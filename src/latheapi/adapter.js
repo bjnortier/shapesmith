@@ -127,21 +127,25 @@ define([
       switch (vertex.type) {
       case 'sphere':
         normalized = Normalize.normalizeVertex(vertex);
+        var sphere = CSG.sphere({ 
+          center: [normalized.x, normalized.y, normalized.z],
+          radius: normalized.r,
+          slices: 36,
+          stacks: 18,
+        });
         sha = SHA1Hasher.hash(normalized);
-        if (addCallbackAndShouldGenerate(sha, callback)) {
-          getOrGenerate(sha, function() {
-            return Lathe.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
-          }, performCallback);
-        }
+        callback(undefined, {csg: sphere, sha: sha});
         break;
       case 'cylinder':
         normalized = Normalize.normalizeVertex(vertex);
+        var cylinder = CSG.cylinder({
+          start: [normalized.x, normalized.y, normalized.z],
+          end: [normalized.x, normalized.y, normalized.z + normalized.h],
+          radius: normalized.r,
+          slices: 36,
+        });
         sha = SHA1Hasher.hash(normalized);
-        if (addCallbackAndShouldGenerate(sha, callback)) {
-          getOrGenerate(sha, function() {
-            return Lathe.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
-          }, performCallback);
-        }
+        callback(undefined, {csg: cylinder, sha: sha});
         break;
       case 'cone':
         normalized = Normalize.normalizeVertex(vertex);
@@ -154,12 +158,16 @@ define([
         break;
       case 'cube':
         normalized = Normalize.normalizeVertex(vertex);
+        var cube = CSG.cube({
+          center: [
+            normalized.x + normalized.w/2, 
+            normalized.y + normalized.d/2, 
+            normalized.z + normalized.h/2,
+          ],
+          radius: [normalized.w/2, normalized.d/2, normalized.h/2],
+        });
         sha = SHA1Hasher.hash(normalized);
-        if (addCallbackAndShouldGenerate(sha, callback)) {
-          getOrGenerate(sha, function() {
-            return Lathe.createCube(sha, normalized, normalized.transforms, normalized.workplane);
-          }, performCallback);
-        }
+        callback(undefined, {csg: cube, sha: sha});
         break;
       case 'union':
         generateBoolean(vertex, Lathe.createUnion, callback);

@@ -275,6 +275,54 @@ define([
         updateScreenBoxForObj(this.sceneObject);
       },
 
+
+      csgToMesh: function(csg) {
+        var geometry = new THREE.Geometry();
+        var indices = [];
+        var box3 = new THREE.Box3();
+
+        var workplaneAxis = calc.objToVector(
+            this.model.vertex.workplane.axis, 
+            geometryGraph, 
+            THREE.Vector3);
+        var workplaneAngle = geometryGraph.evaluate(this.model.vertex.workplane.angle);
+        var workplaneOrigin = calc.objToVector(
+              this.model.vertex.workplane.origin, 
+              geometryGraph, 
+              THREE.Vector3);
+
+        csg.polygons.forEach(function(polygon) {
+
+          var polygonIndices = polygon.vertices.map(function(v) {
+            var vertex = new THREE.Vector3(v.pos.x, v.pos.y, v.pos.z);
+
+            var localVertex = vertex.clone();
+            localVertex.sub(workplaneOrigin);
+            localVertex = calc.rotateAroundAxis(localVertex, workplaneAxis, -workplaneAngle);
+            box3.expandByPoint(localVertex);
+
+            return geometry.vertices.push(vertex) - 1;
+          });
+
+          if (polygonIndices.length === 3) {
+            geometry.faces.push(new THREE.Face3(polygonIndices[0], polygonIndices[1], polygonIndices[2]));
+          } else if (polygonIndices.length === 4) {
+            geometry.faces.push(new THREE.Face4(polygonIndices[0], polygonIndices[1], polygonIndices[2], polygonIndices[3]));
+          } else {
+            throw new Error('unsupported number of vertices');
+          }
+          indices.push(polygonIndices);
+          
+        }, this);
+
+        geometry.computeFaceNormals();
+        return {
+          geometry: geometry, 
+          indices: indices,
+          box3: box3,
+        };
+      },
+
       polygonsToMesh: function(polygons) {
         var geometry = new THREE.Geometry();
         var indices = [];
@@ -439,7 +487,12 @@ define([
       renderMesh: function(result) {
         if (this.model.inContext) {
           this.clear();
-          var toMesh = this.polygonsToMesh(result.polygons);
+          var toMesh;
+          if (result.csg) {
+            toMesh = this.csgToMesh(result.csg);
+          } else {
+            toMesh = this.polygonsToMesh(result.polygons);
+          }
 
           this.extents = {
             center: toMesh.box3.center(),
