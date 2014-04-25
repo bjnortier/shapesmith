@@ -47,7 +47,7 @@ define([
 
     var Model = Toolbar.ItemModel.extend({
 
-      name: 'stl',
+      name: 'stl out',
 
       initialize: function() {
         Toolbar.ItemModel.prototype.initialize.call(this);
@@ -71,7 +71,7 @@ define([
         saveAs(blob, Shapesmith.design  + '.stl');
       },
 
-      icon: icons['stl'],
+      icon: icons['stl_out'],
 
     });
 

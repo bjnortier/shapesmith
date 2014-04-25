@@ -14,6 +14,6 @@
     <text space="preserve" x="34.712517" y="13.345442" id="text3161" linespacing="125%">
       <tspan role="line" id="tspan3163" x="34.712517" y="13.345442"/>
     </text>
-    <path d="m 28,6 8,0 0,12 4,0 -8,8 -8,-8 4,0 z" id="path3169" connector-curvature="0" nodetypes="cccccccc"/>
+    <path d="m 28,24 8,0 0,-12 4,0 -8,-8 -8,8 4,0 z" id="path3169" connector-curvature="0" nodetypes="cccccccc"/>
   </g>
 </svg>

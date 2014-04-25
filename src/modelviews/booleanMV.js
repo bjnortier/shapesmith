@@ -136,6 +136,10 @@ define([
       },
 
       applyTransforms: function() {
+        if (!this.meshObject) {
+          return;
+        }
+
         var translation = calc.objToVector(
           this.model.vertex.transforms.translation, 
           geometryGraph, 

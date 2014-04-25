@@ -4,6 +4,7 @@ requirejs.config({
     'underscore': '../node_modules/underscore/underscore',
     'backbone-events': '../node_modules/backbone-events/lib/backbone-events',
     'backbone': '../node_modules/backbone/backbone',
+    'csg': 'lib/csg',
   },
   shim: {
     'underscore': {
@@ -12,6 +13,9 @@ requirejs.config({
     'backbone': {
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
+    },
+    'csg': {
+      exports: 'CSG',
     },
   },
 });

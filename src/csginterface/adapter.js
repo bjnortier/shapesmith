@@ -7,6 +7,7 @@ define([
     './normalize',
     './pool',
     './bspdb',
+    'csg',
   ], function(
     _,
     Events,
@@ -15,7 +16,8 @@ define([
     geometryGraph,
     Normalize,
     pool,
-    BSPDB) {
+    BSPDB,
+    CSG) {
 
     var infoHandler = function() {
       console.info.apply(console, arguments);
@@ -120,6 +122,21 @@ define([
       generateCallbacks[result.sha] = undefined;
     };
 
+    // The worker message strips all the functions and the
+    // result is only an object. Deserialize that back
+    // into the constituent polygons.
+    function deserializeRawCSG(rawObject) {
+      var polygons = rawObject.polygons.map(function(rawPoly) {
+        var vertices = rawPoly.vertices.map(function(rawVertex) {
+          return new CSG.Vertex(
+            new CSG.Vector(rawVertex.pos.x, rawVertex.pos.y, rawVertex.pos.z),
+            new CSG.Vector(rawVertex.normal.x, rawVertex.normal.y, rawVertex.normal.z));
+        });
+        return new CSG.Polygon(vertices);
+      });
+      return CSG.fromPolygons(polygons);
+    }
+
     var generate = function(vertex, callback) {
       var normalized, sha;
       switch (vertex.type) {
@@ -169,7 +186,13 @@ define([
         generateBoolean(vertex, pool.createIntersect, callback);
         break;
       default:
-        throw new Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);
+        if (vertex.parameters.csg) {
+          callback(undefined, {
+            csg: deserializeRawCSG({polygons: vertex.parameters.csg}),
+          });
+        } else {
+          throw new Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);
+        }
       }
     };
 

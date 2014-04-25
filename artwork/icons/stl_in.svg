@@ -14,7 +14,7 @@
    id="svg5961"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="stl_import.svg">
+   sodipodi:docname="stl_out.svg">
   <defs
      id="defs5963" />
   <sodipodi:namedview
@@ -92,7 +92,7 @@
          y="13.345442" /></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 28,6 8,0 0,12 4,0 -8,8 -8,-8 4,0 z"
+       d="m 28,4 8,0 0,12 4,0 -8,8 -8,-8 4,0 z"
        id="path3169"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc" />

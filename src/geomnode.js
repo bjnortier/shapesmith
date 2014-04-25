@@ -460,6 +460,22 @@ define([
       return getCommonExpressions(this);
     };
 
+    // ---------- Imports ----------
+
+    var Mesh = function(options) {
+      options = options || {};
+      options.type = 'mesh';
+      options.category = 'geometry';
+      options.parameters = options.parameters;
+      GeomNode.prototype.constructor.call(this, options);
+    };
+
+    _.extend(Mesh.prototype, GeomNode.prototype);
+
+    Mesh.prototype.getExpressions = function() {
+      return getCommonExpressions(this); 
+    };
+
     // ---------- Module ----------
 
     return {
@@ -478,6 +494,7 @@ define([
       Union          : Union,
       Subtract       : Subtract,
       Intersect      : Intersect,
+      Mesh           : Mesh,
       constructors: {
         'workplane': Workplane,
         'variable' : Variable,
@@ -491,6 +508,7 @@ define([
         'union'    : Union,
         'subtract' : Subtract,
         'intersect': Intersect,
+        'mesh'     : Mesh,
       }
     };
 

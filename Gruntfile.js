@@ -42,6 +42,7 @@ module.exports = function(grunt) {
         ],
         options: {
           globals: {
+            "alert": false,
             "window": false,
             "document": false,
             "define": false,
@@ -58,6 +59,7 @@ module.exports = function(grunt) {
             "Stats": false,
             "Shapesmith": false,
             "Blob": false,
+            "FileReader": false,
             "saveAs": false
           },
         },

@@ -19,7 +19,7 @@ requirejs([
 
     function translateCSG(csg, vector) {
       csg.polygons = csg.polygons.map(function(polygon) {
-        return new CSG.Polygon(polygon.vertices.map(function(vertex, i) {
+        return new CSG.Polygon(polygon.vertices.map(function(vertex) {
           return new CSG.Vertex(vertex.pos.plus(vector), vertex.normal);
         }));
       });
@@ -88,27 +88,15 @@ requirejs([
       return csg;
     }
 
-    var returnResult = function(id, sha, bsp, csg) {
-      if (!bsp && !csg) {
-        postMessage({error: 'no BSP/CSG for ' + id});
+    var returnResult = function(id, sha, csg) {
+      if (!csg) {
+        postMessage({error: 'no CSG for ' + id});
         return;
       }
 
-      var brep, polygons, serialized;
-      if (bsp) {
-        brep = Conv.bspToBrep(bsp);
-        polygons = brep.map(function(p) {
-          return p.toVertices().map(function(v) {
-            return v.toCoordinate();
-          });
-        });
-        serialized = BSP.serialize(bsp);
-      }
       var jobResult = {
         id: id,
         sha: sha,
-        bsp: serialized,
-        polygons: polygons,
         csg: csg,
       };
       postMessage(jobResult);
@@ -175,7 +163,7 @@ requirejs([
     this.addEventListener('message', function(e) {
 
       // Create new with the arguments
-      var bsp, csg, n;
+      var csg, n;
       if (e.data.sphere) {
         n = e.data.sphere;
         csg = CSG.sphere({
@@ -185,7 +173,7 @@ requirejs([
           stacks: 18,
         });
         csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, undefined, csg);
+        returnResult(e.data.id, e.data.sha, csg);
       } else if (e.data.cylinder) {
         n = e.data.cylinder;
         csg = CSG.cylinder({
@@ -195,7 +183,7 @@ requirejs([
           slices: 36,
         });
         csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, undefined, csg);
+        returnResult(e.data.id, e.data.sha, csg);
       } else if (e.data.cone) {
         n = e.data.cone;
         csg = CSG.cone({
@@ -205,7 +193,7 @@ requirejs([
           slices: 36,
         });
         csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, undefined, csg);
+        returnResult(e.data.id, e.data.sha, csg);
       } else if (e.data.cube) {
         n = e.data.cube;
         csg = CSG.cube({
@@ -217,7 +205,7 @@ requirejs([
           radius: [n.w/2, n.d/2, n.h/2],
         });
         csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
-        returnResult(e.data.id, e.data.sha, undefined, csg);
+        returnResult(e.data.id, e.data.sha, csg);
       } else if (e.data.union || e.data.subtract || e.data.intersect) {
 
         // The child BSPs start off as an array of SHAs, 
@@ -237,7 +225,7 @@ requirejs([
         csg = applyReverseWorkplane(result, e.data.workplane);
         csg = applyTransformsAndWorkplane(result, e.data.transforms, e.data.workplane);
 
-        returnResult(e.data.id, e.data.sha, undefined, result);
+        returnResult(e.data.id, e.data.sha, result);
 
       } else {
         postMessage({error: 'unknown worker message:' + JSON.stringify(e.data)});
