@@ -61,7 +61,7 @@ $(document).ready(function() {
       'hintview',
       'inspect/statsview',
       'scripting/designer',
-      'latheapi/adapter',
+      'csginterface/adapter',
       'designer',
     ], function(
       $, _$,

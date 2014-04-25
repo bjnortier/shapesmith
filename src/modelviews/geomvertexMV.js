@@ -15,7 +15,7 @@ define([
     'geometrygraphsingleton',
     'asyncAPI',
     'icons',
-    'latheapi/adapter',
+    'csginterface/adapter',
   ], function(
     Backbone,
     $, 
@@ -33,7 +33,7 @@ define([
     geometryGraph,
     AsyncAPI,
     icons,
-    latheAdapter) {
+    csgAdapter) {
 
   // ---------- Common ----------
 
@@ -329,7 +329,7 @@ define([
 
       createMesh: function(callback) {
         var vertex = this.model.vertex;
-        latheAdapter.generate(
+        csgAdapter.generate(
           vertex,
           function(err, result) {
 
@@ -373,7 +373,7 @@ define([
             factor: 1, 
           }
         };
-        latheAdapter.generate(
+        csgAdapter.generate(
           vertex,
           function(err, result) {
 

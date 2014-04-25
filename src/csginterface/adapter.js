@@ -1,13 +1,12 @@
-// The adapter is the interface between vertices and lathe objects
 define([
     'underscore',
     'backbone-events',
     'casgraph/sha1hasher',
     'geomnode',
     'geometrygraphsingleton',
-    'latheapi/normalize',
-    'latheapi/pool',
-    'latheapi/bspdb',
+    './normalize',
+    './pool',
+    './bspdb',
   ], function(
     _,
     Events,
@@ -15,7 +14,7 @@ define([
     GeomNode,
     geometryGraph,
     Normalize,
-    Lathe,
+    pool,
     BSPDB) {
 
     var infoHandler = function() {
@@ -38,7 +37,7 @@ define([
           callback(undefined, jobResult);
         } else {
           var jobId = generator();
-          Lathe.broker.on(jobId, function(jobResult) {
+          pool.broker.on(jobId, function(jobResult) {
 
             bspdb.write({
               sha: sha,
@@ -57,7 +56,7 @@ define([
       });
     };
 
-    var generateBoolean = function(vertex, latheGenerator, callback) {
+    var generateBoolean = function(vertex, csgGenerator, callback) {
 
       var children = geometryGraph.childrenOf(vertex);
       var childResults = {};
@@ -94,7 +93,7 @@ define([
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
             var normalized = Normalize.normalizeVertex(vertex);
-            return latheGenerator(sha, childBSPs, normalized.transforms, normalized.workplane);
+            return csgGenerator(sha, childBSPs, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
       };
@@ -129,7 +128,7 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -138,7 +137,7 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -147,7 +146,7 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCone(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createCone(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -156,18 +155,18 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCube(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createCube(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
       case 'union':
-        generateBoolean(vertex, Lathe.createUnion, callback);
+        generateBoolean(vertex, pool.createUnion, callback);
         break;
       case 'subtract':
-        generateBoolean(vertex, Lathe.createSubtract, callback);
+        generateBoolean(vertex, pool.createSubtract, callback);
         break;
       case 'intersect':
-        generateBoolean(vertex, Lathe.createIntersect, callback);
+        generateBoolean(vertex, pool.createIntersect, callback);
         break;
       default:
         throw new Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);
@@ -187,7 +186,7 @@ define([
         broker.trigger('initialized');
       }
     });
-    Lathe.broker.on('initialized', function() {
+    pool.broker.on('initialized', function() {
       poolInitialized = true;
       if (uiDBInitialized && poolInitialized) {
         broker.trigger('initialized');

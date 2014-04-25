@@ -14,8 +14,7 @@ define([
     'modelviews/heightOnWidthDepthAnchorView',
     'modelviews/widthdepthcornerview',
     'asyncAPI',
-    'latheapi/normalize',
-    
+    'csginterface/normalize',
   ], 
   function(
     $, 
@@ -33,7 +32,7 @@ define([
     CornerEditingHeightAnchor,
     WidthDepthCornerView,
     AsyncAPI,
-    Normalize) {
+    normalize) {
 
     // ---------- Common ----------
 
@@ -62,7 +61,7 @@ define([
           ];
         }
 
-        var dimensions = Normalize.normalizeVertex(this.model.vertex);
+        var dimensions = normalize.normalizeVertex(this.model.vertex);
         var position = new THREE.Vector3(dimensions.x, dimensions.y, dimensions.z);
 
         var cube = THREE.SceneUtils.createMultiMaterialObject(
