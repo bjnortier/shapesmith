@@ -136,6 +136,10 @@ define([
       return jobQueue.queueJob({sha: sha, intersect: childBSPs, transforms: transforms, workplane: workplane});
     };
 
+    var createMesh = function(sha, csg, transforms, workplane) {
+      return jobQueue.queueJob({sha: sha, mesh: csg, transforms: transforms, workplane: workplane});
+    };
+
     return {
       createCube     : createCube,
       createSphere   : createSphere,
@@ -144,6 +148,7 @@ define([
       createUnion    : createUnion,
       createSubtract : createSubtract,
       createIntersect: createIntersect,
+      createMesh     : createMesh,
       broker         : jobQueue.broker,
     };
 

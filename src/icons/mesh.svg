@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 64 64" version="0.48.2 r9819" width="64px" height="64px" id="svg5961">
+  <defs id="defs5963"/>
+  <grid type="xygrid" id="grid3167" empspacing="5" visible="true" enabled="true" snapvisiblegridlinesonly="true" spacingx="0.2px" spacingy="0.2px"/>
+  <format/>
+  <type resource="http://purl.org/dc/dcmitype/StillImage"/>
+  <title/>
+  <g id="layer1" label="Layer 1" groupmode="layer">
+    <text space="preserve" x="34.712517" y="13.345442" id="text3161" linespacing="125%">
+      <tspan role="line" id="tspan3163" x="34.712517" y="13.345442"/>
+    </text>
+    <path d="M 6,58 30,10 54,58 z" id="path4034" connector-curvature="0"/>
+    <path d="M 18,34 42,34 30,58 z" id="path4036" connector-curvature="0"/>
+  </g>
+</svg>

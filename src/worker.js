@@ -227,6 +227,13 @@ requirejs([
 
         returnResult(e.data.id, e.data.sha, result);
 
+      } else if (e.data.mesh) {
+
+        var result = deserializeRawCSG({polygons: e.data.mesh});
+        csg = applyReverseWorkplane(result, e.data.workplane);
+        csg = applyTransformsAndWorkplane(result, e.data.transforms, e.data.workplane);
+        returnResult(e.data.id, e.data.sha, csg);
+
       } else {
         postMessage({error: 'unknown worker message:' + JSON.stringify(e.data)});
       }

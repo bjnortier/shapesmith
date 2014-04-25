@@ -185,14 +185,17 @@ define([
       case 'intersect':
         generateBoolean(vertex, pool.createIntersect, callback);
         break;
-      default:
-        if (vertex.parameters.csg) {
-          callback(undefined, {
-            csg: deserializeRawCSG({polygons: vertex.parameters.csg}),
-          });
-        } else {
-          throw new Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);
+      case 'mesh':
+        normalized = Normalize.normalizeVertex(vertex);
+        sha = SHA1Hasher.hash(normalized);
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            return pool.createMesh(sha, normalized.csg, normalized.transforms, normalized.workplane);
+          }, performCallback);
         }
+        break;
+      default:
+        throw new Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);
       }
     };
 

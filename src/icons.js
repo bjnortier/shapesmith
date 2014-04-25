@@ -15,6 +15,7 @@ define([
     'lib/text!icons/workplane.svg',
     'lib/text!icons/stl_in.svg',
     'lib/text!icons/stl_out.svg',
+    'lib/text!icons/mesh.svg',
     'lib/text!icons/help.svg',
   ], 
   function(
@@ -34,6 +35,7 @@ define([
     workplane,
     stl_in,
     stl_out,
+    mesh,
     help) {
 
     return {
@@ -53,6 +55,7 @@ define([
       workplane: workplane,
       stl_out  : stl_out,
       stl_in   : stl_in,
+      mesh     : mesh,
       help     : help,
     };
 
