@@ -28,23 +28,13 @@ define([
 
     var bspdb = new BSPDB(infoHandler, errorHandler); 
 
-    function createSphere(sha, normalized) {
-      var sphere = CSG.sphere({ 
-        center: [normalized.x, normalized.y, normalized.z],
-        radius: normalized.r,
-        slices: 36,
-        stacks: 18,
-      });
-
-    }
-
     var getOrGenerate = function(sha, generator, callback) {
       // Read from the DB, or generate it if it doesn't exist
       bspdb.read(sha, function(err, jobResult) {
         if (err) {
           console.error('error reading from BSP DB', err);
         }
-        if (false) {
+        if (jobResult) {
           callback(undefined, jobResult);
         } else {
           var jobId = generator();
@@ -52,8 +42,7 @@ define([
 
             bspdb.write({
               sha: sha,
-              polygons: jobResult.polygons,
-              serializedBSP: jobResult.serializedBSP,
+              csg: jobResult.csg,
             }, function(err) {
               if (err) {
                 postMessage({error: 'error writing to BSP DB' + err});
