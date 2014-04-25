@@ -7,6 +7,7 @@ define([
     'geometrygraphsingleton',
     'icons',
     'toolbars/toolbar',
+    'toolbars/geomtoolbar',
     './parsestl',
     'asyncAPI',
   ], function(
@@ -18,6 +19,7 @@ define([
     geometryGraph,
     icons,
     toolbar,
+    geomtoolbar,
     parseSTL,
     AsyncAPI) {
 
@@ -58,7 +60,6 @@ define([
         if (!result.error) {
           var committedVertices = result.newVertices;
           VertexMV.eventProxy.trigger('committedCreate', [meshVertex], committedVertices);
-          selection.deselectAll();
         }
       });
     });
@@ -70,6 +71,7 @@ define([
       activate: function() {
         // toolbar.ItemModel.prototype.activate.call(this);
         $('#stl-file-select-input').click();
+        geomtoolbar.setToSelect();
       },
       
       icon: icons.stl_in,
