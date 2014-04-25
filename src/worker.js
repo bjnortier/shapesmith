@@ -35,7 +35,6 @@ requirejs([
       return csg;
     }
 
-
     // https://github.com/mrdoob/three.js/blob/master/src/math/Quaternion.js
     function Quaternion(x,y,z,w) {
       this.x = x;
@@ -119,7 +118,7 @@ requirejs([
     var applyTransformsAndWorkplane = function(csg, transforms, workplane) {
       if (csg) {
         if ((transforms.translation) && 
-            ((transforms.translation.x !== 0) || (transforms.translation.y !== 0) && (transforms.translation.z !== 0))) {
+            ((transforms.translation.x !== 0) || (transforms.translation.y !== 0) || (transforms.translation.z !== 0))) {
           csg = translateCSG(csg, new CSG.Vector(transforms.translation));
         }
         if (transforms.rotation.angle !== 0) {
