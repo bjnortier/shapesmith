@@ -197,7 +197,15 @@ requirejs([
         csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, undefined, csg);
       } else if (e.data.cone) {
-        throw Error('not supported');
+        n = e.data.cone;
+        csg = CSG.cone({
+          start: [n.x, n.y, n.z],
+          end: [n.x, n.y, n.z + n.h],
+          radius: n.r,
+          slices: 36,
+        });
+        csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
+        returnResult(e.data.id, e.data.sha, undefined, csg);
       } else if (e.data.cube) {
         n = e.data.cube;
         csg = CSG.cube({
