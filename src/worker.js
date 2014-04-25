@@ -211,27 +211,27 @@ requirejs([
         // The child BSPs start off as an array of SHAs, 
         // and each SHA is replaced with the BSP from the DB
         var childBSPs = e.data.union || e.data.subtract || e.data.intersect;
-        var result = deserializeRawCSG(childBSPs[0]);
+        csg = deserializeRawCSG(childBSPs[0]);
         for (var i = 1; i < childBSPs.length; ++i) {
           var other = deserializeRawCSG(childBSPs[i]);
           if (e.data.union) {
-            result = result.union(other);
+            csg = csg.union(other);
           } else if (e.data.subtract) {
-            result = other.subtract(result);
+            csg = other.subtract(csg);
           } else {
-            result = result.intersect(other);
+            csg = csg.intersect(other);
           }
         }
-        csg = applyReverseWorkplane(result, e.data.workplane);
-        csg = applyTransformsAndWorkplane(result, e.data.transforms, e.data.workplane);
+        csg = applyReverseWorkplane(csg, e.data.workplane);
+        csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
 
-        returnResult(e.data.id, e.data.sha, result);
+        returnResult(e.data.id, e.data.sha, csg);
 
       } else if (e.data.mesh) {
 
-        var result = deserializeRawCSG({polygons: e.data.mesh});
-        csg = applyReverseWorkplane(result, e.data.workplane);
-        csg = applyTransformsAndWorkplane(result, e.data.transforms, e.data.workplane);
+        csg = deserializeRawCSG({polygons: e.data.mesh});
+        csg = applyReverseWorkplane(csg, e.data.workplane);
+        csg = applyTransformsAndWorkplane(csg, e.data.transforms, e.data.workplane);
         returnResult(e.data.id, e.data.sha, csg);
 
       } else {
