@@ -32,7 +32,6 @@
     "underscore": "= 1.4.3",
     "backbone-events": "git://github.com/bjnortier/backbone-events.git#0.9.9",
     "backbone": "= 0.9.9",
-    "lathe": "= 0.4.0",
     "sqlite3": "~2.1.17",
     "ueberDB": "git://github.com/bjnortier/ueberDB#feature/shapesmith",
     "node-uuid": "~1.4.1",

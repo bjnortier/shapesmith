@@ -99,7 +99,7 @@ define([
         var sha = SHA1Hasher.hash(uniqueObj);
 
         var childBSPs = children.map(function(child) {
-          return childResults[child.id].serializedBSP;
+          return childResults[child.id].csg;
         });
 
         if (addCallbackAndShouldGenerate(sha, callback)) {

@@ -1,7 +1,6 @@
 define([
     'underscore',
     'backbone-events',
-    'lathe/bsp',
   ],
   function(_, Events) {
 
