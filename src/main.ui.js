@@ -4,6 +4,7 @@ requirejs.config({
     'underscore': '../node_modules/underscore/underscore',
     'backbone-events': '../node_modules/backbone-events/lib/backbone-events',
     'backbone': '../node_modules/backbone/backbone',
+    'uuid': '../node_modules/node-uuid/uuid',
     'csg': 'lib/csg',
   },
   shim: {
@@ -67,6 +68,7 @@ $(document).ready(function() {
       'scripting/designer',
       'csginterface/adapter',
       'designer',
+      'progress',
     ], function(
       $, _$,
       sceneModel,
@@ -85,7 +87,8 @@ $(document).ready(function() {
       StatsView,
       Designer,
       adapter,
-      designer) {
+      designer,
+      progress) {
 
       designer.init();
 
@@ -95,6 +98,8 @@ $(document).ready(function() {
       var graphUrl = '/api/' + Shapesmith.user + '/graph/';
       var replicator = new AJAXReplicator(vertexUrl, graphUrl);
       geometryGraph.attachReplicator(replicator);
+
+      progress.addTrackable(replicator);
 
       var commitSHA = $.getQueryParam("commit");
       AsyncAPI.loadFromCommit(replicator, commitSHA, function() {

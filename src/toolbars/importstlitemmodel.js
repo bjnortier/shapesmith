@@ -31,7 +31,7 @@ define([
       var reader = new FileReader();
 
       // Closure to capture the file information.
-      reader.onload = (function(theFile) {
+      reader.onload = (function() {
         return function(e) {
           if (e.target.readyState === 2) {
             input.value = "";
