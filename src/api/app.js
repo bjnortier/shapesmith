@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var nconf = require('nconf');
-var app = express();  
+var app = express();
 
 var rootDir = path.normalize(path.join(__dirname, '../..'));
 
@@ -45,7 +45,7 @@ app.use('/src/node_modules', express.static(path.join(rootDir, 'node_modules')))
 app.use('/node_modules', express.static(path.join(rootDir, 'node_modules')));
 app.use('/lib', express.static(path.join(rootDir, 'src/lib')));
 
-app.use(express.bodyParser());
+app.use(express.bodyParser({limit: '50mb'}));
 app.use(express.cookieParser());
 
 if (config.redisSessionStore) {
@@ -186,7 +186,7 @@ app.get(/^\/signout\/?$/, function(req, res) {
 app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   res.render('designs', {
-    user: username, 
+    user: username,
     temporary: req.session.temporary,
     firstTry: req.session.firstTry,
     signoutButton: ((authEngine === 'session') && !req.session.temporary),
@@ -199,7 +199,7 @@ app.get(/^\/ui\/([\w._-]+)\/([\w-%]+)\/modeller$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   var design = decodeURIComponent(req.params[1]);
   res.render('modeller', {
-    user: username, 
+    user: username,
     design: design,
     firstTry: req.session.firstTry,
     track: config.track,
