@@ -32,7 +32,6 @@ define([
 
       // Closure to capture the file information.
       reader.onload = (function(theFile) {
-        console.log(theFile);
         return function(e) {
           if (e.target.readyState === 2) {
             input.value = "";

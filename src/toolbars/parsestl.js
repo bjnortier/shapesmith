@@ -121,8 +121,6 @@ define(['csg'], function(CSG) {
     var binData = ensureBinary(data);
     var faces =  isBinary(binData) ?      
       parseBinary(binData) : parseASCII(ensureString(data));
-    console.log(faces.length);
-
     return faces;
 
   }
