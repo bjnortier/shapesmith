@@ -129,12 +129,11 @@ define([
 
     };
 
-    var normalizeMesh = function(mesh) {
-
+    var normalizeSTL = function(stlNode) {
       return {
-        csg: mesh.parameters.csg,
-        transforms: normalizeTransforms(mesh.transforms),
-        workplane: normalizeWorkplane(mesh.workplane),
+        stl: stlNode.parameters.stl,
+        transforms: normalizeTransforms(stlNode.transforms),
+        workplane: normalizeWorkplane(stlNode.workplane),
       };
 
     };
@@ -154,8 +153,8 @@ define([
         case 'subtract':
         case 'intersect':
           return normalizeBoolean(vertex);
-        case 'mesh':
-          return normalizeMesh(vertex);
+        case 'stl':
+          return normalizeSTL(vertex);
         default:
           throw new Error('no normalization defined for ' + vertex.id);
         }

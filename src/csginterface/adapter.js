@@ -8,6 +8,7 @@ define([
     './pool',
     './bspdb',
     'csg',
+    'toolbars/parseSTL',
   ], function(
     _,
     Events,
@@ -17,7 +18,8 @@ define([
     Normalize,
     pool,
     BSPDB,
-    CSG) {
+    CSG,
+    parseSTL) {
 
     var infoHandler = function() {
       console.info.apply(console, arguments);
@@ -27,7 +29,7 @@ define([
       console.error.apply(console, arguments);
     };
 
-    var bspdb = new BSPDB(infoHandler, errorHandler); 
+    var bspdb = new BSPDB(infoHandler, errorHandler);
 
     var getOrGenerate = function(sha, generator, callback) {
       // Read from the DB, or generate it if it doesn't exist
@@ -64,7 +66,7 @@ define([
       var childResults = {};
       var allChildrenExist;
 
-      // Ensure all children exist 
+      // Ensure all children exist
       var remaining = children.length;
       children.forEach(function(child) {
         generate(child, function(err, result) {
@@ -99,7 +101,7 @@ define([
           }, performCallback);
         }
       };
-      
+
     };
 
     // Share the generate callbacks so only a single generate is performed
@@ -125,17 +127,17 @@ define([
     // The worker message strips all the functions and the
     // result is only an object. Deserialize that back
     // into the constituent polygons.
-    function deserializeRawCSG(rawObject) {
-      var polygons = rawObject.polygons.map(function(rawPoly) {
-        var vertices = rawPoly.vertices.map(function(rawVertex) {
-          return new CSG.Vertex(
-            new CSG.Vector(rawVertex.pos.x, rawVertex.pos.y, rawVertex.pos.z),
-            new CSG.Vector(rawVertex.normal.x, rawVertex.normal.y, rawVertex.normal.z));
-        });
-        return new CSG.Polygon(vertices);
-      });
-      return CSG.fromPolygons(polygons);
-    }
+    // function deserializeRawCSG(rawObject) {
+    //   var polygons = rawObject.polygons.map(function(rawPoly) {
+    //     var vertices = rawPoly.vertices.map(function(rawVertex) {
+    //       return new CSG.Vertex(
+    //         new CSG.Vector(rawVertex.pos.x, rawVertex.pos.y, rawVertex.pos.z),
+    //         new CSG.Vector(rawVertex.normal.x, rawVertex.normal.y, rawVertex.normal.z));
+    //     });
+    //     return new CSG.Polygon(vertices);
+    //   });
+    //   return CSG.fromPolygons(polygons);
+    // }
 
     var generate = function(vertex, callback) {
       var normalized, sha;
@@ -185,12 +187,13 @@ define([
       case 'intersect':
         generateBoolean(vertex, pool.createIntersect, callback);
         break;
-      case 'mesh':
+      case 'stl':
         normalized = Normalize.normalizeVertex(vertex);
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return pool.createMesh(sha, normalized.csg, normalized.transforms, normalized.workplane);
+            var csg = parseSTL(normalized.stl);
+            return pool.createMesh(sha, csg, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;

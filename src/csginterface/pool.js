@@ -13,7 +13,7 @@ define([
 
       // Create a worker pool and an event broker. The event broker
       // will be used by the caller to listen to the job results
-      var poolSize = 1;
+      var poolSize = 4;
       var workers = [];
       var worker;
       var i;

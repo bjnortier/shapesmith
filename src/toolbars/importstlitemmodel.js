@@ -44,28 +44,41 @@ define([
       reader.readAsBinaryString(input.files[0]);
     }
 
+    function ensureString(buf) {
+      if (typeof buf !== "string") {
+        var array_buffer = new Uint8Array(buf);
+        var str = '';
+        for(var i = 0; i < buf.byteLength; i++) {
+          str += String.fromCharCode(array_buffer[i]); // implicitly assumes little-endian
+        }
+        return str;
+      } else {
+        return buf;
+      }
+    }
+
     $('#stl-file-select-input').change(function() {
       uploadFile(this, function(contents) {
-        var csg = parseSTL(contents);
 
-        var meshVertex = new GeomNode.Mesh({
+        var stl = ensureString(contents);
+        var stlVertex = new GeomNode.STL({
           proto: true,
           editing: true,
-          parameters: {csg: csg},
+          parameters: {stl: stl},
           workplane: Calc.copyObj(currentWorkplane.get().vertex.workplane),
         });
-        geometryGraph.add(meshVertex);
-        var result = AsyncAPI.tryCommitCreate([meshVertex]);
+        geometryGraph.add(stlVertex);
+        var result = AsyncAPI.tryCommitCreate([stlVertex]);
         if (!result.error) {
           var committedVertices = result.newVertices;
-          VertexMV.eventProxy.trigger('committedCreate', [meshVertex], committedVertices);
+          VertexMV.eventProxy.trigger('committedCreate', [stlVertex], committedVertices);
         }
       });
     });
 
     var Model = toolbar.ItemModel.extend({
       
-      name: 'stl in',   
+      name: 'stl in',
       
       activate: function() {
         // toolbar.ItemModel.prototype.activate.call(this);

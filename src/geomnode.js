@@ -1,5 +1,5 @@
 define([
-    'underscore', 
+    'underscore',
     'backbone-events',
     'calculations',
   ], function(_, Events, calc) {
@@ -49,7 +49,7 @@ define([
         this.id = options.id;
       } else {
         this.id = getNextId(options.type);
-      } 
+      }
       idsUsed.push(this.id);
 
       if (options.hasOwnProperty('name')) {
@@ -95,7 +95,7 @@ define([
     GeomNode.prototype.cloneNonEditing = function(options) {
       options = options || {};
       var cloneOptions = _.extend(options, {
-        type        : this.type, 
+        type        : this.type,
         id          : this.id,
         isClone     : true,
         name        : this.name,
@@ -107,7 +107,7 @@ define([
       });
       var newNode = new this.constructor(cloneOptions);
       return newNode;
-    };  
+    };
 
     GeomNode.prototype.cloneEditing = function() {
       var newNode = this.cloneNonEditing();
@@ -119,7 +119,7 @@ define([
 
     GeomNode.prototype.copy = function() {
       var copyOptions = {
-        type        : this.type, 
+        type        : this.type,
         implicit    : this.implicit,
         transforms  : calc.copyObj(this.transforms),
         workplane   : calc.copyObj(this.workplane),
@@ -137,7 +137,7 @@ define([
     var strip = function(obj) {
       return {
         id        : obj.id,
-        type      : obj.type, 
+        type      : obj.type,
         name      : obj.name,
         implicit  : obj.implicit,
         workplane : obj.workplane,
@@ -157,9 +157,9 @@ define([
       GeomNode.prototype.constructor.call(this, options);
     };
 
-    _.extend(Workplane.prototype, GeomNode.prototype); 
+    _.extend(Workplane.prototype, GeomNode.prototype);
 
-    var getCommonExpressions = function(vertex) { 
+    var getCommonExpressions = function(vertex) {
       return {
 
         'workplane.origin.x' : vertex.workplane.origin.x,
@@ -168,7 +168,7 @@ define([
         'workplane.axis.x'   : vertex.workplane.axis.x,
         'workplane.axis.y'   : vertex.workplane.axis.y,
         'workplane.axis.z'   : vertex.workplane.axis.z,
-        'workplane.angle'    : vertex.workplane.angle,    
+        'workplane.angle'    : vertex.workplane.angle,
 
         'transforms.rotation.origin.x' : vertex.transforms.rotation.origin.x,
         'transforms.rotation.origin.y' : vertex.transforms.rotation.origin.y,
@@ -176,16 +176,16 @@ define([
         'transforms.rotation.axis.x'   : vertex.transforms.rotation.axis.x,
         'transforms.rotation.axis.y'   : vertex.transforms.rotation.axis.y,
         'transforms.rotation.axis.z'   : vertex.transforms.rotation.axis.z,
-        'transforms.rotation.angle'    : vertex.transforms.rotation.angle,  
+        'transforms.rotation.angle'    : vertex.transforms.rotation.angle,
 
         'transforms.translation.x' : vertex.transforms.translation.x,
         'transforms.translation.y' : vertex.transforms.translation.y,
-        'transforms.translation.z' : vertex.transforms.translation.z,  
+        'transforms.translation.z' : vertex.transforms.translation.z,
 
         'transforms.scale.origin.x' : vertex.transforms.scale.origin.x,
         'transforms.scale.origin.y' : vertex.transforms.scale.origin.y,
-        'transforms.scale.origin.z' : vertex.transforms.scale.origin.z,  
-        'transforms.scale.factor' : vertex.transforms.scale.factor,  
+        'transforms.scale.origin.z' : vertex.transforms.scale.origin.z,
+        'transforms.scale.factor' : vertex.transforms.scale.factor,
       };
     };
 
@@ -203,7 +203,7 @@ define([
     var Variable = function(options) {
       if (!options.hasOwnProperty('name')) {
         throw new Error('No name');
-      }    
+      }
       options.type = 'variable';
       GeomNode.prototype.constructor.call(this, options);
       this.transforms = undefined;
@@ -399,8 +399,8 @@ define([
 
     Extrude.prototype.getExpressions = function() {
       return _.extend({
-        'vector.u' : this.parameters.vector.u, 
-        'vector.v' : this.parameters.vector.v, 
+        'vector.u' : this.parameters.vector.u,
+        'vector.v' : this.parameters.vector.v,
         'vector.w' : this.parameters.vector.w,
         'height' : this.parameters.height,
       }, getCommonExpressions(this));
@@ -462,25 +462,25 @@ define([
 
     // ---------- Imports ----------
 
-    var Mesh = function(options) {
+    var STL = function(options) {
       options = options || {};
-      options.type = 'mesh';
+      options.type = 'stl';
       options.category = 'geometry';
       options.parameters = options.parameters;
       GeomNode.prototype.constructor.call(this, options);
     };
 
-    _.extend(Mesh.prototype, GeomNode.prototype);
+    _.extend(STL.prototype, GeomNode.prototype);
 
-    Mesh.prototype.getExpressions = function() {
-      return getCommonExpressions(this); 
+    STL.prototype.getExpressions = function() {
+      return getCommonExpressions(this);
     };
 
     // ---------- Module ----------
 
     return {
       resetIDCounters: resetIDCounters,
-      strip          : strip,     
+      strip          : strip,
       Node           : GeomNode,
       Workplane      : Workplane,
       Variable       : Variable,
@@ -494,7 +494,7 @@ define([
       Union          : Union,
       Subtract       : Subtract,
       Intersect      : Intersect,
-      Mesh           : Mesh,
+      STL            : STL,
       constructors: {
         'workplane': Workplane,
         'variable' : Variable,
@@ -508,7 +508,7 @@ define([
         'union'    : Union,
         'subtract' : Subtract,
         'intersect': Intersect,
-        'mesh'     : Mesh,
+        'stl'      : STL,
       }
     };
 
