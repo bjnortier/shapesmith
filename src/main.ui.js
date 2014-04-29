@@ -100,6 +100,7 @@ $(document).ready(function() {
       geometryGraph.attachReplicator(replicator);
 
       progress.addTrackable(replicator);
+      progress.addTrackable(adapter.broker);
 
       var commitSHA = $.getQueryParam("commit");
       AsyncAPI.loadFromCommit(replicator, commitSHA, function() {

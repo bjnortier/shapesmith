@@ -40,7 +40,7 @@ define([
         throw new Error('No type');
       }
       this.type = options.type;
-      
+
       if (options.hasOwnProperty('id')) {
         validateIdOrName(options.id);
         if (!options.isClone) {
@@ -480,6 +480,7 @@ define([
 
     return {
       resetIDCounters: resetIDCounters,
+      validateIdOrName: validateIdOrName,
       strip          : strip,
       Node           : GeomNode,
       Workplane      : Workplane,

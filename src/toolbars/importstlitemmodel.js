@@ -31,11 +31,11 @@ define([
       var reader = new FileReader();
 
       // Closure to capture the file information.
-      reader.onload = (function() {
+      reader.onload = (function(file) {
         return function(e) {
           if (e.target.readyState === 2) {
             input.value = "";
-            successFn(e.target.result);
+            successFn(e.target.result, file);
           }
         };
       })(input.files[0]);
@@ -58,10 +58,18 @@ define([
     }
 
     $('#stl-file-select-input').change(function() {
-      uploadFile(this, function(contents) {
+      uploadFile(this, function(contents, file) {
 
+        var name;
+        try {
+          name = file.name.replace(/\.stl/g, '');
+          GeomNode.validateIdOrName(name);
+        } catch(e) {
+          name = undefined;
+        }
         var stl = ensureString(contents);
         var stlVertex = new GeomNode.STL({
+          name: name,
           proto: true,
           editing: true,
           parameters: {stl: stl},
@@ -77,15 +85,15 @@ define([
     });
 
     var Model = toolbar.ItemModel.extend({
-      
+
       name: 'stl in',
-      
+
       activate: function() {
         // toolbar.ItemModel.prototype.activate.call(this);
         $('#stl-file-select-input').click();
         geomtoolbar.setToSelect();
       },
-      
+
       icon: icons.stl_in,
 
       createAnother: function() {

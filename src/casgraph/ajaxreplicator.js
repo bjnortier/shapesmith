@@ -16,9 +16,9 @@ define([
       var writeGraph = function(hash, graph, callback) {
         write(graphUrl, hash, graph, callback);
       };
-      
+
       var write = function(url, hash, object, callback) {
-        
+
         var tracker = progressTrackable.create(that);
 
         $.ajax({
@@ -50,7 +50,7 @@ define([
       var readGraph = function(hash, callback) {
         read(graphUrl, hash, callback);
       };
-      
+
       var read = function(url, hash, callback) {
 
         var tracker = progressTrackable.create(that);

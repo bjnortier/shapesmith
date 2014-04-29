@@ -9,6 +9,7 @@ define([
     './bspdb',
     'csg',
     'toolbars/parseSTL',
+    'progresstrackable',
   ], function(
     _,
     Events,
@@ -19,7 +20,8 @@ define([
     pool,
     BSPDB,
     CSG,
-    parseSTL) {
+    parseSTL,
+    progressTrackable) {
 
     var infoHandler = function() {
       console.info.apply(console, arguments);
@@ -41,20 +43,21 @@ define([
           callback(undefined, jobResult);
         } else {
           var jobId = generator();
-          pool.broker.on(jobId, function(jobResult) {
+          pool.broker.on('jobDone', function(jobResult) {
 
-            bspdb.write({
-              sha: sha,
-              csg: jobResult.csg,
-            }, function(err) {
-              if (err) {
-                postMessage({error: 'error writing to BSP DB' + err});
-              }
-            });
+            if (jobResult.id === jobId) {
+              bspdb.write({
+                sha: sha,
+                csg: jobResult.csg,
+              }, function(err) {
+                if (err) {
+                  postMessage({error: 'error writing to BSP DB' + err});
+                }
+              });
 
-            jobResult.sha = sha;
-            jobResult.id = jobId;
-            callback(undefined, jobResult);
+              jobResult.sha = sha;
+              callback(undefined, jobResult);
+            }
           });
         }
       });
@@ -121,23 +124,8 @@ define([
       generateCallbacks[result.sha].forEach(function(callback) {
         callback(err, result);
       });
-      generateCallbacks[result.sha] = undefined;
+      delete generateCallbacks[result.sha];
     };
-
-    // The worker message strips all the functions and the
-    // result is only an object. Deserialize that back
-    // into the constituent polygons.
-    // function deserializeRawCSG(rawObject) {
-    //   var polygons = rawObject.polygons.map(function(rawPoly) {
-    //     var vertices = rawPoly.vertices.map(function(rawVertex) {
-    //       return new CSG.Vertex(
-    //         new CSG.Vector(rawVertex.pos.x, rawVertex.pos.y, rawVertex.pos.z),
-    //         new CSG.Vector(rawVertex.normal.x, rawVertex.normal.y, rawVertex.normal.z));
-    //     });
-    //     return new CSG.Polygon(vertices);
-    //   });
-    //   return CSG.fromPolygons(polygons);
-    // }
 
     var generate = function(vertex, callback) {
       var normalized, sha;
@@ -215,11 +203,21 @@ define([
         broker.trigger('initialized');
       }
     });
+
     pool.broker.on('initialized', function() {
       poolInitialized = true;
       if (uiDBInitialized && poolInitialized) {
         broker.trigger('initialized');
       }
+    });
+
+    var trackers = [];
+    pool.broker.on('jobQueued', function(id) {
+      trackers[id] = progressTrackable.create(broker);
+    });
+    pool.broker.on('jobDone', function(result) {
+      trackers[result.id].finish();
+      delete trackers[result.id];
     });
 
     return {

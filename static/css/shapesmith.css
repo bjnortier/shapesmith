@@ -117,7 +117,9 @@ body {
   fill-opacity: 0.5;
 }
 #messaging {
-  margin-left: 50%;
+  position: relative;
+  left: 100%;
+  margin-left: 5px;
 }
 #geometry .editing .icon24 svg {
   fill: rgba(166, 219, 230, 0.42);
