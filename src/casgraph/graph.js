@@ -1,4 +1,4 @@
-define(['underscore', 'backbone-events', 'casgraph/sha1hasher'], 
+define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
   function(_, Events, sha1hasher) {
 
   // Create a new Graph. Any JS object can be inserted and will be
@@ -10,14 +10,14 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
   // `serializableFn` optional function to detrmine if a vertex should be serialized
   // `constructionFn` optional function to construct deserialzed vertices
   var CAS = function(options) {
-    
+
     options = options || {};
     var idKey = options.idKey || 'id';
     var hashFn = options.hashFn || sha1hasher.hash;
     var stripFn = options.stripFn;
     var serializableFn = options.serializableFn || function() { return true; };
     var constructionFn = options.constructionFn || function(obj) { return obj; };
-    
+
     // For cloning
     this.options = options;
 
@@ -123,7 +123,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
     this.hashIfHashable = function(id, object) {
       if (serializableFn(object)) {
         var strippedObject = stripFn ? stripFn(object) : object;
-        var hash = hashFn(strippedObject);
+        var hash = object.sha || hashFn(strippedObject);
         hashes[id] = hash;
         this.trigger('vertexHashed', hash, strippedObject);
       } else if (hashes[id]) {

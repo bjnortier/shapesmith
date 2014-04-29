@@ -31,11 +31,11 @@ define([
       var reader = new FileReader();
 
       // Closure to capture the file information.
-      reader.onload = (function(theFile) {
+      reader.onload = (function(file) {
         return function(e) {
           if (e.target.readyState === 2) {
             input.value = "";
-            successFn(e.target.result);
+            successFn(e.target.result, file);
           }
         };
       })(input.files[0]);
@@ -44,35 +44,56 @@ define([
       reader.readAsBinaryString(input.files[0]);
     }
 
-    $('#stl-file-select-input').change(function() {
-      uploadFile(this, function(contents) {
-        var csg = parseSTL(contents);
+    function ensureString(buf) {
+      if (typeof buf !== "string") {
+        var array_buffer = new Uint8Array(buf);
+        var str = '';
+        for(var i = 0; i < buf.byteLength; i++) {
+          str += String.fromCharCode(array_buffer[i]); // implicitly assumes little-endian
+        }
+        return str;
+      } else {
+        return buf;
+      }
+    }
 
-        var meshVertex = new GeomNode.Mesh({
+    $('#stl-file-select-input').change(function() {
+      uploadFile(this, function(contents, file) {
+
+        var name;
+        try {
+          name = file.name.replace(/\.stl/g, '');
+          GeomNode.validateIdOrName(name);
+        } catch(e) {
+          name = undefined;
+        }
+        var stl = ensureString(contents);
+        var stlVertex = new GeomNode.STL({
+          name: name,
           proto: true,
           editing: true,
-          parameters: {csg: csg},
+          parameters: {stl: stl},
           workplane: Calc.copyObj(currentWorkplane.get().vertex.workplane),
         });
-        geometryGraph.add(meshVertex);
-        var result = AsyncAPI.tryCommitCreate([meshVertex]);
+        geometryGraph.add(stlVertex);
+        var result = AsyncAPI.tryCommitCreate([stlVertex]);
         if (!result.error) {
           var committedVertices = result.newVertices;
-          VertexMV.eventProxy.trigger('committedCreate', [meshVertex], committedVertices);
+          VertexMV.eventProxy.trigger('committedCreate', [stlVertex], committedVertices);
         }
       });
     });
 
     var Model = toolbar.ItemModel.extend({
-      
-      name: 'stl in',   
-      
+
+      name: 'stl in',
+
       activate: function() {
         // toolbar.ItemModel.prototype.activate.call(this);
         $('#stl-file-select-input').click();
         geomtoolbar.setToSelect();
       },
-      
+
       icon: icons.stl_in,
 
       createAnother: function() {

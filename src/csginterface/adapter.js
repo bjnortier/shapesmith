@@ -8,6 +8,8 @@ define([
     './pool',
     './bspdb',
     'csg',
+    'toolbars/parseSTL',
+    'progresstrackable',
   ], function(
     _,
     Events,
@@ -17,7 +19,9 @@ define([
     Normalize,
     pool,
     BSPDB,
-    CSG) {
+    CSG,
+    parseSTL,
+    progressTrackable) {
 
     var infoHandler = function() {
       console.info.apply(console, arguments);
@@ -27,7 +31,7 @@ define([
       console.error.apply(console, arguments);
     };
 
-    var bspdb = new BSPDB(infoHandler, errorHandler); 
+    var bspdb = new BSPDB(infoHandler, errorHandler);
 
     var getOrGenerate = function(sha, generator, callback) {
       // Read from the DB, or generate it if it doesn't exist
@@ -39,20 +43,21 @@ define([
           callback(undefined, jobResult);
         } else {
           var jobId = generator();
-          pool.broker.on(jobId, function(jobResult) {
+          pool.broker.on('jobDone', function(jobResult) {
 
-            bspdb.write({
-              sha: sha,
-              csg: jobResult.csg,
-            }, function(err) {
-              if (err) {
-                postMessage({error: 'error writing to BSP DB' + err});
-              }
-            });
+            if (jobResult.id === jobId) {
+              bspdb.write({
+                sha: sha,
+                csg: jobResult.csg,
+              }, function(err) {
+                if (err) {
+                  postMessage({error: 'error writing to BSP DB' + err});
+                }
+              });
 
-            jobResult.sha = sha;
-            jobResult.id = jobId;
-            callback(undefined, jobResult);
+              jobResult.sha = sha;
+              callback(undefined, jobResult);
+            }
           });
         }
       });
@@ -64,7 +69,7 @@ define([
       var childResults = {};
       var allChildrenExist;
 
-      // Ensure all children exist 
+      // Ensure all children exist
       var remaining = children.length;
       children.forEach(function(child) {
         generate(child, function(err, result) {
@@ -99,7 +104,7 @@ define([
           }, performCallback);
         }
       };
-      
+
     };
 
     // Share the generate callbacks so only a single generate is performed
@@ -119,23 +124,8 @@ define([
       generateCallbacks[result.sha].forEach(function(callback) {
         callback(err, result);
       });
-      generateCallbacks[result.sha] = undefined;
+      delete generateCallbacks[result.sha];
     };
-
-    // The worker message strips all the functions and the
-    // result is only an object. Deserialize that back
-    // into the constituent polygons.
-    function deserializeRawCSG(rawObject) {
-      var polygons = rawObject.polygons.map(function(rawPoly) {
-        var vertices = rawPoly.vertices.map(function(rawVertex) {
-          return new CSG.Vertex(
-            new CSG.Vector(rawVertex.pos.x, rawVertex.pos.y, rawVertex.pos.z),
-            new CSG.Vector(rawVertex.normal.x, rawVertex.normal.y, rawVertex.normal.z));
-        });
-        return new CSG.Polygon(vertices);
-      });
-      return CSG.fromPolygons(polygons);
-    }
 
     var generate = function(vertex, callback) {
       var normalized, sha;
@@ -185,12 +175,13 @@ define([
       case 'intersect':
         generateBoolean(vertex, pool.createIntersect, callback);
         break;
-      case 'mesh':
+      case 'stl':
         normalized = Normalize.normalizeVertex(vertex);
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return pool.createMesh(sha, normalized.csg, normalized.transforms, normalized.workplane);
+            var csg = parseSTL(normalized.stl);
+            return pool.createMesh(sha, csg, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -212,11 +203,21 @@ define([
         broker.trigger('initialized');
       }
     });
+
     pool.broker.on('initialized', function() {
       poolInitialized = true;
       if (uiDBInitialized && poolInitialized) {
         broker.trigger('initialized');
       }
+    });
+
+    var trackers = [];
+    pool.broker.on('jobQueued', function(id) {
+      trackers[id] = progressTrackable.create(broker);
+    });
+    pool.broker.on('jobDone', function(result) {
+      trackers[result.id].finish();
+      delete trackers[result.id];
     });
 
     return {

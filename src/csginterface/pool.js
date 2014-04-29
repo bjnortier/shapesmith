@@ -1,7 +1,7 @@
 define([
     'underscore',
     'backbone-events',
-  ], 
+  ],
   function(
     _,
     Events) {
@@ -13,7 +13,7 @@ define([
 
       // Create a worker pool and an event broker. The event broker
       // will be used by the caller to listen to the job results
-      var poolSize = 1;
+      var poolSize = 4;
       var workers = [];
       var worker;
       var i;
@@ -52,11 +52,10 @@ define([
             }
           } else if (evt.data.hasOwnProperty('id')) {
             var jobResult = {
-              serializedBSP: evt.data.bsp,
-              polygons: evt.data.polygons,
+              id: evt.data.id,
               csg: evt.data.csg,
             };
-            broker.trigger(evt.data.id, jobResult);
+            broker.trigger('jobDone', jobResult);
 
           } else if (evt.data.info) {
             console.info('worker info:', evt.data.info);
@@ -73,6 +72,7 @@ define([
       this.queueJob = function(job) {
         var jobId = nextJobId++;
         job.id = jobId;
+        broker.trigger('jobQueued', jobId);
         var worker = getAvailableWorker();
         if (worker) {
           doJob(job, worker);

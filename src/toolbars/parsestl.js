@@ -16,7 +16,7 @@ define(['csg'], function(CSG) {
       return buf;
     }
 
-  }    
+  }
 
   function ensureString(buf) {
 
@@ -69,7 +69,7 @@ define(['csg'], function(CSG) {
               reader.getFloat32(vertexstart + 4,true),
               reader.getFloat32(vertexstart + 8,true)),
             normal));
-      }  
+      }
 
       faces.push(new CSG.Polygon(vertices));
     }
@@ -92,7 +92,7 @@ define(['csg'], function(CSG) {
       while ((result = patternNormal.exec(text)) !== null) {
         normal = new CSG.Vector(
           parseFloat(result[1]),
-          parseFloat(result[3]), 
+          parseFloat(result[3]),
           parseFloat(result[5]));
       }
 
@@ -119,7 +119,7 @@ define(['csg'], function(CSG) {
   // Parse either binary or ASCII data
   function parse(data) {
     var binData = ensureBinary(data);
-    var faces =  isBinary(binData) ?      
+    var faces =  isBinary(binData) ?
       parseBinary(binData) : parseASCII(ensureString(data));
     return faces;
 

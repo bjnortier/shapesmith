@@ -55,7 +55,7 @@ define([
       workplane: workplane,
       stl_out  : stl_out,
       stl_in   : stl_in,
-      mesh     : mesh,
+      stl      : mesh,
       help     : help,
     };
 

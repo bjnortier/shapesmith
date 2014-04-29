@@ -69,7 +69,7 @@ define([
       modelgraph.addWrapper('union', BooleanMV);
       modelgraph.addWrapper('subtract', BooleanMV);
       modelgraph.addWrapper('intersect', BooleanMV);
-      modelgraph.addWrapper('mesh', BooleanMV);
+      modelgraph.addWrapper('stl', BooleanMV);
 
       // geomToolbar.addItem(new PointItemModel());
       geomToolbar.addItem(new CubeItemModel());
