@@ -207,8 +207,10 @@ define([
       scale: function(origin, factor) {
         if (!this.startRadius) {
           this.startRadius = geometryGraph.evaluate(this.vertex.parameters.radius);
+          this.startHeight = geometryGraph.evaluate(this.vertex.parameters.height);
         }
         this.vertex.parameters.radius = this.startRadius*factor;
+        this.vertex.parameters.height = this.startHeight*factor;
         this.vertex.trigger('change', this.vertex);
       },
 
