@@ -8,7 +8,7 @@ define([
     './pool',
     './bspdb',
     'csg',
-    'toolbars/parseSTL',
+    'toolbars/parsestl',
     'progresstrackable',
   ], function(
     _,
