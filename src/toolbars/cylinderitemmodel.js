@@ -14,9 +14,9 @@ define([
     GeomNode) {
 
     var Model = toolbar.ItemModel.extend({
-      
-      name: 'cylinder',   
-      
+
+      name: 'cylinder',
+
       activate: function() {
         toolbar.ItemModel.prototype.activate.call(this);
 
@@ -24,11 +24,11 @@ define([
         var point = new GeomNode.Point({
           editing   : true,
           proto   : true,
-          implicit  : true, 
+          implicit  : true,
           workplane : workplane,
         });
         geometryGraph.add(point);
-        
+
         var cylinderOptions = {
           editing    : true,
           proto    : true,
@@ -44,7 +44,7 @@ define([
 
       createAnother: function(type) {
         return type === 'cylinder';
-      } 
+      }
 
     });
 

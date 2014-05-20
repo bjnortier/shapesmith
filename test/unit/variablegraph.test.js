@@ -1,5 +1,5 @@
 define(['variablegraph'], function(variableGraph) {
-  
+
   describe('Variables', function() {
 
     var graph;
@@ -62,13 +62,13 @@ define(['variablegraph'], function(variableGraph) {
 
       var a = variableGraph.createVertex('a', '1');
       var b = variableGraph.createVertex('b', '1*5');
-      
+
       assert.isTrue(graph.canAdd(a));
       assert.isTrue(graph.canAdd(b));
 
       graph.add(a);
       var a2 = variableGraph.createVertex('a', '15*5');
-      assert.isFalse(graph.canAdd(a2)); 
+      assert.isFalse(graph.canAdd(a2));
 
       assert.isFalse(graph.canAdd(variableGraph.createVertex('c', 'r*5')));
       assert.isFalse(graph.canAdd(variableGraph.createVertex('a', '')));
@@ -101,7 +101,7 @@ define(['variablegraph'], function(variableGraph) {
 
       var a = variableGraph.createVertex('a', '1');
       var b = variableGraph.createVertex('b', '2');
-      
+
       graph.add(a);
       graph.add(b);
 

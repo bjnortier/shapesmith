@@ -182,7 +182,7 @@ app.get(/^\/signout\/?$/, function(req, res) {
   });
 });
 
-// Designs 
+// Designs
 app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   res.render('designs', {
@@ -194,7 +194,7 @@ app.get(/^\/ui\/([\w._-]+)\/designs\/?$/, function(req, res) {
   });
 });
 
-// Modeller 
+// Modeller
 app.get(/^\/ui\/([\w._-]+)\/([\w-%]+)\/modeller$/, function(req, res) {
   var username = decodeURIComponent(req.params[0]);
   var design = decodeURIComponent(req.params[1]);

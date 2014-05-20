@@ -8,7 +8,7 @@ describe('Scripting', function() {
     before(function(done) {
         this.timeout(5000);
         client.initDesign(done);
-            
+
     });
 
     beforeEach(function(done) {
@@ -57,11 +57,11 @@ describe('Scripting', function() {
 
     describe('Polylines', function() {
 
-        it('can create from coordinates', function(done) {  
+        it('can create from coordinates', function(done) {
             this.timeout(5000);
             client
                 .assertExecuteError(
-                    'designer.createPolyline(0)', 
+                    'designer.createPolyline(0)',
                     'parameter is not an array')
                 .assertExecuteSuccess('p = designer.createPolyline([[0,0,0],[10,10,0]])')
                 .assertNumberOfDisplayNodes(1)
@@ -72,7 +72,7 @@ describe('Scripting', function() {
 
         });
 
-        it('can create from points', function(done) {  
+        it('can create from points', function(done) {
             this.timeout(5000);
             client
                 .assertExecuteSuccess('p0 = designer.createPoint(0,0,0)')
@@ -90,10 +90,10 @@ describe('Scripting', function() {
             client
                 .assertExecuteSuccess('polyline = designer.createPolyline([[0,0,0],[10,10,0]])')
                 .assertExecuteError(
-                    'designer.getPoint({})', 
+                    'designer.getPoint({})',
                     'unknown geometry type')
                 .assertExecuteError(
-                    'designer.getPoint(polyline, 3)', 
+                    'designer.getPoint(polyline, 3)',
                     'point index out of bounds [0,1]')
                 .assertExecuteSuccess('point0 = designer.getPoint(polyline, 0)')
                 .assertExecuteSuccess('point1 = designer.getPoint(polyline, 1)')
@@ -107,11 +107,11 @@ describe('Scripting', function() {
 
     describe('Extrusions', function() {
 
-        it('can create from coordinates', function(done) {  
+        it('can create from coordinates', function(done) {
             this.timeout(5000);
             client
                 .assertExecuteError(
-                    'designer.createExtrusion(0)', 
+                    'designer.createExtrusion(0)',
                     'parameter is not an array')
                 .assertExecuteSuccess('p = designer.createExtrusion([[0,0,0],[10,0,0]])')
                 .assertNumberOfDisplayNodes(2)
@@ -121,7 +121,7 @@ describe('Scripting', function() {
 
         });
 
-        it('can create from points', function(done) {  
+        it('can create from points', function(done) {
             this.timeout(5000);
             client
                 .assertExecuteSuccess('p0 = designer.createPoint(0,0,0)')

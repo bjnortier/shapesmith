@@ -8,7 +8,7 @@ describe('Geometry toolbar', function() {
     before(function(done) {
         this.timeout(5000);
         client.initDesign(done);
-            
+
     });
 
     beforeEach(function(done) {

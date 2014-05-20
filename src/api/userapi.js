@@ -84,7 +84,7 @@ var UserAPI = function(app) {
         }
 
         var userData = {
-          username: username, 
+          username: username,
           emailAddress: emailAddress,
           password_bcrypt: bcrypt.hashSync(password, 12),
           createdAt: new Date().toISOString(),
@@ -119,7 +119,7 @@ var UserAPI = function(app) {
     var username = 'tmp_' + uuid.v4();
     var userData = {
       username: username,
-      temporary: true, 
+      temporary: true,
     };
 
     userDB.init(username, function(err, db) {
@@ -137,7 +137,7 @@ var UserAPI = function(app) {
             track: config.track
           });
         }
-      
+
         users.create(db, userData, function(err) {
           if (err) {
             console.error(err);
@@ -167,7 +167,7 @@ var UserAPI = function(app) {
   });
 
   // app.get(/^\/user\/([\w%@.]+)\/?$/, function(req, res) {
-    
+
   //   var username = decodeURIComponent(req.params[0]);
   //   if (!app.get('authEngine').canRead(username, req)) {
   //     res.json(401, 'Unauthorized');
@@ -203,7 +203,7 @@ var UserAPI = function(app) {
           track: config.track
         });
       }
-      
+
       users.checkPassword(db, username, password, function(err, paswordMatches) {
         if (err) {
           console.error(err);

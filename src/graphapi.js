@@ -1,9 +1,9 @@
 define([
-    'underscore', 
-    'geomnode', 
+    'underscore',
+    'geomnode',
     'casgraph/sha1hasher',
-    'geometrygraph', 
-    'mesh', 
+    'geometrygraph',
+    'mesh',
   ], function(
     _,
     GeomNode,

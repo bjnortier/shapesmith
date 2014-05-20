@@ -2,25 +2,25 @@ define([
     'jquery',
     'underscore',
     'lib/mustache',
-    'calculations', 
+    'calculations',
     'colors',
-    'scene', 
+    'scene',
     'scenevieweventgenerator',
     'worldcursor',
     'geometrygraphsingleton',
     'modelviews/vertexMV',
-    'modelviews/geomvertexMV', 
-    'modelviews/pointMV', 
+    'modelviews/geomvertexMV',
+    'modelviews/pointMV',
     'modelviews/workplaneMV',
     'asyncAPI',
-  ], 
+  ],
   function(
     $,
     _,
     Mustache,
-    calc, 
-    colors, 
-    sceneModel, 
+    calc,
+    colors,
+    sceneModel,
     sceneViewEventGenerator,
     worldCursor,
     geometryGraph,
@@ -36,7 +36,7 @@ define([
 
       render: function() {
         GeomVertexMV.EditingSceneView.prototype.render.call(this);
-        
+
         // Not this.model.vertex as this is view is also used on other models
         var pointChildren = geometryGraph.childrenOf(this.model.polyline);
         if (pointChildren.length === 0) {
@@ -48,7 +48,7 @@ define([
 
         var positions = [calc.objToVector(coordinates[0], geometryGraph, THREE.Vector3)];
 
-        var material = this.model.vertex.editing ? 
+        var material = this.model.vertex.editing ?
           this.materials.editing.edge : this.materials.normal.edge;
 
         for(var i = 1; i < coordinates.length; ++i) {
@@ -113,7 +113,7 @@ define([
           this.activePoint.parameters.coordinate.x = position.x;
           this.activePoint.parameters.coordinate.y = position.y;
           this.activePoint.parameters.coordinate.z = position.z;
-          this.activePoint.trigger('change', this.activePoint);      
+          this.activePoint.trigger('change', this.activePoint);
         }
       },
 
@@ -139,7 +139,7 @@ define([
           if (children.length > 2) {
             this.removeLastPoint();
             this.tryCommit();
-          } 
+          }
         }
       },
 
@@ -155,7 +155,7 @@ define([
             this.removeLastPoint();
             var clickedPoint = viewAndEvent.view.model.vertex;
             geometryGraph.addPointToParent(this.vertex, clickedPoint);
-            
+
             // Finish on the first point
             var children = geometryGraph.childrenOf(this.vertex);
             if ((clickedPoint === _.first(children)) && (children.length > 2)) {
@@ -216,7 +216,7 @@ define([
 
       render: function() {
         GeomVertexMV.EditingDOMView.prototype.render.call(this);
-        var template = 
+        var template =
           this.beforeTemplate +
           this.afterTemplate;
         var view = _.extend(this.baseView, {
@@ -226,7 +226,7 @@ define([
         return this;
       },
 
-    }); 
+    });
 
     var EditingLineSceneView = GeomVertexMV.EditingSceneView.extend(LineSceneView, {});
 

@@ -83,7 +83,7 @@ define([
 
       var expander = new Toolbar.ExpanderItem();
       mainToolbar.addItem(new SaveItemModel());
-      mainToolbar.addItem(new ExportSTLItemModel()); 
+      mainToolbar.addItem(new ExportSTLItemModel());
       mainToolbar.addItem(new ExitItemModel());
 
       var helpItemModel = new HelpItemModel();

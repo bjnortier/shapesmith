@@ -6,18 +6,18 @@ define([
     'worldcursor',
     'scene',
     'geometrygraphsingleton',
-    'modelviews/modelgraph', 
-    'modelviews/geomvertexMV', 
-    'modelviews/pointMV', 
+    'modelviews/modelgraph',
+    'modelviews/geomvertexMV',
+    'modelviews/pointMV',
     'modelviews/zanchorview',
     'modelviews/dimensionview',
     'modelviews/heightOnWidthDepthAnchorView',
     'modelviews/widthdepthcornerview',
     'asyncAPI',
     'csginterface/normalize',
-  ], 
+  ],
   function(
-    $, 
+    $,
     _,
     Mustache,
     calc,
@@ -51,12 +51,12 @@ define([
         var materials;
         if (this.model.vertex.editing) {
           materials = [
-            this.materials.editing.face, 
+            this.materials.editing.face,
             this.materials.editing.wire
           ];
         } else {
           materials = [
-            this.materials.normal.face, 
+            this.materials.normal.face,
             this.materials.normal.wire
           ];
         }
@@ -69,24 +69,24 @@ define([
           materials);
         cube.position = position.add(new THREE.Vector3(
           dimensions.w/2, dimensions.d/2, dimensions.h/2));
-        
+
         var unrotatedSceneObject = new THREE.Object3D();
         unrotatedSceneObject.add(cube);
         this.sceneObject.add(unrotatedSceneObject);
 
         if (this.model.vertex.rotating) {
 
-          unrotatedSceneObject.position = 
+          unrotatedSceneObject.position =
             calc.objToVector(
               this.model.vertex.transforms.rotation.origin,
-              geometryGraph, 
+              geometryGraph,
               THREE.Vector3).negate();
 
           var quat2 = new THREE.Quaternion();
           quat2.setFromAxisAngle(
             calc.objToVector(
               this.model.vertex.transforms.rotation.axis,
-              geometryGraph, 
+              geometryGraph,
               THREE.Vector3),
             geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
           var quat3 = new THREE.Quaternion().multiplyQuaternions(this.sceneObject.quaternion, quat2);
@@ -96,7 +96,7 @@ define([
           this.sceneObject.position.add(
             calc.objToVector(
               this.model.vertex.transforms.rotation.origin,
-              geometryGraph, 
+              geometryGraph,
               THREE.Vector3));
 
         }
@@ -141,13 +141,13 @@ define([
           if (!this.vertex.transforming) {
 
             this.views.push(new ZAnchorView({
-              model: this, 
+              model: this,
               vertex: this.origin,
               origin: this.origin.parameters.coordinate,
             }));
 
             this.views.push(new CornerEditingHeightAnchor({
-              model: this, 
+              model: this,
               heightKey: 'height',
               origin: this.origin,
               vertex: this.vertex,
@@ -159,7 +159,7 @@ define([
             this.views.push(new HeightDimensionView({model: this}));
           }
         }
-        
+
 
       },
 
@@ -188,7 +188,7 @@ define([
             y: geometryGraph.evaluate(this.origin.parameters.coordinate.y),
             z: geometryGraph.evaluate(this.origin.parameters.coordinate.z),
           };
-          // this.transformRender = true; 
+          // this.transformRender = true;
           this.origin.trigger('change', this.origin);
           // this.transformRender = false;
           this.startPosition = this.sceneView.sceneObject.position.clone();
@@ -244,7 +244,7 @@ define([
             this.origin.parameters.coordinate.y = position.y;
             this.origin.parameters.coordinate.z = position.z;
             this.origin.trigger('change', this.origin);
-          } else if (this.stage === 1) {  
+          } else if (this.stage === 1) {
             this.vertex.parameters.width = position.x - this.origin.parameters.coordinate.x;
             this.vertex.parameters.depth = position.y - this.origin.parameters.coordinate.y;
             this.vertex.trigger('change', this.vertex);
@@ -266,7 +266,7 @@ define([
             ++this.stage;
 
             this.widthDepthCornerView = new WidthDepthCornerView({
-              model: this, 
+              model: this,
             });
             this.widthDepthCornerView.dragStarted();
             this.widthDepthCornerView.isDraggable = function() {
@@ -280,7 +280,7 @@ define([
             ++this.stage;
 
             this.heightAnchor = new CornerEditingHeightAnchor({
-              model: this, 
+              model: this,
               heightKey: 'height',
               origin: this.origin,
               vertex: this.vertex,
@@ -311,7 +311,7 @@ define([
       updateHint: function() {
         // if (this.vertex.proto) {
         //   switch(this.stage) {
-        //     case 0: 
+        //     case 0:
         //       this.hintView.set('Click to add a corner.');
         //       break;
         //     case 1:
@@ -330,13 +330,13 @@ define([
 
       render: function() {
         GeomVertexMV.EditingDOMView.prototype.render.call(this);
-        var template = 
+        var template =
           this.beforeTemplate +
           '<div>width  <input class="field width" type="text" value="{{width}}"></input></div>' +
           '<div>depth  <input class="field depth" type="text" value="{{depth}}"></input></div>' +
           '<div>height <input class="field height" type="text" value="{{height}}"></input></div>' +
           this.afterTemplate;
-          
+
         var view = _.extend(this.baseView, {
           width  : this.model.vertex.parameters.width,
           depth  : this.model.vertex.parameters.depth,
@@ -361,7 +361,7 @@ define([
         }, this);
       }
 
-    }); 
+    });
 
     var WidthDimensionView = DimensionView.extend({
 
@@ -375,8 +375,8 @@ define([
 
       update: function() {
         this.localPosition = calc.objToVector(
-          this.model.origin.parameters.coordinate,  
-          geometryGraph, 
+          this.model.origin.parameters.coordinate,
+          geometryGraph,
           THREE.Vector3);
         this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.width)/2;
         DimensionView.prototype.update.call(this);
@@ -396,8 +396,8 @@ define([
 
       update: function() {
         this.localPosition = calc.objToVector(
-          this.model.origin.parameters.coordinate,  
-          geometryGraph, 
+          this.model.origin.parameters.coordinate,
+          geometryGraph,
           THREE.Vector3);
         this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.depth)/2;
         DimensionView.prototype.update.call(this);
@@ -417,8 +417,8 @@ define([
 
       update: function() {
         this.localPosition = calc.objToVector(
-          this.model.origin.parameters.coordinate,  
-          geometryGraph, 
+          this.model.origin.parameters.coordinate,
+          geometryGraph,
           THREE.Vector3);
         this.localPosition.x += geometryGraph.evaluate(this.model.vertex.parameters.width);
         this.localPosition.y += geometryGraph.evaluate(this.model.vertex.parameters.depth);

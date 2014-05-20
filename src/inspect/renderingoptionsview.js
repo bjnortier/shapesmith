@@ -1,5 +1,5 @@
 define([
-    'backbone', 
+    'backbone',
     'interactioncoordinator',
     'scene',
   ], function(Backbone, coordinator, sceneModel) {
@@ -7,7 +7,7 @@ define([
     var View = Backbone.View.extend({
 
       id: 'rendering-options',
-      
+
       initialize: function() {
         this.showing = true;
         this.render();

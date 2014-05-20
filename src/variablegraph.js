@@ -28,14 +28,14 @@ define([
       };
 
       this.evaluate = function(expression) {
-        var variables = gatherVariables();  
+        var variables = gatherVariables();
         return parseExpressionWithVariables(expression, variables);
       };
 
       this.getExpressionChildren = function(expression) {
         if (typeof(expression) === 'number') {
           return [];
-        } 
+        }
         var childVarNames = parser.parse(expression).variables();
         return childVarNames.map(function(name) {
           return graph.getByProperty('name', name);

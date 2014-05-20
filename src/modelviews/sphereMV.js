@@ -6,14 +6,14 @@ define([
     'worldcursor',
     'scene',
     'geometrygraphsingleton',
-    'modelviews/modelgraph', 
-    'modelviews/geomvertexMV', 
-    'modelviews/pointMV', 
+    'modelviews/modelgraph',
+    'modelviews/geomvertexMV',
+    'modelviews/pointMV',
     'modelviews/zanchorview',
     'modelviews/radiusview',
     'modelviews/dimensionview',
     'asyncAPI',
-  ], 
+  ],
   function(
     $,
     _,
@@ -44,7 +44,7 @@ define([
           return;
         }
 
-        var faceMaterial = this.model.vertex.editing ? 
+        var faceMaterial = this.model.vertex.editing ?
           this.materials.editing.face :
           this.materials.normal.face;
 
@@ -81,17 +81,17 @@ define([
 
         if (this.model.vertex.rotating) {
 
-          unrotatedSceneObject.position = 
+          unrotatedSceneObject.position =
             calc.objToVector(
               this.model.vertex.transforms.rotation.origin,
-              geometryGraph, 
+              geometryGraph,
               THREE.Vector3).negate();
 
           var quat2 = new THREE.Quaternion();
           quat2.setFromAxisAngle(
             calc.objToVector(
               this.model.vertex.transforms.rotation.axis,
-              geometryGraph, 
+              geometryGraph,
               THREE.Vector3),
             geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
           var quat3 = new THREE.Quaternion().multiplyQuaternions(this.sceneObject.quaternion, quat2);
@@ -101,7 +101,7 @@ define([
           this.sceneObject.position.add(
             calc.objToVector(
               this.model.vertex.transforms.rotation.origin,
-              geometryGraph, 
+              geometryGraph,
               THREE.Vector3));
 
         }
@@ -139,10 +139,10 @@ define([
           modelGraph.get(this.origin.id).parentModel = this;
 
           this.editingImplicitChildren = [this.origin];
-          
+
           if (!this.vertex.transforming) {
             this.views.push(new ZAnchorView({
-              model: this, 
+              model: this,
               vertex: this.origin,
               origin: this.origin.parameters.coordinate,
             }));
@@ -200,8 +200,8 @@ define([
             this.activePoint.parameters.coordinate.x = position.x;
             this.activePoint.parameters.coordinate.y = position.y;
             this.activePoint.parameters.coordinate.z = position.z;
-            this.activePoint.trigger('change', this.activePoint);  
-          // Radius      
+            this.activePoint.trigger('change', this.activePoint);
+          // Radius
           } else if (this.stage === 'radius') {
             this.radiusView.drag(position, undefined, event);
           }
@@ -220,7 +220,7 @@ define([
             this.stage ='radius';
 
             this.radiusView = new RadiusView({
-              model: this, 
+              model: this,
             });
             this.radiusView.dragStarted();
             this.radiusView.isDraggable = function() {
@@ -240,7 +240,7 @@ define([
       updateHint: function() {
         if (this.vertex.proto) {
           switch(this.stage) {
-          case 0: 
+          case 0:
             this.hintView.set('Click to add a corner.');
             break;
           case 1:
@@ -256,7 +256,7 @@ define([
 
       render: function() {
         GeomVertexMV.EditingDOMView.prototype.render.call(this);
-        var template = 
+        var template =
           this.beforeTemplate +
           '<div>radius <input class="field radius" type="text" value="{{radius}}"></input></div>' +
           this.afterTemplate;
@@ -279,12 +279,12 @@ define([
       updateFromDOM: function() {
         GeomVertexMV.EditingDOMView.prototype.updateFromDOM.call(this);
         this.updateFromField(
-          this.$el.find('.field.radius'), 
-          this.model.vertex.parameters, 
+          this.$el.find('.field.radius'),
+          this.model.vertex.parameters,
           'radius');
       }
 
-    }); 
+    });
 
     var RadiusDimensionView = DimensionView.extend({
 
@@ -298,8 +298,8 @@ define([
 
       update: function() {
         this.localPosition = calc.objToVector(
-          this.model.origin.parameters.coordinate,  
-          geometryGraph, 
+          this.model.origin.parameters.coordinate,
+          geometryGraph,
           THREE.Vector3);
         // Use the temporary dx and dy used on creation when available
         if ((this.model.vertex.parameters.dx !== undefined) &&
@@ -335,7 +335,7 @@ define([
         GeomVertexMV.DisplayModel.prototype.destroy.call(this);
       },
 
-    }); 
+    });
 
     var DisplaySceneView = GeomVertexMV.DisplaySceneView.extend(SceneViewMixin).extend({
 

@@ -39,7 +39,7 @@ requirejs([
       },
 
       render: function() {
-        var html = 
+        var html =
           '<input id="new-design-name" placeholder="new project" class="field" required="required"/>' +
           '<input id="hidden-button" type="submit" value="create"/>';
 
@@ -73,8 +73,8 @@ requirejs([
             dataType: 'json',
             contentType: 'application/json',
             success: function(response) {
-              var url = '/ui/' + encodeURIComponent(Shapesmith.user) + 
-                '/' + encodeURIComponent(newDesignName) + 
+              var url = '/ui/' + encodeURIComponent(Shapesmith.user) +
+                '/' + encodeURIComponent(newDesignName) +
                 '/modeller?commit=' + response.heads.master;
               window.location.href = url;
             },
@@ -119,8 +119,8 @@ requirejs([
       },
 
       render: function() {
-        var template = 
-          '<div class="design">' + 
+        var template =
+          '<div class="design">' +
           '<h2><span class="name">&nbsp;</span></h2><div class="preview">' +
           '<div class="screenshot loading"><div>loading...</div></div>' +
           '</div></div>';
@@ -139,8 +139,8 @@ requirejs([
       },
 
       render: function() {
-        var template = 
-          '<div class="design">' + 
+        var template =
+          '<div class="design">' +
           '<div class="delete"></div><h2><span class="name">{{name}}</span></h2><div class="placeholder"></div><div class="preview">' +
           '{{#imgsrc}}<div class="screenshot" style="background-image: url({{imgsrc}})"></div>{{/imgsrc}}' +
           '{{^imgsrc}}<div class="screenshot" style="background-image: url(/images/empty_preview.png)"></div>{{/imgsrc}}' +
@@ -161,10 +161,10 @@ requirejs([
       delete: function(event) {
         event.stopPropagation();
         if (!this.$el.find('.confirm').length) {
-          var html = '<div class="confirm"><span class="question">Are you sure?</span>' + 
+          var html = '<div class="confirm"><span class="question">Are you sure?</span>' +
             '<div class="buttons">' +
-              '<input name="confirmdelete" type="button" value="Delete"/>' + 
-              '<input name="canceldelete" type="button" value="Don\'t delete"/>' + 
+              '<input name="confirmdelete" type="button" value="Delete"/>' +
+              '<input name="canceldelete" type="button" value="Don\'t delete"/>' +
             '</div></div>';
 
           this.$el.find('.placeholder').append(html);
@@ -239,8 +239,8 @@ requirejs([
       },
 
       open: function() {
-        window.location = '/ui/' + encodeURIComponent(Shapesmith.user) + 
-                  '/' + encodeURIComponent(this.model.name) + 
+        window.location = '/ui/' + encodeURIComponent(Shapesmith.user) +
+                  '/' + encodeURIComponent(this.model.name) +
                   '/modeller?commit=' + this.model.commit;
       },
 
@@ -253,7 +253,7 @@ requirejs([
 
       // Create models for designs
       $.getJSON('/api/' + encodeURIComponent(Shapesmith.user) + '/designs', function(designs) {
-        
+
         $('#designs .placeholder').remove();
         var designModels = {};
         designs.map(function(name) {

@@ -6,20 +6,7 @@ module.exports = function(grunt) {
 
     jshint: {
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        node: true,
-        loopfunc: true,
-        indent: 2,
+        jshintrc: '.jshintrc',
       },
       gruntfile: {
         src: 'Gruntfile.js'
@@ -40,47 +27,9 @@ module.exports = function(grunt) {
           'src/toolbars/**/*.js',
           'src/*.js',
         ],
-        options: {
-          globals: {
-            "alert": false,
-            "window": false,
-            "document": false,
-            "define": false,
-            "postMessage": false,
-            "indexedDB": false,
-            "Worker": false,
-            "importScripts": false,
-            "history": false,
-            "requestAnimationFrame": false,
-            "THREE": false,
-            "$": false,
-            "requirejs": true,
-            "dat": false,
-            "Stats": false,
-            "Shapesmith": false,
-            "Blob": false,
-            "FileReader": false,
-            "saveAs": false
-          },
-        },
       },
       unit: {
         src: ['test/unit*.js', 'test/unit/**/*.js'],
-        options: {
-          globals: {
-            define: false,
-            describe: false, 
-            before: false, 
-            beforeEach: false, 
-            after: false,
-            afterEach: false,
-            it: false,
-            requirejs: true,
-            assert: true,
-            chai: true,
-            mocha: false,
-          },
-        },
       },
     },
 
@@ -129,10 +78,10 @@ module.exports = function(grunt) {
         path: 'test'
       },
 
-      unit: { 
+      unit: {
         src: 'test/unit.js',
       },
-      functional: { 
+      functional: {
         src: [
           'test/functional/points.test.js',
           'test/functional/polylines.test.js',
@@ -211,7 +160,6 @@ module.exports = function(grunt) {
   // Unit testing
   grunt.registerTask('unit', ['jshint:unit', 'simplemocha:unit']);
   grunt.registerTask('test', ['jshint:api', 'jshint:ui', 'unit']);
-  
   // Functional testing - requires a running server
   process.env['app_env'] = 'functional';
   grunt.registerTask('functional', ['express', 'simplemocha:functional']);

@@ -2,7 +2,7 @@ define([
     'jquery',
     'lib/mustache',
     'backbone',
-  ], 
+  ],
   function($, Mustache, Backbone) {
 
     var ItemModel = Backbone.Model.extend({
@@ -15,7 +15,7 @@ define([
       click: function() {
         if (this.get('enabled')) {
           this.toolbarModel.itemClicked(this);
-        }   
+        }
       },
 
       activate: function() {
@@ -47,8 +47,8 @@ define([
           icon: this.model.icon,
           label: this.model.name.toUpperCase(),
         };
-        var template = 
-          '<div class="icon32">{{{icon}}}</div>' + 
+        var template =
+          '<div class="icon32">{{{icon}}}</div>' +
           '<div class="label">{{label}}</div>';
         $(this.el).html(Mustache.render(template, view));
         return this;
@@ -159,5 +159,5 @@ define([
       View: View,
       ExpanderItem: ExpanderItem,
     };
-    
+
   });

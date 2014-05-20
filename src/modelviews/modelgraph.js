@@ -1,13 +1,13 @@
 // The model graph is a collection of Backbone models for the vertices
-// in the graph. Each vertex in the graph has one Backbone model. Each model 
+// in the graph. Each vertex in the graph has one Backbone model. Each model
 // can potentially have more than one view, but typically there is one scene
-// view and one or more dom tree views for each node (in the case of shared 
+// view and one or more dom tree views for each node (in the case of shared
 // vertices)
 define([
     'underscore',
     'backbone-events',
     'geometrygraphsingleton',
-  ], 
+  ],
   function(
     _,
     Events,
@@ -27,7 +27,7 @@ define([
 
       geometryGraph.on('vertexAdded', function(vertex) {
 
-        var ModelConstructor = vertex.editing ? 
+        var ModelConstructor = vertex.editing ?
           wrappers[vertex.type].EditingModel :
           wrappers[vertex.type].DisplayModel;
         var model = new ModelConstructor({
@@ -59,12 +59,12 @@ define([
         }
 
         var originalModel = models[original.id];
-        var ModelConstructor = replacement.editing ? 
+        var ModelConstructor = replacement.editing ?
           wrappers[replacement.type].EditingModel :
           wrappers[replacement.type].DisplayModel;
         var replacementModel = new ModelConstructor({
           original: original,
-          originalModel: originalModel, 
+          originalModel: originalModel,
           vertex: replacement,
         });
         models[replacement.id] = replacementModel;
@@ -82,7 +82,7 @@ define([
 
         // Destroy after replacement for DOM replacement
         originalModel.destroy();
-      }); 
+      });
 
       this.get = function(id) {
         return models[id];

@@ -54,10 +54,10 @@ define([
       },
 
       click: function() {
-        
-        
+
+
         var stl = 'solid ' + Shapesmith.design + '\n';
-        
+
         var topModels = objectTree.getTopLevelModels();
         topModels.forEach(function(model) {
           var geometry = model.sceneView.sceneObject.children[0].geometry;

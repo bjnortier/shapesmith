@@ -45,6 +45,7 @@
     "requirejs": true,
     "assert": true,
     "chai": true,
-    "mocha": false
+    "mocha": false,
+    "dat": false
   }
 }

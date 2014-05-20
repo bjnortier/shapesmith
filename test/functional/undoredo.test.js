@@ -8,7 +8,7 @@ describe('Undo/Redo', function() {
     before(function(done) {
         this.timeout(5000);
         client.initDesign(done);
-            
+
     });
 
     beforeEach(function(done) {
@@ -37,7 +37,7 @@ describe('Undo/Redo', function() {
             .assertNumberOfDisplayNodes(0)
             .forward()
             .assertNumberOfDisplayNodes(1)
-            .forward()            
+            .forward()
             .assertNumberOfDisplayNodes(2, done)
     })
 
@@ -45,9 +45,9 @@ describe('Undo/Redo', function() {
         this.timeout(5000);
         client
             .click('.toolbar .polyline')
-            .clickOnWorld(0,0,0) 
-            .clickOnWorld(10,10,0) 
-            .clickOnWorld(0,10,0) 
+            .clickOnWorld(0,0,0)
+            .clickOnWorld(10,10,0)
+            .clickOnWorld(0,10,0)
             .clickOnWorld(0,0,0)
             .click('.toolbar .select')
             .assertNumberOfDisplayNodes(1)
@@ -67,7 +67,7 @@ describe('Undo/Redo', function() {
             .click('.point0')
             .assertNumberOfEditingNodes(1)
             .clickOnWorld(10,10,10)
-            .back() 
+            .back()
             .pause(100)
             .assertNumberOfDisplayNodes(0, done)
     })
@@ -81,7 +81,7 @@ describe('Undo/Redo', function() {
             .dblClickOnWorld(20,20,0)
             .click('.toolbar .select')
             .assertNumberOfDisplayNodes(1)
-            .back() 
+            .back()
             .assertNumberOfDisplayNodes(0)
             .forward()
             .assertNumberOfDisplayNodes(1, done);

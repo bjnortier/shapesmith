@@ -5,7 +5,7 @@ define([
     'scenevieweventgenerator',
     'geometrygraphsingleton',
   ], function(
-    Backbone, 
+    Backbone,
     calc,
     sceneModel,
     sceneViewEventGenerator,
@@ -49,8 +49,8 @@ define([
 
         var quaternion = new THREE.Quaternion();
         var axis = calc.objToVector(
-            this.model.vertex.workplane.axis, 
-            geometryGraph, 
+            this.model.vertex.workplane.axis,
+            geometryGraph,
             THREE.Vector3);
         var angle = this.model.vertex.workplane.angle/180*Math.PI;
 
@@ -58,10 +58,10 @@ define([
         this.sceneObject.useQuaternion = true;
         this.sceneObject.quaternion = quaternion;
 
-        this.sceneObject.position = 
+        this.sceneObject.position =
           calc.objToVector(
-            this.model.vertex.workplane.origin, 
-            geometryGraph, 
+            this.model.vertex.workplane.origin,
+            geometryGraph,
             THREE.Vector3);
       },
 

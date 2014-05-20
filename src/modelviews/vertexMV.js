@@ -56,7 +56,7 @@ define([
 
         selection.off('selected', this.select, this);
         selection.off('deselected', this.deselect, this);
-      },  
+      },
 
       addTreeView: function(options) {
         var domView = new this.DOMView(_.extend(options, {model: this}));
@@ -75,14 +75,14 @@ define([
       select: function(ids) {
         if (ids.indexOf(this.vertex.id) !== -1) {
           this.set('selected', true);
-        } 
+        }
         this.trigger('postSelection');
       },
 
       deselect: function(ids) {
         if (ids.indexOf(this.vertex.id) !== -1) {
           this.set('selected', false);
-        } 
+        }
         this.trigger('postSelection');
       },
 
@@ -122,7 +122,7 @@ define([
       },
 
       clear: function() {
-        // For async renders (e.g. when loading textures), don't render if the 
+        // For async renders (e.g. when loading textures), don't render if the
         // view has been removed
         if (this.removed) {
           return;
@@ -134,18 +134,18 @@ define([
           var dispose = function(obj) {
 
             if (obj.geometry) {
-              obj.geometry.dispose();  
+              obj.geometry.dispose();
             }
             if (obj.material) {
-              if (obj.material instanceof THREE.MeshFaceMaterial) {  
+              if (obj.material instanceof THREE.MeshFaceMaterial) {
                 obj.material.materials.forEach(function(obj) {
                   obj.dispose();
                 });
-              } else { 
-                // obj.material.dispose(); 
+              } else {
+                // obj.material.dispose();
               }
-            } 
-            if (obj.dispose) {  
+            }
+            if (obj.dispose) {
               obj.dispose();
             }
             if (obj.children) {
@@ -154,7 +154,7 @@ define([
           };
           dispose(this.sceneObject);
         }
-        
+
         this.boundingBox = {
           min: new THREE.Vector3( Infinity, Infinity, Infinity),
           max: new THREE.Vector3( -Infinity, -Infinity, -Infinity),
@@ -166,10 +166,10 @@ define([
             obj.geometry.computeBoundingBox();
             ['x', 'y', 'z'].forEach(function(dim) {
               that.boundingBox.min[dim] = Math.min(
-                that.boundingBox.min[dim], 
+                that.boundingBox.min[dim],
                 obj.geometry.boundingBox.min[dim]);
               that.boundingBox.max[dim] = Math.max(
-                that.boundingBox.max[dim], 
+                that.boundingBox.max[dim],
                 obj.geometry.boundingBox.max[dim]);
             });
           }
@@ -191,7 +191,7 @@ define([
 
         // Each scene view has two objects, the one that is part of
         // the scene, and an object that is never added to the scene
-        // but is only used for selections. E.g. an edge has cylinders 
+        // but is only used for selections. E.g. an edge has cylinders
         // that are used for selection
         this.hiddenSelectionObject = new THREE.Object3D();
         this.scene.add(this.sceneObject);
@@ -271,7 +271,7 @@ define([
         if (this.vertex.errors) {
           return;
         }
-        
+
         if (this.parentModel) {
           return this.parentModel.tryCommit();
         }
@@ -284,7 +284,7 @@ define([
           var findImplicitChildren = function(parent) {
             var uniqueImplicitChildren = _.uniq(geometryGraph.childrenOf(parent).filter(function(v) {
               return v.implicit;
-            })); 
+            }));
             originals = originals.concat(uniqueImplicitChildren.concat());
             uniqueImplicitChildren.forEach(findImplicitChildren);
           };
@@ -311,7 +311,7 @@ define([
             committedVertices = result.newVertices;
             eventProxy.trigger('committedEdit', committedVertices);
             selection.deselectAll();
-          } 
+          }
         }
       },
 
@@ -335,7 +335,7 @@ define([
           var findImplicitChildren = function(parent) {
             var uniqueImplicitChildren = _.uniq(geometryGraph.childrenOf(parent).filter(function(v) {
               return v.implicit;
-            })); 
+            }));
             cancelVertices = cancelVertices.concat(uniqueImplicitChildren);
             uniqueImplicitChildren.forEach(findImplicitChildren);
           };
@@ -451,7 +451,7 @@ define([
           // Webkit Bug https://bugs.webkit.org/show_bug.cgi?id=114745
           this.$el.find('input').blur();
           this.model.cancel();
-        } 
+        }
       },
 
       delete: function() {
@@ -489,7 +489,7 @@ define([
       initialize: function() {
         this.model.domView = this;
         this.render();
-        this.$el.addClass(this.model.vertex.name);  
+        this.$el.addClass(this.model.vertex.name);
         this.model.vertex.on('change', this.update, this);
       },
 

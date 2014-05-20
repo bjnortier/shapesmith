@@ -17,9 +17,9 @@ define([
     'lib/text!icons/stl_out.svg',
     'lib/text!icons/mesh.svg',
     'lib/text!icons/help.svg',
-  ], 
+  ],
   function(
-    point, 
+    point,
     polyline,
     cube,
     sphere,
@@ -39,7 +39,7 @@ define([
     help) {
 
     return {
-      point    : point, 
+      point    : point,
       polyline : polyline,
       cube     : cube,
       sphere   : sphere,

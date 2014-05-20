@@ -63,7 +63,7 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
       assert.throws(function() {
         cas.createEdge({}, a);
       }, Error, "no object 'undefined' in graph");
-      
+
       cas.createEdge(a,b);
       cas.createEdge(c,b);
       assert.deepEqual(cas.getOutgoing(a), [b]);
@@ -153,7 +153,7 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
     });
 
     it('can be restored from a hash-serialization', function() {
-      
+
       var hashedGraph = {
         vertices: ['_a', '_b'],
         edges: {'_a': ['_b']},
@@ -163,7 +163,7 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
         '_a' : {id: 'a'},
         '_b' : {id: 'b'}
       };
-      
+
       cas.fromHashSerialization(hashedGraph, hashesToVertices);
 
       assert.deepEqual(cas.serialize(), {
@@ -190,7 +190,7 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
       });
 
       var a = {id: 'a'}, b = {id: 'b'};
-      cas.put(a); 
+      cas.put(a);
       cas.put(b);
       cas.createEdge(a,b);
       cas.remove(a);
@@ -205,7 +205,7 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
     it('can be cloned', function() {
       var a = {id: 'a'}, b = {id: 'b'}, c = {id: 'c'};
       var cas1 = new CASGraph();
-      cas1.put(a); 
+      cas1.put(a);
       cas1.put(b);
       cas1.createEdge(a,b);
 
@@ -247,8 +247,8 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
     it('can generate add/remove diff events', function() {
       var cas1 = new CASGraph(), cas2 = new CASGraph();
       var a = {id: 'a'}, b = {id: 'b'};
-      cas1.put(a); 
-      cas2.put(b); 
+      cas1.put(a);
+      cas2.put(b);
 
       var logger12 = new EventLog();
       var logger21 = new EventLog();
@@ -268,7 +268,7 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
       var cas1 = new CASGraph(), cas2 = new CASGraph();
       var a1 = {id: 'a', val: 'a1'};
       var a2 = {id: 'a', val: 'a2'};
-      cas1.put(a1); 
+      cas1.put(a1);
       cas2 = cas1.clone();
       cas2.replace(a2);
 
@@ -287,8 +287,8 @@ define(['underscore', 'casgraph/graph'], function(_, CASGraph) {
 
     it('can generate metadata diff events', function() {
       var cas1 = new CASGraph(), cas2 = new CASGraph();
-      cas1.setMetadata('a'); 
-      cas2.setMetadata('b'); 
+      cas1.setMetadata('a');
+      cas2.setMetadata('b');
 
       var logger12 = new EventLog();
       var logger21 = new EventLog();

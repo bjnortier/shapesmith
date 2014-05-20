@@ -99,11 +99,11 @@ requirejs([
         csg: csg,
       };
       postMessage(jobResult);
-      
+
     };
 
     var applyReverseWorkplane = function(csg, workplane) {
-      if (!((workplane.origin.x === 0) && (workplane.origin.y === 0) && (workplane.origin.z === 0))) {  
+      if (!((workplane.origin.x === 0) && (workplane.origin.y === 0) && (workplane.origin.z === 0))) {
         csg = translateCSG(csg, new CSG.Vector(workplane.origin).negated());
       }
       if (workplane.angle !== 0) {
@@ -117,7 +117,7 @@ requirejs([
 
     var applyTransformsAndWorkplane = function(csg, transforms, workplane) {
       if (csg) {
-        if ((transforms.translation) && 
+        if ((transforms.translation) &&
             ((transforms.translation.x !== 0) || (transforms.translation.y !== 0) || (transforms.translation.z !== 0))) {
           csg = translateCSG(csg, new CSG.Vector(transforms.translation));
         }
@@ -127,7 +127,7 @@ requirejs([
           csg = translateCSG(csg, new CSG.Vector(transforms.rotation.origin));
         }
         if (transforms.scale.factor !== 1) {
-          csg = translateCSG(csg, new CSG.Vector(transforms.scale.origin).negated()); 
+          csg = translateCSG(csg, new CSG.Vector(transforms.scale.origin).negated());
           csg = scaleCSG(csg, transforms.scale.factor);
           csg = translateCSG(csg, new CSG.Vector(transforms.scale.origin));
         }
@@ -197,8 +197,8 @@ requirejs([
         n = e.data.cube;
         csg = CSG.cube({
           center: [
-            n.x + n.w/2, 
-            n.y + n.d/2, 
+            n.x + n.w/2,
+            n.y + n.d/2,
             n.z + n.h/2,
           ],
           radius: [n.w/2, n.d/2, n.h/2],
@@ -207,7 +207,7 @@ requirejs([
         returnResult(e.data.id, e.data.sha, csg);
       } else if (e.data.union || e.data.subtract || e.data.intersect) {
 
-        // The child BSPs start off as an array of SHAs, 
+        // The child BSPs start off as an array of SHAs,
         // and each SHA is replaced with the BSP from the DB
         var childBSPs = e.data.union || e.data.subtract || e.data.intersect;
         csg = deserializeRawCSG(childBSPs[0]);

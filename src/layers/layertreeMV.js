@@ -7,7 +7,7 @@ define([
     'modelviews/vertexMV',
     'asyncAPI',
     'commandstack',
-    'geometrygraphsingleton', 
+    'geometrygraphsingleton',
     'layers/layertreedragdropmixin',
   ], function(
     Backbone,
@@ -64,9 +64,9 @@ define([
           if (childView.container) {
             childView.container = child;
             childView.updateChildren();
-          } 
+          }
 
-        } else {  
+        } else {
           if (child.type !== 'geometry') {
             view.childViews[child.id] = new ContainerDisplayView({
               model: view.model,
@@ -92,7 +92,7 @@ define([
       toRemove.forEach(function(id) {
         if (view.childViews[id].container) {
           view.childViews[id].remove();
-        } 
+        }
         delete view.childViews[id];
       });
 
@@ -145,10 +145,10 @@ define([
           name: this.container.name,
           type: this.container.type,
         };
-        var template = 
+        var template =
           '<div class="title {{id}}" draggable="true">' +
-          '<div class="icon24 {{type}}"></div>' + 
-          '<div class="name">{{name}}</div>' + 
+          '<div class="icon24 {{type}}"></div>' +
+          '<div class="name">{{name}}</div>' +
           '<div class="delete"></div>' +
           '<div>';
         this.$el.html(Mustache.render(template, view));
@@ -185,7 +185,7 @@ define([
 
       // We keep count of the number of enter events,
       // since moving fomr the div into the image will generate
-      // one leave and one enter event, and we want to keep 
+      // one leave and one enter event, and we want to keep
       // the drop highlight
       dragenter: function(event) {
         event.stopPropagation();
@@ -194,7 +194,7 @@ define([
           this.enterEventCount = 0;
         }
         ++this.enterEventCount;
-        
+
       },
 
       dragleave: function(event) {
@@ -210,8 +210,8 @@ define([
 
       dragover: function(event) {
         event.stopPropagation();
-        event.preventDefault(); 
-        event.originalEvent.dataTransfer.dropEffect = 'move';  
+        event.preventDefault();
+        event.originalEvent.dataTransfer.dropEffect = 'move';
 
         var height = $(event.target).height();
 
@@ -250,7 +250,7 @@ define([
         event.stopPropagation();
         event.preventDefault();
 
-        var node = (this.model.dragSrcView.container || 
+        var node = (this.model.dragSrcView.container ||
               this.model.createOrGetGeomNode(this.model.dragSrcView.model.vertex.id));
         if (this.$el.hasClass('validChildDropTarget')) {
           this.model.moveInto(node, this.container);

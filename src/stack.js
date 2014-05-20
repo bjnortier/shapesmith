@@ -2,7 +2,7 @@ define([], function() {
 
   function Stack() {
     var array = [];
-    
+
     this.push = function(obj) {
       array.push(obj);
     };

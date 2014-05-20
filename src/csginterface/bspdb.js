@@ -13,7 +13,7 @@ define([
       var db;
 
       var openDBRequest = indexedDB.open('shapesmith', 2);
-      
+
       openDBRequest.onerror = function() {
         console.error('Could not create BSP database');
       };
@@ -25,7 +25,7 @@ define([
           that.trigger('initialized');
           infoHandler('BSP DB initialized');
           db = event.target.result;
-        } 
+        }
         ++successCount;
       };
 
@@ -56,7 +56,7 @@ define([
 
       this.write = function(value, callback) {
         var transaction = db.transaction([DB_NAME], 'readwrite');
-        
+
         transaction.onerror = function(event) {
           errorHandler('could not write bsp', event);
           callback(event);
@@ -74,7 +74,7 @@ define([
           } else {
 
             // BSP is serialized manually otherwise the IndexDB shim fails
-            // because JSON.stringify fails because of circular references 
+            // because JSON.stringify fails because of circular references
             var writeRequest = transaction.objectStore(DB_NAME).add(value);
 
             writeRequest.onsuccess = function() {

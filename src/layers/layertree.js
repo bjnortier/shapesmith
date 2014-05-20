@@ -59,7 +59,7 @@ define(['underscore', 'backbone-events'], function(_, Events) {
       }
 
       this.detach(node);
-      
+
       // Move grand children one level up
       var grandChildren = node.getChildren ? node.getChildren() : [];
       children = children.concat(grandChildren);
@@ -160,7 +160,7 @@ define(['underscore', 'backbone-events'], function(_, Events) {
   };
 
   var RootContainer = function() {
-    Container.prototype.constructor.call(this, 'root', function() { 
+    Container.prototype.constructor.call(this, 'root', function() {
       return 'root';
     });
 

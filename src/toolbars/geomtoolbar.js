@@ -1,21 +1,21 @@
 define([
-    'toolbars/toolbar', 
-    'commandstack', 
+    'toolbars/toolbar',
+    'commandstack',
     'interactioncoordinator',
     'selection',
     'modelviews/vertexMV',
     'modelviews/modelgraph',
-  ], 
+  ],
   function(
-    toolbar, 
-    commandStack, 
-    coordinator, 
+    toolbar,
+    commandStack,
+    coordinator,
     selection,
     VertexMV,
     modelGraph) {
 
     var SelectItemModel = toolbar.ItemModel.extend({
-      
+
       name: 'select',
 
       activate: function() {
@@ -81,7 +81,7 @@ define([
       },
 
       committedCreate: function(committedVertices) {
-        // The first vertex in the list is by convention the main vertex 
+        // The first vertex in the list is by convention the main vertex
         if (!committedVertices[0].implicit) {
           for (var i = 0; i < this.items.length; ++i) {
             var item = this.items[i];

@@ -18,14 +18,14 @@ define([
     'csginterface/adapter',
   ], function(
     Backbone,
-    $, 
+    $,
     Mustache,
     _,
-    colors, 
+    colors,
     sceneModel,
     coordinator,
-    sceneViewEventGenerator, 
-    worldCursor, 
+    sceneViewEventGenerator,
+    worldCursor,
     calc,
     VertexMV,
     hintView,
@@ -178,7 +178,7 @@ define([
           },
 
         };
-        
+
         VertexMV.SceneView.prototype.initialize.call(this);
         sceneModel.view.on('cameraMoveStopped', this.updateScreenBox, this);
       },
@@ -229,14 +229,14 @@ define([
         var boundMin = boundingBox.min;
         var boundMax = boundingBox.max;
         var corners = [
-          new THREE.Vector3(boundMin.x, boundMin.y, boundMin.z), // 000 
+          new THREE.Vector3(boundMin.x, boundMin.y, boundMin.z), // 000
           new THREE.Vector3(boundMin.x, boundMin.y, boundMax.z), // 001
           new THREE.Vector3(boundMin.x, boundMax.y, boundMin.z), // 010
-          new THREE.Vector3(boundMin.x, boundMax.y, boundMax.z), // 011 
-          new THREE.Vector3(boundMax.x, boundMin.y, boundMin.z), // 100 
-          new THREE.Vector3(boundMax.x, boundMin.y, boundMax.z), // 101 
-          new THREE.Vector3(boundMax.x, boundMax.y, boundMin.z), // 110 
-          new THREE.Vector3(boundMax.x, boundMax.y, boundMax.z), // 111 
+          new THREE.Vector3(boundMin.x, boundMax.y, boundMax.z), // 011
+          new THREE.Vector3(boundMax.x, boundMin.y, boundMin.z), // 100
+          new THREE.Vector3(boundMax.x, boundMin.y, boundMax.z), // 101
+          new THREE.Vector3(boundMax.x, boundMax.y, boundMin.z), // 110
+          new THREE.Vector3(boundMax.x, boundMax.y, boundMax.z), // 111
         ];
 
         var screenBox = new THREE.Box2();
@@ -282,13 +282,13 @@ define([
         var box3 = new THREE.Box3();
 
         var workplaneAxis = calc.objToVector(
-            this.model.vertex.workplane.axis, 
-            geometryGraph, 
+            this.model.vertex.workplane.axis,
+            geometryGraph,
             THREE.Vector3);
         var workplaneAngle = geometryGraph.evaluate(this.model.vertex.workplane.angle);
         var workplaneOrigin = calc.objToVector(
-              this.model.vertex.workplane.origin, 
-              geometryGraph, 
+              this.model.vertex.workplane.origin,
+              geometryGraph,
               THREE.Vector3);
 
         csg.polygons.forEach(function(polygon) {
@@ -316,12 +316,12 @@ define([
             }
           }
           indices.push(polygonIndices);
-          
+
         }, this);
 
         geometry.computeFaceNormals();
         return {
-          geometry: geometry, 
+          geometry: geometry,
           indices: indices,
           box3: box3,
         };
@@ -339,7 +339,7 @@ define([
           } else if(callback) {
             callback(result);
           }
-          
+
         });
       },
 
@@ -370,7 +370,7 @@ define([
               y: 0,
               z: 0,
             },
-            factor: 1, 
+            factor: 1,
           }
         };
         csgAdapter.generate(
@@ -383,7 +383,7 @@ define([
           } else if(callback) {
             callback(result);
           }
-          
+
         });
       },
 
@@ -393,8 +393,8 @@ define([
         if (!this.isGlobal) {
           var quaternion = new THREE.Quaternion();
           var axis = calc.objToVector(
-              this.model.vertex.workplane.axis, 
-              geometryGraph, 
+              this.model.vertex.workplane.axis,
+              geometryGraph,
               THREE.Vector3);
           var angle = geometryGraph.evaluate(this.model.vertex.workplane.angle)/180*Math.PI;
 
@@ -402,10 +402,10 @@ define([
           this.sceneObject.useQuaternion = true;
           this.sceneObject.quaternion = quaternion;
 
-          this.sceneObject.position = 
+          this.sceneObject.position =
             calc.objToVector(
-              this.model.vertex.workplane.origin, 
-              geometryGraph, 
+              this.model.vertex.workplane.origin,
+              geometryGraph,
               THREE.Vector3);
         }
 
@@ -465,7 +465,7 @@ define([
         this.parentModel = options.parentModel;
         VertexMV.EditingModel.prototype.initialize.call(this, options);
         this.hintView = hintView;
-        
+
 
         worldCursor.on('positionChanged', this.workplanePositionChanged, this);
         worldCursor.on('click', this.workplaneClick, this);
@@ -486,7 +486,7 @@ define([
         sceneViewEventGenerator.off('sceneViewClick', this.sceneViewClick, this);
         sceneViewEventGenerator.off('sceneViewDblClick', this.sceneViewDblClick, this);
         geometryGraph.off('vertexReplaced', this.vertexReplaced, this);
-      },  
+      },
 
       keyup: function(event) {
         // Delete
@@ -528,11 +528,11 @@ define([
       },
 
       render: function() {
-        this.beforeTemplate = 
+        this.beforeTemplate =
           '{{^implicit}}' +
-          '<div class="title">' + 
+          '<div class="title">' +
           '<div class="icon24">{{{icon}}}</div>' +
-          '<div class="name">{{name}}</div>' + 
+          '<div class="name">{{name}}</div>' +
           '<div class="actions">' +
             '{{#isTopLevel}}' +
             // '<i class="showhide icon-eye-open"></i>' +
@@ -540,24 +540,24 @@ define([
             '{{/isTopLevel}}' +
           '</div>' +
           '{{/implicit}}' +
-          '</div>' + 
+          '</div>' +
           '<div class="children {{id}}"></div>';
-        this.afterTemplate = this.model.vertex.implicit ? '' : 
+        this.afterTemplate = this.model.vertex.implicit ? '' :
           // '<div class="workplane">' +
           //   '<div class="origin">' +
           //     '<div>x <input class="field workplane.origin.x" type="text" value="{{workplane.origin.x}}"></input></div>' +
           //     '<div>y <input class="field workplane.origin.y" type="text" value="{{workplane.origin.y}}"></input></div>' +
-          //     '<div>z <input class="field workplane.origin.z" type="text" value="{{workplane.origin.z}}"></input></div>' +     
+          //     '<div>z <input class="field workplane.origin.z" type="text" value="{{workplane.origin.z}}"></input></div>' +
           //   '</div>' +
           // '</div>' +
           '<div class="transforms">' +
             '<div class="expander"><i class="arrow icon-caret-down"></i>transforms<i class="clear icon-remove"></i></div>' +
             // '<div>centerx <input class="field centerx" type="text" value="{{center.x}}"></input></div>' +
             // '<div>centery <input class="field centery" type="text" value="{{center.y}}"></input></div>' +
-            // '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' + 
+            // '<div>centerz <input class="field centerz" type="text" value="{{center.z}}"></input></div>' +
             '<div class="parameter">axisx <input class="field axisx" type="text" value="{{axis.x}}"></input></div>' +
             '<div class="parameter">axisy <input class="field axisy" type="text" value="{{axis.y}}"></input></div>' +
-            '<div class="parameter">axisz <input class="field axisz" type="text" value="{{axis.z}}"></input></div>' + 
+            '<div class="parameter">axisz <input class="field axisz" type="text" value="{{axis.z}}"></input></div>' +
             '<div class="parameter">angle <input class="field angle" type="text" value="{{angle}}"></input></div>' +
             '<div class="parameter">scale <input class="field scale" type="text" value="{{scale}}"></input></div>' +
           '</div>';
@@ -576,7 +576,7 @@ define([
             y: rotation.origin.y,
             z: rotation.origin.z,
           },
-          axis: { 
+          axis: {
             x: rotation.axis.x,
             y: rotation.axis.y,
             z: rotation.axis.z,
@@ -654,7 +654,7 @@ define([
       }
 
     });
-    
+
 
     var EditingSceneView = SceneView.extend({
 
@@ -675,7 +675,7 @@ define([
 
     // ---------- Display ----------
 
-    var DisplayModel = VertexMV.DisplayModel.extend({ 
+    var DisplayModel = VertexMV.DisplayModel.extend({
 
       initialize: function(options) {
         this.DOMView = DisplayDOMView;
@@ -719,7 +719,7 @@ define([
 
       initialize: function(options) {
         VertexMV.DisplayDOMView.prototype.initialize.call(this, options);
-        this.$el.addClass(this.model.vertex.name);  
+        this.$el.addClass(this.model.vertex.name);
         if (options.appendDomElement) {
           options.appendDomElement.append(this.$el);
         } else if (options.replaceDomElement) {
@@ -751,14 +751,14 @@ define([
             isTopLevel: !geometryGraph.parentsOf(this.model.vertex).length,
             hasExplicitChildren: hasExplicitChildren,
           };
-          var template = 
-            '<div class="title">' + 
+          var template =
+            '<div class="title">' +
               '{{#hasExplicitChildren}}' +
               '<i class="dive icon-chevron-sign-down"></i>' +
               '<i class="ascend icon-chevron-sign-up"></i>' +
-              '{{/hasExplicitChildren}}' +  
+              '{{/hasExplicitChildren}}' +
               '<div class="icon24" style="fill: {{color}}; stroke: {{color}};">{{{icon}}}</div>' +
-              '<div class="name">{{name}}</div>' + 
+              '<div class="name">{{name}}</div>' +
               '<div class="actions">' +
                 // '<i class="showhide icon-eye-open"></i>' +
                 '<i title="delete" class="delete icon-remove"></i>' +
@@ -772,7 +772,7 @@ define([
         } else {
           this.$el.html();
         }
-      },  
+      },
 
       updateSelected: function() {
         if (this.model.get('selected')) {
@@ -780,7 +780,7 @@ define([
         } else {
           this.$el.removeClass('selected');
         }
-      }, 
+      },
 
       events: {
         'click > .title .icon24'   : 'clickTitle',
@@ -812,8 +812,8 @@ define([
         var parameters = this.model.vertex.parameters;
         var color = (parameters.material && parameters.material.color) || '#6cbe32';
         this.$el.find('> .title > .icon24').attr(
-          "style", 
-          
+          "style",
+
           Mustache.render("fill: {{color}}; stroke: {{color}}", {color: color}));
       },
 
@@ -821,8 +821,8 @@ define([
         this.$el.addClass('dived');
         var color = "#bbb";
         this.$el.find('> .title > .icon24').attr(
-          "style", 
-          
+          "style",
+
           Mustache.render("fill: {{color}}; stroke: {{color}}", {color: color}));
       },
 
@@ -942,7 +942,7 @@ define([
       EditingModel    : EditingModel,
       EditingDOMView  : EditingDOMView,
       EditingSceneView: EditingSceneView,
-      DisplayModel    : DisplayModel, 
+      DisplayModel    : DisplayModel,
       DisplayDOMView  : DisplayDOMView,
       DisplaySceneView: DisplaySceneView,
     };

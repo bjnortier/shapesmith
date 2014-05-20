@@ -14,9 +14,9 @@ define([
     GeomNode) {
 
     var Model = toolbar.ItemModel.extend({
-      
-      name: 'cone',   
-      
+
+      name: 'cone',
+
       activate: function() {
         toolbar.ItemModel.prototype.activate.call(this);
 
@@ -24,11 +24,11 @@ define([
         var point = new GeomNode.Point({
           editing   : true,
           proto   : true,
-          implicit  : true, 
+          implicit  : true,
           workplane : workplane,
         });
         geometryGraph.add(point);
-        
+
         var coneOptions = {
           editing    : true,
           proto    : true,

@@ -2,7 +2,7 @@ define([
     'backbone',
     'jquery',
     'lib/mustache',
-    'geometrygraphsingleton', 
+    'geometrygraphsingleton',
     'asyncAPI',
     'layers/layertreeMV',
   ], function(
@@ -48,12 +48,12 @@ define([
       },
 
       render: function() {
-        var template = 
+        var template =
           '<td colspan="3" class="title">' +
-          '<div title="Building" class="icon24 building"></div>' + 
-          '<div title="Storey" class="icon24 storey"></div>' + 
+          '<div title="Building" class="icon24 building"></div>' +
+          '<div title="Storey" class="icon24 storey"></div>' +
           '<div title="Zone" class="icon24 zone"></div>' +
-          '</td>'; 
+          '</td>';
         var view = {};
         this.$el.html(Mustache.render(template, view));
         return this;
@@ -78,7 +78,7 @@ define([
       },
 
     });
-    
+
     return new Model();
 
   });

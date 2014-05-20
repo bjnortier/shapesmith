@@ -22,7 +22,7 @@ var create = function(db, username, type, object, callback) {
 };
 
 module.exports.createNewGraph = function(db, username, callback) {
-  
+
   var emptyGraph = {
     vertices: [],
     edges: [],

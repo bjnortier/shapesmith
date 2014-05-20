@@ -1,6 +1,6 @@
 var SS = SS || {};
 
-define(['scene', 'trackball', 'calculations'], 
+define(['scene', 'trackball', 'calculations'],
   function(sceneModel, trackball, calc) {
 
     SS.dontDampTrackball = function() {

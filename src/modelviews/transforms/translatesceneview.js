@@ -9,7 +9,7 @@ define([
   ],
   function(
     calc,
-    AsyncAPI, 
+    AsyncAPI,
     sceneModel,
     geometryGraph,
     TransformSceneView,
@@ -28,7 +28,7 @@ define([
         axisGeom.vertices.push(new THREE.Vector3(0, 0, 5000));
         axisGeom.vertices.push(new THREE.Vector3(0, 0, -5000));
 
-        this.axis = new THREE.Line(axisGeom, 
+        this.axis = new THREE.Line(axisGeom,
           new THREE.LineBasicMaterial({ color: this.greyLineColor }));
 
         var extents = this.model.selectedModel.getExtents();
@@ -36,8 +36,8 @@ define([
 
         TransformSceneView.prototype.initialize.call(this);
         this.initialTranslation = calc.objToVector(
-          this.model.vertex.transforms.translation, 
-          geometryGraph, 
+          this.model.vertex.transforms.translation,
+          geometryGraph,
           THREE.Vector3);
       },
 
@@ -46,7 +46,7 @@ define([
 
         this.arrow = new THREE.Object3D();
         this.arrow.add(new THREE.Mesh(
-          new THREE.CylinderGeometry(0, 0.75, 1.5, 3), 
+          new THREE.CylinderGeometry(0, 0.75, 1.5, 3),
           new THREE.MeshBasicMaterial({color: this.greyFaceColor, transparent: true, opacity: 0.8})));
 
         this.arrow.scale = this.cameraScale;
@@ -56,7 +56,7 @@ define([
         this.arrow.position = extents.center.clone().add(
           new THREE.Vector3(0, 0, extents.dz));
         this.arrow.children[0].position.z = 2;
-        this.arrow.children[0].rotation.x = Math.PI/2; 
+        this.arrow.children[0].rotation.x = Math.PI/2;
       },
 
       updateCameraScale: function() {
@@ -80,7 +80,7 @@ define([
 
       unhighlight: function() {
         TransformSceneView.prototype.unhighlight.call(this);
-        this.sceneObject.remove(this.axis); 
+        this.sceneObject.remove(this.axis);
       },
 
       dragStarted: function() {
@@ -102,12 +102,12 @@ define([
 
         // Local Workplane
         var workplaneOrigin = calc.objToVector(
-          this.editingVertex.workplane.origin, 
-          geometryGraph, 
+          this.editingVertex.workplane.origin,
+          geometryGraph,
           THREE.Vector3);
         var workplaneAxis =  calc.objToVector(
-          this.editingVertex.workplane.axis, 
-          geometryGraph, 
+          this.editingVertex.workplane.axis,
+          geometryGraph,
           THREE.Vector3);
         var workplaneAngle = geometryGraph.evaluate(this.editingVertex.workplane.angle);
 
@@ -120,7 +120,7 @@ define([
         var absolutePositionOnNormal = calc.positionOnRay(mouseRay, ray);
 
         // Back into local coordinates
-        var positionOnNormalInLocalCoords = 
+        var positionOnNormalInLocalCoords =
           calc.rotateAroundAxis(absolutePositionOnNormal, workplaneAxis, -workplaneAngle);
         positionOnNormalInLocalCoords.sub(workplaneOrigin);
         var grid = currentWorkplane.getGridSize();

@@ -275,7 +275,7 @@ define([
       return getCommonExpressions(this);
     };
 
-    // ----------- Cube ---------- 
+    // ----------- Cube ----------
 
     var Cube = function(options) {
       options = options || {};
@@ -302,7 +302,7 @@ define([
       return {};
     };
 
-    // ----------- Sphere ---------- 
+    // ----------- Sphere ----------
 
     var Sphere = function(options) {
       options = options || {};
@@ -327,7 +327,7 @@ define([
       return {};
     };
 
-    // ----------- Cylinder ---------- 
+    // ----------- Cylinder ----------
 
     var Cylinder = function(options) {
       options = options || {};
@@ -356,7 +356,7 @@ define([
       return {};
     };
 
-  // ----------- Cone ---------- 
+  // ----------- Cone ----------
 
     var Cone = function(options) {
       options = options || {};

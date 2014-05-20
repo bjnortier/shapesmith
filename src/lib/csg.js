@@ -4,43 +4,43 @@
 // and is meant to serve as an easily understandable implementation of the
 // algorithm. All edge cases involving overlapping coplanar polygons in both
 // solids are correctly handled.
-// 
+//
 // Example usage:
-// 
+//
 //     var cube = CSG.cube();
 //     var sphere = CSG.sphere({ radius: 1.3 });
 //     var polygons = cube.subtract(sphere).toPolygons();
-// 
+//
 // ## Implementation Details
-// 
+//
 // All CSG operations are implemented in terms of two functions, `clipTo()` and
 // `invert()`, which remove parts of a BSP tree inside another BSP tree and swap
 // solid and empty space, respectively. To find the union of `a` and `b`, we
 // want to remove everything in `a` inside `b` and everything in `b` inside `a`,
 // then combine polygons from `a` and `b` into one solid:
-// 
+//
 //     a.clipTo(b);
 //     b.clipTo(a);
 //     a.build(b.allPolygons());
-// 
+//
 // The only tricky part is handling overlapping coplanar polygons in both trees.
 // The code above keeps both copies, but we need to keep them in one tree and
 // remove them in the other tree. To remove them from `b` we can clip the
 // inverse of `b` against `a`. The code for union now looks like this:
-// 
+//
 //     a.clipTo(b);
 //     b.clipTo(a);
 //     b.invert();
 //     b.clipTo(a);
 //     b.invert();
 //     a.build(b.allPolygons());
-// 
+//
 // Subtraction and intersection naturally follow from set operations. If
 // union is `A | B`, subtraction is `A - B = ~(~A | B)` and intersection is
 // `A & B = ~(~A | ~B)` where `~` is the complement operator.
-// 
+//
 // ## License
-// 
+//
 // Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), under the MIT license.
 
 // # class CSG
@@ -72,9 +72,9 @@ CSG.prototype = {
 
   // Return a new CSG solid representing space in either this solid or in the
   // solid `csg`. Neither this solid nor the solid `csg` are modified.
-  // 
+  //
   //     A.union(B)
-  // 
+  //
   //     +-------+            +-------+
   //     |       |            |       |
   //     |   A   |            |       |
@@ -83,7 +83,7 @@ CSG.prototype = {
   //          |   B   |            |       |
   //          |       |            |       |
   //          +-------+            +-------+
-  // 
+  //
   union: function(csg) {
     var a = new CSG.Node(this.clone().polygons);
     var b = new CSG.Node(csg.clone().polygons);
@@ -98,9 +98,9 @@ CSG.prototype = {
 
   // Return a new CSG solid representing space in this solid but not in the
   // solid `csg`. Neither this solid nor the solid `csg` are modified.
-  // 
+  //
   //     A.subtract(B)
-  // 
+  //
   //     +-------+            +-------+
   //     |       |            |       |
   //     |   A   |            |       |
@@ -109,7 +109,7 @@ CSG.prototype = {
   //          |   B   |
   //          |       |
   //          +-------+
-  // 
+  //
   subtract: function(csg) {
     var a = new CSG.Node(this.clone().polygons);
     var b = new CSG.Node(csg.clone().polygons);
@@ -126,9 +126,9 @@ CSG.prototype = {
 
   // Return a new CSG solid representing space both this solid and in the
   // solid `csg`. Neither this solid nor the solid `csg` are modified.
-  // 
+  //
   //     A.intersect(B)
-  // 
+  //
   //     +-------+
   //     |       |
   //     |   A   |
@@ -137,7 +137,7 @@ CSG.prototype = {
   //          |   B   |
   //          |       |
   //          +-------+
-  // 
+  //
   intersect: function(csg) {
     var a = new CSG.Node(this.clone().polygons);
     var b = new CSG.Node(csg.clone().polygons);
@@ -163,9 +163,9 @@ CSG.prototype = {
 // Construct an axis-aligned solid cuboid. Optional parameters are `center` and
 // `radius`, which default to `[0, 0, 0]` and `[1, 1, 1]`. The radius can be
 // specified using a single number or a list of three numbers, one for each axis.
-// 
+//
 // Example code:
-// 
+//
 //     var cube = CSG.cube({
 //       center: [0, 0, 0],
 //       radius: 1
@@ -198,9 +198,9 @@ CSG.cube = function(options) {
 // `slices`, and `stacks`, which default to `[0, 0, 0]`, `1`, `16`, and `8`.
 // The `slices` and `stacks` parameters control the tessellation along the
 // longitude and latitude directions.
-// 
+//
 // Example usage:
-// 
+//
 //     var sphere = CSG.sphere({
 //       center: [0, 0, 0],
 //       radius: 1,
@@ -240,9 +240,9 @@ CSG.sphere = function(options) {
 // Construct a solid cylinder. Optional parameters are `start`, `end`,
 // `radius`, and `slices`, which default to `[0, -1, 0]`, `[0, 1, 0]`, `1`, and
 // `16`. The `slices` parameter controls the tessellation.
-// 
+//
 // Example usage:
-// 
+//
 //     var cylinder = CSG.cylinder({
 //       start: [0, -1, 0],
 //       end: [0, 1, 0],
@@ -282,9 +282,9 @@ CSG.cylinder = function(options) {
 // Construct a solid cone. Optional parameters are `start`, `end`,
 // `radius`, and `slices`, which default to `[0, -1, 0]`, `[0, 1, 0]`, `1`, and
 // `16`. The `slices` parameter controls the tessellation.
-// 
+//
 // Example usage:
-// 
+//
 //     var cylinder = CSG.cone({
 //       start: [0, -1, 0],
 //       end: [0, 1, 0],
@@ -322,9 +322,9 @@ CSG.cone = function(options) {
 // # class Vector
 
 // Represents a 3D vector.
-// 
+//
 // Example usage:
-// 
+//
 //     new CSG.Vector(1, 2, 3);
 //     new CSG.Vector([1, 2, 3]);
 //     new CSG.Vector({ x: 1, y: 2, z: 3 });
@@ -521,7 +521,7 @@ CSG.Plane.prototype = {
 // be coplanar and form a convex loop. They do not have to be `CSG.Vertex`
 // instances but they must behave similarly (duck typing can be used for
 // customization).
-// 
+//
 // Each convex polygon has a `shared` property, which is shared between all
 // polygons that are clones of each other or were split from the same polygon.
 // This can be used to define per-polygon properties (such as surface color).

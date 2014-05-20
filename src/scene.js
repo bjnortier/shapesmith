@@ -15,7 +15,7 @@ define([
     var View = Backbone.View.extend({
 
       initialize: function() {
-        
+
         _.extend(this, Backbone.Events);
 
         var that = this;
@@ -98,8 +98,8 @@ define([
           var newScale = cameraDistance/150;
           if (Math.round(cameraDistance/10) !== Math.round(lastCameraPosition.length()/10)) {
             this.cameraScale = new THREE.Vector3(newScale, newScale, newScale);
-            this.updateScene = true;  
-          } 
+            this.updateScene = true;
+          }
         }
 
       },

@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsingleton'], 
+define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsingleton'],
   function(_, Backbone, calc, sceneModel, geometryGraph) {
 
     var EventGenerator = function() {
@@ -109,8 +109,8 @@ define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsinglet
           closestEdgePosition = this.findClosestNonEditingEdge(event);
         }
         this.trigger(
-          'positionChanged', 
-          event, 
+          'positionChanged',
+          event,
           faceIntersections[0] && faceIntersections[0].position,
           closestEdgePosition);
 
@@ -128,16 +128,16 @@ define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsinglet
             closestEdgePosition = this.findClosestNonEditingEdge(event);
           }
           if (!dragging) {
-            this.trigger('dragStarted', 
+            this.trigger('dragStarted',
               mouseDownOnDraggableIntersections[0],
               event,
               faceIntersects[0] && faceIntersects[0].position,
               closestEdgePosition);
             dragging = true;
           } else {
-            this.trigger('drag', 
+            this.trigger('drag',
               mouseDownOnDraggableIntersections[0],
-              event, 
+              event,
               faceIntersects[0] && faceIntersects[0].position,
               closestEdgePosition);
           }
@@ -202,8 +202,8 @@ define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsinglet
           var intersections = selector(view);
           intersections.forEach(function(i) {
             acc.push({
-              view: view, 
-              distance: i.distance, 
+              view: view,
+              distance: i.distance,
               position: i.position,
               faceIndex: i.faceIndex,
               object: i.object,
@@ -231,10 +231,10 @@ define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsinglet
           var findClosestEdge = function(obj) {
             if ((obj instanceof THREE.Line) && (obj.screenBox)) {
               // Only use objects where the mouse is within the screen box
-              var inBox = 
-                (((event.offsetX >= obj.screenBox.min.x) && 
+              var inBox =
+                (((event.offsetX >= obj.screenBox.min.x) &&
                   (event.offsetX <= obj.screenBox.max.x)) &&
-                ((event.offsetY >= obj.screenBox.min.y) && 
+                ((event.offsetY >= obj.screenBox.min.y) &&
                  (event.offsetY <= obj.screenBox.max.y)));
               if (!inBox) {
                 return;
@@ -261,7 +261,7 @@ define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsinglet
           };
           findClosestEdge({children: [sceneView.sceneObject]});
         });
-        
+
         return closestEdgePosition;
       };
 
@@ -295,7 +295,7 @@ define(['underscore', 'backbone', 'calculations', 'scene', 'geometrygraphsinglet
 
       return function(sceneView) {
         var isVertexView = !!sceneView.model.vertex;
-        var testForIntersect = 
+        var testForIntersect =
           (isVertexView && ((sceneView.model.vertex.category === 'geometry') ||
                            (sceneView.model.vertex.type === 'workplane'))) ||
           !isVertexView;

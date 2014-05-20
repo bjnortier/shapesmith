@@ -5,9 +5,9 @@ define(['underscore', 'casgraph/graph', 'casgraph/replicator'], function(_, CASG
     it('can write vertices', function() {
 
       var graph = new CASGraph({
-        hashFn : function(obj) {  
-          return obj.hasOwnProperty('id') ?    
-            '_' + obj.id : 
+        hashFn : function(obj) {
+          return obj.hasOwnProperty('id') ?
+            '_' + obj.id :
             '_' + _.keys(obj.vertices).length;
         }
       });
@@ -55,7 +55,7 @@ define(['underscore', 'casgraph/graph', 'casgraph/replicator'], function(_, CASG
 
       var readGraph = function(hash, callback) {
         if (hash === '_graphhash') {
-          callback(true, '_graphhash', hashedGraph); 
+          callback(true, '_graphhash', hashedGraph);
         } else {
           throw new Error('unexpected graph hash');
         }
@@ -72,9 +72,9 @@ define(['underscore', 'casgraph/graph', 'casgraph/replicator'], function(_, CASG
       };
 
       var graph = new CASGraph({
-        hashFn : function(obj) {  
-          return obj.hasOwnProperty('id') ?    
-            '_' + obj.id : 
+        hashFn : function(obj) {
+          return obj.hasOwnProperty('id') ?
+            '_' + obj.id :
             '_' + _.keys(obj.vertices).length;
         }
       });

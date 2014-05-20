@@ -13,7 +13,7 @@ define([
       name: 'save',
 
       initialize: function() {
-        
+
         Toolbar.ItemModel.prototype.initialize.call(this);
       },
 
