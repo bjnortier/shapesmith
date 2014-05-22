@@ -108,7 +108,7 @@ module.exports = function(grunt) {
               name: "worker",
             }
           ],
-          fileExclusionRegExp: /(^\.|^bin$|^artwork$|^.*.db$|^.db$|^test|^grunt.*$|^mocha$|^chai$|^webdriverjs$)/,
+          fileExclusionRegExp: /(^\.|^build.*$|^bin$|^artwork$|^.*.db$|^.db$|^test|^grunt.*$|^mocha$|^chai$|^webdriverjs$)/,
         }
       }
     },
