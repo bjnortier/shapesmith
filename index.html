@@ -1,42 +1,168 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Shapesmith by bjnortier</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Shapesmith.net</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shapesmith is a parametric, open-source 3d modeling application in your browser">
+  <meta name="author" content="Benjamin Nortier">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Shapesmith</h1>
-        <p>Open source 3D modelling on your browser</p>
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Shapesmith ATOM Feed" />
 
-        <p class="view"><a href="https://github.com/bjnortier/shapesmith.next">View the Project on GitHub <small>bjnortier/shapesmith.next</small></a></p>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
+  <link href="/css/1140.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/landing.css" rel="stylesheet">
 
-        <ul>
-          <li><a href="https://github.com/bjnortier/shapesmith.next/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/bjnortier/shapesmith.next/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/bjnortier/shapesmith.next">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="shapesmith" class="anchor" href="#shapesmith"><span class="octicon octicon-link"></span></a>Shapesmith</h1>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/bjnortier">bjnortier</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+  <!-- Flattr -->
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  (function() {
+    var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+    t.parentNode.insertBefore(s, t);
+  })();
+  /* ]]> */</script>
+
+</head>
+
+<body>
+
+  <a href="https://github.com/bjnortier/shapesmith/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <ul id="navlist">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="https://github.com/bjnortier/shapesmith">Github</a></li>
+        <li><a href="http://www.twitter.com/shapesmith">Twitter</a></li>
+      </ul>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+    <div class="twocol last"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <img class="logo" src="/img/logo_small.png"/><a class="FlattrButton" style="display:none;" href="http://shapesmith.net"></a>
+      <noscript><a href="http://flattr.com/thing/640870/Shapesmith" target="_blank">
+        <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+      </noscript>
+      <h2>Parametric, Open source, 3D modelling - in your browser</h2>
+    </div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="try fourcol">
+      <form method="post" action="https://app.shapesmith.net/createtemp"><input type="submit" value="Try it (no signup required)"/></form>
+    </div>
+    <div class="signin fourcol"><a href="https://app.shapesmith.net/signin"><input type="button" value="Sign in"/></a></div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <div class="section">
+        <h2>Parametric</h2>
+        <p>Shapesmith is parametric, so it's very quick and easy
+          to modify your models. You can also use variables with expressions to quickly change models, like changing the radius of holes:</p>
+        <img src="/img/introducingdotnext/variables.png"/>
+      </div>
+    </div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <div class="section">
+        <h2>3D-print ready</h2>
+        <p>Import STL models and edit them, and export your models to STL and print it on your 3D printer:</p>
+        <img src="/img/www/stlimport.png"/>
+      </div>
+    </div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <div class="section">
+        <h2>Browser-based</h2>
+        <p>No install required - if you have a WebGL-capable browser
+          you can use Shapesmith. Shapesmith is built with pure HTML5
+          and Javascript, and makes use of various new web technologies.
+        </p>
+        <div style="margin: 1em 0;" class="centered">
+          <img alt="chrome" src="https://raw.github.com/paulirish/browser-logos/master/chrome/chrome_64x64.png"/>
+          <img alt="safari" src="https://raw.github.com/paulirish/browser-logos/master/safari/safari_64x64.png"/><span class="safari-marker">*</span>
+          <img alt="firefox" src="https://raw.github.com/paulirish/browser-logos/master/firefox/firefox_64x64.png"/>
+          <a class="html5-logo" href="http://www.w3.org/html/logo/">
+          <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-graphics-semantics-storage.png" width="229" height="64" alt="HTML5 Powered with CSS3 / Styling, Graphics, 3D &amp; Effects, Semantics, and Offline &amp; Storage" title="HTML5 Powered with CSS3 / Styling, Graphics, 3D &amp; Effects, Semantics, and Offline &amp; Storage">
+          </a>
+        </div>
+        <div class="safari-note">
+        * WebGL is not enabled in Safari by default. <a href="https://discussions.apple.com/thread/3300585">Here are the instructions to enable it.</a>
+        </div>
+      </div>
+    </div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <div class="section">
+        <h2>Open source</h2>
+        <p>Shapemsith is completely open source under a permissable license (MIT). You don't have to worry about the hosted version disappearing, you can always run your own server. You can also run you own server in your school or business to keep
+          your models private.</p>
+        <p>Shapesmith is <a href="https://github.com/bjnortier/shapesmith">on Github.</a></p>
+      </div>
+    </div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row">
+    <div class="twocol"></div>
+    <div class="eightcol">
+      <div class="section">
+        <h2>Updates</h2>
+        <p><a href="https://twitter.com/shapesmith/">Follow this project on twitter</a> for updates, or just try it:</p>
+      </div>
+    </div>
+    <div class="fourcol"></div>
+    <div class="try fourcol">
+      <form method="post" action="https://app.shapesmith.net/createtemp"><input type="submit" value="Try it (no signup required)"/></form>
+    </div>
+    <div class="fourcol"></div>
+    <div class="twocol"></div>
+  </div>
+
+  <div class="row footer">
+    <div class="twocol"></div>
+    <div class="eightcol"></div>
+    </div>
+    <div class="twocol"></div>
+  </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-22797822-3', 'shapesmith.net');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
 </html>

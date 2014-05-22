@@ -1,0 +1,79 @@
+body {
+  font-family: 'Lato', 'Sans';
+  font-size: 12pt;
+  font-weight: 300;
+}
+
+#navlist {
+  padding-top: 20px;
+}
+
+.logo {
+  margin-right: 20px;
+}
+
+h2 {
+  font-weight: 400;
+}
+
+.centered {
+  text-align: center;
+}
+
+.safari-marker {
+  vertical-align: top;
+  font-size: 20px;
+  margin-left: -10px;
+}
+
+.safari-note {
+  font-size: 0.8em;
+}
+
+.html5-logo {
+  padding-left: 20px;
+}
+
+.section {
+  margin-left: 0 -20px;
+  padding: 20px 0px;
+}
+
+.footer {
+  margin-bottom: 4em;
+}
+
+input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 15px;
+  padding: 10px;
+  margin: 20px 0 0 0;
+}
+input[type="button"],
+input[type="submit"] {
+  width: 100%;
+  border: none;
+  border-bottom: solid 1px #B6B6B6;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.try input[type="submit"] {
+  background-color: #FFD589;
+}
+.try input[type="submit"]:hover {
+  background-color: #F7B949;
+}
+.signin input[type="button"] {
+  background-color: #DFDFDF;
+}
+.signin input[type="button"]:hover {
+  background-color: #B4E2FC;
+}
+.signin a {
+  text-decoration: none;
+}
+.signin a:visited {
+  text-decoration: none;
+}
