@@ -1,14 +1,14 @@
 ---
 layout: post
 title: Introducing Shapesmith.next
-summary: 
+summary: I'm proud to announce the future of Shapesmith, dubbed "Shapesmith.next". This is a reference to the next version of Javascript, ES.next, since Shapesmith is now a pure Javascript application.
 ---
 
 Finally.
 
 *(If you're impatient, you can head over to [https://next.shapesmith.net](https://next.shapesmith.net/) and try out the new version, then come back here and read the post)*.
 
-I'm proud to announce the future of Shapesmith, dubbed "Shapesmith.next". This is a reference to the next version of Javascript, ES.next, since Shapesmith is now a *pure Javascript* application. 
+I'm proud to announce the future of Shapesmith, dubbed "Shapesmith.next". This is a reference to the next version of Javascript, ES.next, since Shapesmith is now a *pure Javascript* application.
 
 This application will become "Shapesmith", and the previous beast will be deprecated.
 

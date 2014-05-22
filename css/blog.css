@@ -1,0 +1,11 @@
+h2 > a:visited, h2 > a {
+  text-decoration: none;
+}
+
+.continue-reading {
+  text-align: right;
+}
+
+.post-summary {
+  margin-top: 0.5em;
+}

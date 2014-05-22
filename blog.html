@@ -1,6 +1,7 @@
 ---
 layout: layout
 title: Shapesmith Blog
+css: blog
 ---
 
 {% for post in site.posts %}
@@ -10,7 +11,7 @@ title: Shapesmith Blog
     <div class="post-summary">
       <h2><a href="{{ post.url }}">{{ post.title}}</a></h2>
       <div class="date">{{ post.date | date_to_string }}</div>
-      {{ post.summary }}
+      <p>{{ post.summary }}</p>
       <p class="continue-reading"><a href="{{post.url}}">continue reading &rarr;</a></p>
     </div>
   </div>
