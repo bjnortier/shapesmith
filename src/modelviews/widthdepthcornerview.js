@@ -1,17 +1,17 @@
 define([
-    'calculations', 
+    'calculations',
     'colors',
-    'scene', 
+    'scene',
     'interactioncoordinator',
     'scenevieweventgenerator',
     'worldcursor',
     'geometrygraphsingleton',
-    'modelviews/geomvertexMV', 
-  ], 
+    'modelviews/geomvertexMV',
+  ],
   function(
-    calc, 
-    colors, 
-    sceneModel, 
+    calc,
+    colors,
+    sceneModel,
     coordinator,
     sceneViewEventGenerator,
     worldCursor,
@@ -43,9 +43,9 @@ define([
       render: function() {
         GeomVertexMV.EditingSceneView.prototype.render.call(this);
         this.point = THREE.SceneUtils.createMultiMaterialObject(
-          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1), 
+          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1),
           [
-            this.materials.editing.face, 
+            this.materials.editing.face,
             this.materials.editing.wire
           ]);
 
@@ -54,7 +54,7 @@ define([
           originPosition,
           new THREE.Vector3(
             geometryGraph.evaluate(this.vertex.parameters.width),
-            geometryGraph.evaluate(this.vertex.parameters.depth), 
+            geometryGraph.evaluate(this.vertex.parameters.depth),
             0));
         this.point.position = cornerPosition;
 
@@ -66,11 +66,11 @@ define([
         this.point.scale = this.cameraScale;
       },
 
-      isClickable: function() { 
+      isClickable: function() {
         return false;
       },
 
-      // This view is not draggable, but the display scene view can transfer 
+      // This view is not draggable, but the display scene view can transfer
       // the dragging to this view (e.g. when a point is dragged), but only for
       // points that are not prototypes any more
       isDraggable: function() {
@@ -88,7 +88,7 @@ define([
 
         var originPosition = calc.objToVector(this.origin.parameters.coordinate, geometryGraph, THREE.Vector3);
         var width = position.x - originPosition.x;
-        var depth = position.y - originPosition.y;      
+        var depth = position.y - originPosition.y;
         this.model.vertex.parameters.width = width;
         this.model.vertex.parameters.depth = depth;
         this.model.vertex.trigger('change', this.model.vertex);

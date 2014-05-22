@@ -1,7 +1,7 @@
 define([
     'jquery',
     'lib/jquery.getQueryParam',
-    'scene',  
+    'scene',
     'interactioncoordinator',
   ], function($, __$, sceneModel, coordinator) {
 
@@ -27,11 +27,11 @@ define([
       }
 
       this.mousedown = function() {
-        targetOnDown = { 
-          azimuth:  target.azimuth, 
+        targetOnDown = {
+          azimuth:  target.azimuth,
           elevation: target.elevation,
         };
-      };  
+      };
 
       this.mouseup = function() {
         if (state) {
@@ -81,13 +81,13 @@ define([
             var upVec = new THREE.Vector3(0,0,1);
             var mouseLeftVec = new THREE.Vector3().crossVectors(upVec, camVec);
             var mouseUpVec = new THREE.Vector3().crossVectors(camVec, mouseLeftVec);
-            
+
             var dPos = mouseLeftVec.clone().multiplyScalar(dMouseFromLast.x).add(
               mouseUpVec.clone().multiplyScalar(dMouseFromLast.y));
             dPos.multiplyScalar(Math.sqrt(position.distance)/50);
 
-            target.scenePosition.add(dPos);  
-            this.updateCamera(); 
+            target.scenePosition.add(dPos);
+            this.updateCamera();
           }
 
         }
@@ -143,7 +143,7 @@ define([
       this.updateCamera = function() {
         if (sceneView.renderer.info.memory.geometries > 1000) {
           damping = 1.0;
-        } 
+        }
         var dAzimuth = (target.azimuth - position.azimuth)*damping;
         var dElevation = (target.elevation - position.elevation)*damping;
         var dDistance = (target.distance - position.distance)*damping;
@@ -188,7 +188,7 @@ define([
 
       this.updateCamera();
 
-    }; 
+    };
 
     var eventToPosition = function(event) {
       return {

@@ -5,9 +5,9 @@ define([
     'geometrygraphsingleton',
     'interactioncoordinator',
     'modelviews/overlaydomview',
-  ], 
+  ],
   function(Backbone, calc, sceneModel, geometryGraph, coordinator, OverlayDOMView) {
-  
+
     var View = OverlayDOMView.extend({
 
       initialize: function() {
@@ -33,12 +33,12 @@ define([
           globalPosition = this.localPosition;
         } else {
           var workplaneOrigin = calc.objToVector(
-            this.model.vertex.workplane.origin, 
-            geometryGraph, 
+            this.model.vertex.workplane.origin,
+            geometryGraph,
             THREE.Vector3);
           var workplaneAxis =  calc.objToVector(
-            this.model.vertex.workplane.axis, 
-            geometryGraph, 
+            this.model.vertex.workplane.axis,
+            geometryGraph,
             THREE.Vector3);
           var workplaneAngle = geometryGraph.evaluate(this.model.vertex.workplane.angle);
 
@@ -47,7 +47,7 @@ define([
         }
 
         var screenPos = calc.toScreenCoordinates(sceneWidth, sceneHeight, camera, globalPosition);
-          
+
         this.$el.css('left', (screenPos.x + 10) + 'px');
         this.$el.css('top',  (screenPos.y - 10) + 'px');
       },

@@ -8,7 +8,7 @@ describe('Graph view', function() {
     before(function(done) {
         this.timeout(5000);
         client.initDesign(done);
-            
+
     });
 
     beforeEach(function(done) {
@@ -37,7 +37,7 @@ describe('Graph view', function() {
             .click('#geometry .point1')
             .assertTextEqual('.vertex:nth-child(2) .title', 'point0')
             .assertTextEqual('.vertex:nth-child(3) .title', 'point1', done);
-    });   
+    });
 
     it('will maintain variable row index on editing', function(done) {
         this.timeout(10000);
@@ -60,7 +60,7 @@ describe('Graph view', function() {
             .click('#variables .b')
             .assertTextEqual('#variables tr:nth-child(2) .name', 'a')
             .assertValueEqual('#variables tr:nth-child(3) .name .field', 'b', done);
-    });               
+    });
 
 
 });

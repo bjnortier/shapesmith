@@ -8,7 +8,7 @@ define([
     BooleanItemModel) {
 
     var Model = BooleanItemModel.extend({
-      
+
       name: 'subtract',
       VertexConstructor: GeomNode.Subtract,
       icon: icons['subtract'],

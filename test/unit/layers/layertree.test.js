@@ -32,18 +32,18 @@ define(['layers/layertree'], function(LayerTree) {
       tree.moveInto(storey, building1);
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: [
             {
-              type: 'storey', 
-              name: 'storey1', 
+              type: 'storey',
+              name: 'storey1',
               children: [],
             }
           ]
         },
         {
-          type: 'building', 
+          type: 'building',
           name: 'building2',
           children: [],
         }
@@ -73,13 +73,13 @@ define(['layers/layertree'], function(LayerTree) {
 
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: [],
         },
         {
-          type: 'building', 
-          name: 'building2', 
+          type: 'building',
+          name: 'building2',
           children: [],
         }
       ], tree.toObj());
@@ -112,17 +112,17 @@ define(['layers/layertree'], function(LayerTree) {
 
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: [
             {
-              type: 'storey', 
-              name: 'storey2', 
+              type: 'storey',
+              name: 'storey2',
               children: [],
             },
             {
-              type: 'storey', 
-              name: 'storey1', 
+              type: 'storey',
+              name: 'storey1',
               children: [],
             }
           ]
@@ -133,17 +133,17 @@ define(['layers/layertree'], function(LayerTree) {
 
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: [
             {
-              type: 'storey', 
-              name: 'storey1', 
+              type: 'storey',
+              name: 'storey1',
               children: [],
             },
             {
-              type: 'storey', 
-              name: 'storey2', 
+              type: 'storey',
+              name: 'storey2',
               children: [],
             }
           ]
@@ -164,12 +164,12 @@ define(['layers/layertree'], function(LayerTree) {
 
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: [
             {
-              type: 'storey', 
-              name: 'storey1', 
+              type: 'storey',
+              name: 'storey1',
               children: [{
                 type: 'geometry',
                 id: 'point0',
@@ -178,7 +178,7 @@ define(['layers/layertree'], function(LayerTree) {
           ]
         },
       ], tree.toObj());
-       
+
     });
 
     it('can be deserialized', function() {
@@ -199,12 +199,12 @@ define(['layers/layertree'], function(LayerTree) {
 
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: [
             {
-              type: 'storey', 
-              name: 'storey1', 
+              type: 'storey',
+              name: 'storey1',
               children: [{
                 type: 'geometry',
                 id: 'point0',
@@ -230,7 +230,7 @@ define(['layers/layertree'], function(LayerTree) {
       assert.isTrue(tree.removeNode(leaf));
       assert.deepEqual([
         {
-          type: 'building', 
+          type: 'building',
           name: 'building1',
           children: []
         }
@@ -248,7 +248,7 @@ define(['layers/layertree'], function(LayerTree) {
       assert.isTrue(tree.removeNode(building));
       assert.deepEqual([
         {
-          type: 'geometry', 
+          type: 'geometry',
           id: 'point0',
         }
       ], tree.toObj());

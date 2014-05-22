@@ -1,4 +1,4 @@
-define(['geomnode', 'geometrygraph'], 
+define(['geomnode', 'geometrygraph'],
   function(GeomNode, GeometryGraph) {
 
     var graph = new GeometryGraph.Graph();
@@ -19,7 +19,7 @@ define(['geomnode', 'geometrygraph'],
         var result = graph.validate(v);
         assert.isTrue(result);
         assert.deepEqual(v.errors, {});
-        
+
         delete v.name;
         result = graph.validate(v);
         assert.isFalse(result);

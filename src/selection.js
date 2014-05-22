@@ -1,10 +1,10 @@
 define([
-    'underscore', 
-    'backbone', 
-    'geometrygraphsingleton', 
-  ], 
+    'underscore',
+    'backbone',
+    'geometrygraphsingleton',
+  ],
   function(_, Backbone, geometryGraph) {
-  
+
     var Manager = function() {
 
       _.extend(this, Backbone.Events);
@@ -29,7 +29,7 @@ define([
           return;
         }
         selected = [id];
-        
+
         if (deselected.length > 0) {
           this.trigger('deselected', deselected, selected);
         }
@@ -41,12 +41,12 @@ define([
         if (!this.canSelect || geometryGraph.isEditing()) {
           return;
         }
-        
+
         var alreadySelected = false;
         for (var i in selected) {
           if (selected[i] === id) {
             alreadySelected = true;
-          } 
+          }
         }
 
         if (alreadySelected) {

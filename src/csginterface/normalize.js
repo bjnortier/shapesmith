@@ -3,8 +3,8 @@
 define([
     'calculations',
     'geometrygraphsingleton',
-  ], 
-  function(calc, geometryGraph) { 
+  ],
+  function(calc, geometryGraph) {
 
     var normalizeTransforms = function(transforms) {
       return {
@@ -32,7 +32,7 @@ define([
             y: geometryGraph.evaluate(transforms.scale.origin.y),
             z: geometryGraph.evaluate(transforms.scale.origin.z),
           },
-          factor: geometryGraph.evaluate(transforms.scale.factor), 
+          factor: geometryGraph.evaluate(transforms.scale.factor),
         }
 
       };
@@ -88,7 +88,7 @@ define([
       var radius = geometryGraph.evaluate(sphere.parameters.radius);
 
       return {
-        x: center.x, 
+        x: center.x,
         y: center.y,
         z: center.z,
         r: radius,
@@ -105,7 +105,7 @@ define([
       var height = geometryGraph.evaluate(cylinder.parameters.height);
 
       return {
-        x: center.x, 
+        x: center.x,
         y: center.y,
         z: Math.min(center.z, center.z + height),
         r: radius,
@@ -129,6 +129,15 @@ define([
 
     };
 
+    var normalizeSTL = function(stlNode) {
+      return {
+        stl: stlNode.parameters.stl,
+        transforms: normalizeTransforms(stlNode.transforms),
+        workplane: normalizeWorkplane(stlNode.workplane),
+      };
+
+    };
+
     var normalizeVertex = function(vertex) {
       var normalized = (function() {
         switch (vertex.type) {
@@ -144,6 +153,8 @@ define([
         case 'subtract':
         case 'intersect':
           return normalizeBoolean(vertex);
+        case 'stl':
+          return normalizeSTL(vertex);
         default:
           throw new Error('no normalization defined for ' + vertex.id);
         }

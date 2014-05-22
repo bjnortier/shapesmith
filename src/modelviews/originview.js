@@ -1,17 +1,17 @@
 define([
-    'calculations', 
+    'calculations',
     'colors',
-    'scene', 
+    'scene',
     'interactioncoordinator',
     'scenevieweventgenerator',
     'worldcursor',
     'geometrygraphsingleton',
-    'modelviews/geomvertexMV', 
-  ], 
+    'modelviews/geomvertexMV',
+  ],
   function(
-    calc, 
-    colors, 
-    sceneModel, 
+    calc,
+    colors,
+    sceneModel,
     coordinator,
     sceneViewEventGenerator,
     worldCursor,
@@ -44,9 +44,9 @@ define([
       render: function() {
         GeomVertexMV.EditingSceneView.prototype.render.call(this);
         this.point = THREE.SceneUtils.createMultiMaterialObject(
-          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1), 
+          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1),
           [
-            this.materials.editing.face, 
+            this.materials.editing.face,
             this.materials.editing.wire
           ]);
 
@@ -60,7 +60,7 @@ define([
         this.point.scale = this.cameraScale;
       },
 
-      isClickable: function() { 
+      isClickable: function() {
         return false;
       },
 

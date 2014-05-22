@@ -1,7 +1,7 @@
 define([
     'underscore',
     'backbone-events',
-  ], 
+  ],
   function(
     _,
     Events) {
@@ -52,10 +52,10 @@ define([
             }
           } else if (evt.data.hasOwnProperty('id')) {
             var jobResult = {
-              serializedBSP: evt.data.bsp,
-              polygons: evt.data.polygons,
+              id: evt.data.id,
+              csg: evt.data.csg,
             };
-            broker.trigger(evt.data.id, jobResult);
+            broker.trigger('jobDone', jobResult);
 
           } else if (evt.data.info) {
             console.info('worker info:', evt.data.info);
@@ -72,6 +72,7 @@ define([
       this.queueJob = function(job) {
         var jobId = nextJobId++;
         job.id = jobId;
+        broker.trigger('jobQueued', jobId);
         var worker = getAvailableWorker();
         if (worker) {
           doJob(job, worker);
@@ -135,6 +136,10 @@ define([
       return jobQueue.queueJob({sha: sha, intersect: childBSPs, transforms: transforms, workplane: workplane});
     };
 
+    var createMesh = function(sha, csg, transforms, workplane) {
+      return jobQueue.queueJob({sha: sha, mesh: csg, transforms: transforms, workplane: workplane});
+    };
+
     return {
       createCube     : createCube,
       createSphere   : createSphere,
@@ -143,6 +148,7 @@ define([
       createUnion    : createUnion,
       createSubtract : createSubtract,
       createIntersect: createIntersect,
+      createMesh     : createMesh,
       broker         : jobQueue.broker,
     };
 

@@ -28,8 +28,8 @@ define([
           this.rotationObj = this.vertex.transforms.rotation;
         }
 
-        this.center = extents.center; 
-        
+        this.center = extents.center;
+
         TransformSceneView.prototype.initialize.call(this, options);
         this.vertex.on('change', this.render, this);
       },
@@ -51,8 +51,8 @@ define([
           y = (this.radius)*Math.sin(angle);
           circleGeom.vertices.push(new THREE.Vector3(x,y,0));
         }
-        var circleMaterial = new THREE.LineBasicMaterial({ 
-          color: this.greyLineColor, 
+        var circleMaterial = new THREE.LineBasicMaterial({
+          color: this.greyLineColor,
           linewidth: 1.0
         });
         var circle = new THREE.Line(circleGeom, circleMaterial);
@@ -73,7 +73,7 @@ define([
         this.rotationSceneObject = new THREE.Object3D();
         this.sceneObject.add(this.rotationSceneObject);
         this.rotationSceneObject.add(this.circleAndArrow);
-       
+
         if (!this.isWorkplane) {
           var quat1 = new THREE.Quaternion().setFromAxisAngle(
             this.relativeRotationAxis, 0);
@@ -83,7 +83,7 @@ define([
             geometryGraph.evaluate(this.rotationObj.angle)/180*Math.PI);
           var quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
           quat3.normalize();
-          
+
           this.rotationSceneObject.useQuaternion = true;
           this.rotationSceneObject.quaternion = quat3;
           this.rotationSceneObject.position = this.center;
@@ -100,7 +100,7 @@ define([
 
       dragStarted: function() {
         this.initiator.hideOtherViews(this);
-        
+
         if (this.isWorkplane) {
           this.editingVertex = this.vertex;
           this.editingModel = modelGraph.get(this.editingVertex.id);
@@ -129,12 +129,12 @@ define([
         if (!this.isWorkplane) {
           // Local Workplane
           workplaneOrigin = calc.objToVector(
-            this.editingVertex.workplane.origin, 
-            geometryGraph, 
+            this.editingVertex.workplane.origin,
+            geometryGraph,
             THREE.Vector3);
           workplaneAxis =  calc.objToVector(
-            this.editingVertex.workplane.axis, 
-            geometryGraph, 
+            this.editingVertex.workplane.axis,
+            geometryGraph,
             THREE.Vector3);
           workplaneAngle = geometryGraph.evaluate(this.editingVertex.workplane.angle);
         }
@@ -200,8 +200,8 @@ define([
             var rotationOriginVec = calc.objToVector(this.center, geometryGraph, THREE.Vector3);
             rotationOriginVec.multiplyScalar(1/scaleFactor);
             rotationOrigin = {
-              x: rotationOriginVec.x, 
-              y: rotationOriginVec.y, 
+              x: rotationOriginVec.x,
+              y: rotationOriginVec.y,
               z: rotationOriginVec.z,
             };
           }
@@ -216,7 +216,7 @@ define([
               geometryGraph.evaluate(this.rotationObj.angle)/180*Math.PI);
             quat3 = new THREE.Quaternion().multiplyQuaternions(quat1, quat2);
             quat3.normalize();
-            
+
             this.rotationSceneObject.useQuaternion = true;
             this.rotationSceneObject.quaternion = quat3;
           }

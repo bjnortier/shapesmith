@@ -19,6 +19,7 @@ define([
     'toolbars/sphereitemmodel',
     'toolbars/cylinderitemmodel',
     'toolbars/coneitemmodel',
+    'toolbars/importstlitemmodel',
     'toolbars/unionitemmodel',
     'toolbars/subtractitemmodel',
     'toolbars/intersectitemmodel',
@@ -47,6 +48,7 @@ define([
     SphereItemModel,
     CylinderItemModel,
     ConeItemModel,
+    ImportSTLItemModel,
     UnionItemModel,
     SubtractItemModel,
     IntersectItemModel,
@@ -67,19 +69,21 @@ define([
       modelgraph.addWrapper('union', BooleanMV);
       modelgraph.addWrapper('subtract', BooleanMV);
       modelgraph.addWrapper('intersect', BooleanMV);
+      modelgraph.addWrapper('stl', BooleanMV);
 
       // geomToolbar.addItem(new PointItemModel());
       geomToolbar.addItem(new CubeItemModel());
       geomToolbar.addItem(new SphereItemModel());
       geomToolbar.addItem(new CylinderItemModel());
       geomToolbar.addItem(new ConeItemModel());
+      geomToolbar.addItem(new ImportSTLItemModel());
       geomToolbar.addItem(new UnionItemModel());
       geomToolbar.addItem(new IntersectItemModel());
       geomToolbar.addItem(new SubtractItemModel());
 
       var expander = new Toolbar.ExpanderItem();
       mainToolbar.addItem(new SaveItemModel());
-      mainToolbar.addItem(new ExportSTLItemModel()); 
+      mainToolbar.addItem(new ExportSTLItemModel());
       mainToolbar.addItem(new ExitItemModel());
 
       var helpItemModel = new HelpItemModel();

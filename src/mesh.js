@@ -27,7 +27,7 @@ define([
     Mesh.prototype.ensureSpaceAvailable = function() {
       if ((this.numPositions + 1)*12 > this.positions.buffer.byteLength) {
         this.positions = new Float32Array(doubleAndCopyArrayBuffer(this.positions.buffer));
-      } 
+      }
       if ((this.numTriangles + 1)*12 > this.triangleIndices.buffer.byteLength) {
         this.triangleIndices = new Uint32Array(doubleAndCopyArrayBuffer(this.triangleIndices.buffer));
       }
@@ -78,15 +78,15 @@ define([
       for (i = 0; i < other.numTriangles; ++i) {
         this.addTriangle([
           offset + other.triangleIndices[i*3],
-          offset + other.triangleIndices[i*3+1], 
+          offset + other.triangleIndices[i*3+1],
           offset + other.triangleIndices[i*3+2]
-        ]);    
+        ]);
       }
       for (i = 0; i < other.numLines; ++i) {
         this.addLine([
           offset + other.lineIndices[i*2],
           offset + other.lineIndices[i*2+1]
-        ]);    
+        ]);
       }
     };
 

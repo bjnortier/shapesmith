@@ -1,23 +1,23 @@
 define([
     'jquery',
     'lib/mustache',
-    'calculations', 
+    'calculations',
     'colors',
-    'scene', 
+    'scene',
     'interactioncoordinator',
     'scenevieweventgenerator',
     'worldcursor',
     'geometrygraphsingleton',
-    'modelviews/geomvertexMV', 
+    'modelviews/geomvertexMV',
     'modelviews/dimensionview',
     'asyncAPI',
-  ], 
+  ],
   function(
-    $, 
+    $,
     Mustache,
-    calc, 
-    colors, 
-    sceneModel, 
+    calc,
+    colors,
+    sceneModel,
     coordinator,
     sceneViewEventGenerator,
     worldCursor,
@@ -48,7 +48,7 @@ define([
           this.vertex.parameters.coordinate.x = position.x;
           this.vertex.parameters.coordinate.y = position.y;
           this.vertex.parameters.coordinate.z = position.z;
-          this.vertex.trigger('change', this.vertex);      
+          this.vertex.trigger('change', this.vertex);
         }
       },
 
@@ -74,7 +74,7 @@ define([
 
       render: function() {
         GeomVertexMV.EditingDOMView.prototype.render.call(this);
-        var template = 
+        var template =
           this.beforeTemplate +
           '<div class="coordinate">' +
           '<input class="field x" type="text" value="{{x}}"></input>' +
@@ -103,7 +103,7 @@ define([
         }, this);
       }
     });
-   
+
     var EditingSceneView = GeomVertexMV.EditingSceneView.extend({
 
       initialize: function(options) {
@@ -123,14 +123,14 @@ define([
       render: function() {
         GeomVertexMV.EditingSceneView.prototype.render.call(this);
         this.point = THREE.SceneUtils.createMultiMaterialObject(
-          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1), 
+          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1),
           [
-            this.materials.editing.origin, 
+            this.materials.editing.origin,
             this.materials.editing.wire
           ]);
         this.point.position = calc.objToVector(
-          this.model.vertex.parameters.coordinate, 
-          geometryGraph, 
+          this.model.vertex.parameters.coordinate,
+          geometryGraph,
           THREE.Vector3);
         this.sceneObject.add(this.point);
         this.updateScaledObjects();
@@ -140,7 +140,7 @@ define([
         this.point.scale = this.cameraScale;
       },
 
-      isClickable: function() { 
+      isClickable: function() {
         if (this.model.vertex.implicit) {
           return !this.model.vertex.active;
         } else {
@@ -186,19 +186,19 @@ define([
       },
 
       render: function() {
-        var template = 
+        var template =
           '(<div class="dim x">{{x}}</div>,' +
           '<div class="dim y">{{y}}</div>,' +
           '<div class="dim z">{{z}}</div>)';
-        var view = 
+        var view =
           calc.objToVector(this.model.vertex.parameters.coordinate, geometryGraph, THREE.Vector3);
         this.$el.html(Mustache.render(template, view));
       },
 
       update: function() {
         this.localPosition = calc.objToVector(
-          this.model.vertex.parameters.coordinate,  
-          geometryGraph, 
+          this.model.vertex.parameters.coordinate,
+          geometryGraph,
           THREE.Vector3);
         DimensionView.prototype.update.call(this);
       },
@@ -214,7 +214,7 @@ define([
         GeomVertexMV.DisplayModel.prototype.initialize.call(this, options);
       },
 
-    });  
+    });
 
     var DisplaySceneView = GeomVertexMV.DisplaySceneView.extend({
 
@@ -276,7 +276,7 @@ define([
           this.selectionPoint = new THREE.Mesh(
             hiddenGeometry,
             new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide }));
-          this.hiddenSelectionObject.add(this.selectionPoint);  
+          this.hiddenSelectionObject.add(this.selectionPoint);
         }
       },
 

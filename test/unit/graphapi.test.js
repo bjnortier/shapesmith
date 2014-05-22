@@ -2,7 +2,7 @@ define([
     'geomnode',
     'geometrygraph',
     'graphapi'
-  ], 
+  ],
   function(GeomNode, GeometryGraph, API) {
 
     describe('Graph API', function() {
@@ -39,7 +39,7 @@ define([
       });
 
       it('can create the OBJ file for an empty graph', function() {
-      
+
         var serializedGraph = '{"vertices":[],"edges":{}}';
         var hashesToVertices = '{}';
         API.toOBJ(JSON.parse(serializedGraph), JSON.parse(hashesToVertices));

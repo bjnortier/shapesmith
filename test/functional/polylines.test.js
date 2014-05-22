@@ -55,7 +55,7 @@ describe('Polylines', function() {
             .click('.toolbar .select')
             .assertNumberOfDisplayNodes(4, done)
     });
-  
+
 
     it.skip('can edited by dragging the points', function(done) {
         this.timeout(5000);

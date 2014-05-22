@@ -20,6 +20,7 @@
   <script type="text/javascript" src="/lib/stats.min.js"></script>
   <script type="text/javascript" src="/lib/dat.gui.min.js"></script>
   <script type="text/javascript" src="/src/PipeGeometry.js"></script>
+  <script type="text/javascript" src="/lib/csg.js"></script>
   
   <script type="text/javascript" src="/lib/IndexedDBShim.min.js"></script>
   <script type="text/javascript" src="/lib/html5slider.js"></script>
@@ -30,6 +31,7 @@
 <body>
 
   <div id="graphs">
+    <div id="messaging"></div>
     <table id="variables"></table>
     <div class="geometry section">geometry</div>
     <div id="geometry"></div>
@@ -78,6 +80,8 @@
     <p>Click on the <span class="emph">?</span> in the toolbar to bring up this help.</p>
     <div class="got-it"><input type="button" value="Got it"/></div>
   </div>
+
+  <input type="file" class="offscreen" id="stl-file-select-input"/>
 
 <script>
   {{#firstTry}}

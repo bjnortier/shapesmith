@@ -1,13 +1,15 @@
-// The adapter is the interface between vertices and lathe objects
 define([
     'underscore',
     'backbone-events',
     'casgraph/sha1hasher',
     'geomnode',
     'geometrygraphsingleton',
-    'latheapi/normalize',
-    'latheapi/pool',
-    'latheapi/bspdb',
+    './normalize',
+    './pool',
+    './bspdb',
+    'csg',
+    'toolbars/parsestl',
+    'progresstrackable',
   ], function(
     _,
     Events,
@@ -15,8 +17,11 @@ define([
     GeomNode,
     geometryGraph,
     Normalize,
-    Lathe,
-    BSPDB) {
+    pool,
+    BSPDB,
+    CSG,
+    parseSTL,
+    progressTrackable) {
 
     var infoHandler = function() {
       console.info.apply(console, arguments);
@@ -26,7 +31,7 @@ define([
       console.error.apply(console, arguments);
     };
 
-    var bspdb = new BSPDB(infoHandler, errorHandler); 
+    var bspdb = new BSPDB(infoHandler, errorHandler);
 
     var getOrGenerate = function(sha, generator, callback) {
       // Read from the DB, or generate it if it doesn't exist
@@ -38,33 +43,33 @@ define([
           callback(undefined, jobResult);
         } else {
           var jobId = generator();
-          Lathe.broker.on(jobId, function(jobResult) {
+          pool.broker.on('jobDone', function(jobResult) {
 
-            bspdb.write({
-              sha: sha,
-              polygons: jobResult.polygons,
-              serializedBSP: jobResult.serializedBSP,
-            }, function(err) {
-              if (err) {
-                postMessage({error: 'error writing to BSP DB' + err});
-              }
-            });
+            if (jobResult.id === jobId) {
+              bspdb.write({
+                sha: sha,
+                csg: jobResult.csg,
+              }, function(err) {
+                if (err) {
+                  postMessage({error: 'error writing to BSP DB' + err});
+                }
+              });
 
-            jobResult.sha = sha;
-            jobResult.id = jobId;
-            callback(undefined, jobResult);
+              jobResult.sha = sha;
+              callback(undefined, jobResult);
+            }
           });
         }
       });
     };
 
-    var generateBoolean = function(vertex, latheGenerator, callback) {
+    var generateBoolean = function(vertex, csgGenerator, callback) {
 
       var children = geometryGraph.childrenOf(vertex);
       var childResults = {};
       var allChildrenExist;
 
-      // Ensure all children exist 
+      // Ensure all children exist
       var remaining = children.length;
       children.forEach(function(child) {
         generate(child, function(err, result) {
@@ -89,17 +94,17 @@ define([
         var sha = SHA1Hasher.hash(uniqueObj);
 
         var childBSPs = children.map(function(child) {
-          return childResults[child.id].serializedBSP;
+          return childResults[child.id].csg;
         });
 
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
             var normalized = Normalize.normalizeVertex(vertex);
-            return latheGenerator(sha, childBSPs, normalized.transforms, normalized.workplane);
+            return csgGenerator(sha, childBSPs, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
       };
-      
+
     };
 
     // Share the generate callbacks so only a single generate is performed
@@ -119,7 +124,7 @@ define([
       generateCallbacks[result.sha].forEach(function(callback) {
         callback(err, result);
       });
-      generateCallbacks[result.sha] = undefined;
+      delete generateCallbacks[result.sha];
     };
 
     var generate = function(vertex, callback) {
@@ -130,7 +135,7 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createSphere(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -139,7 +144,7 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createCylinder(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -148,7 +153,7 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCone(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createCone(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
@@ -157,18 +162,28 @@ define([
         sha = SHA1Hasher.hash(normalized);
         if (addCallbackAndShouldGenerate(sha, callback)) {
           getOrGenerate(sha, function() {
-            return Lathe.createCube(sha, normalized, normalized.transforms, normalized.workplane);
+            return pool.createCube(sha, normalized, normalized.transforms, normalized.workplane);
           }, performCallback);
         }
         break;
       case 'union':
-        generateBoolean(vertex, Lathe.createUnion, callback);
+        generateBoolean(vertex, pool.createUnion, callback);
         break;
       case 'subtract':
-        generateBoolean(vertex, Lathe.createSubtract, callback);
+        generateBoolean(vertex, pool.createSubtract, callback);
         break;
       case 'intersect':
-        generateBoolean(vertex, Lathe.createIntersect, callback);
+        generateBoolean(vertex, pool.createIntersect, callback);
+        break;
+      case 'stl':
+        normalized = Normalize.normalizeVertex(vertex);
+        sha = SHA1Hasher.hash(normalized);
+        if (addCallbackAndShouldGenerate(sha, callback)) {
+          getOrGenerate(sha, function() {
+            var csg = parseSTL(normalized.stl);
+            return pool.createMesh(sha, csg, normalized.transforms, normalized.workplane);
+          }, performCallback);
+        }
         break;
       default:
         throw new Error('unknown vertex id/type: ' + vertex.id + '/' + vertex.type);
@@ -188,11 +203,21 @@ define([
         broker.trigger('initialized');
       }
     });
-    Lathe.broker.on('initialized', function() {
+
+    pool.broker.on('initialized', function() {
       poolInitialized = true;
       if (uiDBInitialized && poolInitialized) {
         broker.trigger('initialized');
       }
+    });
+
+    var trackers = [];
+    pool.broker.on('jobQueued', function(id) {
+      trackers[id] = progressTrackable.create(broker);
+    });
+    pool.broker.on('jobDone', function(result) {
+      trackers[result.id].finish();
+      delete trackers[result.id];
     });
 
     return {

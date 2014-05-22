@@ -1,24 +1,24 @@
 // The object tree is a tree-like interface to the geometry graph. Trees are much
 // easier to display and interact with than graphs, since they are simple
-// collapsable hierarchies. 
+// collapsable hierarchies.
 //
 // Representing a graph (a DAG to be exact) using trees leads to redundancy -
 // a vertex in the graph can be represented by more than one node in the tree.
-// 
-// The graph tree keeps track, in a non-durable way, of which nodes have been 
+//
+// The graph tree keeps track, in a non-durable way, of which nodes have been
 // drilled down to.
 //
 // Rules:
-//   1. Each vertex in the graph that has no parents and is not implicit 
+//   1. Each vertex in the graph that has no parents and is not implicit
 //      will have a tree.
 //   2. Vertices in the graph that are shared between more than one resulting
-//      tree will have multiple tree views 
+//      tree will have multiple tree views
 
 define([
     'underscore',
     'geometrygraphsingleton',
     'modelviews/modelgraph'
-  ], 
+  ],
   function(
     _,
     geometryGraph,
@@ -34,7 +34,7 @@ define([
       this.children = children || [];
 
       this.children.forEach(function(child) {
-        child.parent = this;      
+        child.parent = this;
       });
 
       this.dive = function() {
@@ -82,7 +82,7 @@ define([
       this.domView = domView;
     };
 
-    // Hide the node in the scene - includes hiding 
+    // Hide the node in the scene - includes hiding
     // scene views of implicit children
     Node.prototype.hideInScene = function() {
       this.model.sceneView.popShowStack();
@@ -130,7 +130,7 @@ define([
 
         } else if (vertex.implicit) {
 
-          // Implicit vertices will be added as children to all 
+          // Implicit vertices will be added as children to all
           // parent nodes. This happens during editing when a new
           // point is added
           var parentVertices = geometryGraph.parentsOf(vertex);
@@ -166,11 +166,11 @@ define([
           }
         }, []);
 
-        // If any of the children of the removed vertex should now be trees, 
+        // If any of the children of the removed vertex should now be trees,
         // create them
-        var geomVerticesWithoutTrees = geometryGraph.filteredVertices(function(v) { 
+        var geomVerticesWithoutTrees = geometryGraph.filteredVertices(function(v) {
           var isGeom = (v.category === 'geometry');
-          var hasTree = _.find(trees, function(t) { 
+          var hasTree = _.find(trees, function(t) {
             return t.vertex.id === v.id;
           });
           return isGeom && !hasTree;
@@ -184,7 +184,7 @@ define([
     });
 
     models.on('replaced', function(original, originalModel, replacement, replacementModel) {
-      if (original.category === 'geometry') { 
+      if (original.category === 'geometry') {
         // Find the nodes in the tree representing the vertex and replace
         // with the new model
         var nodes = [];
@@ -224,7 +224,7 @@ define([
       var domView = model.addTreeView({appendDomElement: domElement});
       var childrenPlaceholder = domView.$el.find('> .children.' + vertex.id);
       var node = new Node(
-        vertex, 
+        vertex,
         model,
         domView,
         geometryGraph.childrenOf(vertex).reduce(function(acc, child) {

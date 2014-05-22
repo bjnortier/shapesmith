@@ -22,7 +22,7 @@ THREE.PipeGeometry = function (radius, positions) {
 
     var r = new THREE.Vector3().crossVectors(p1p2, prand).normalize();
     var s = new THREE.Vector3().crossVectors(p1p2, r).normalize();
-     
+
     for ( x = 0; x <= segmentsX; x ++ ) {
       var u = x / segmentsX;
       var vec1 = new THREE.Vector3(
@@ -33,7 +33,7 @@ THREE.PipeGeometry = function (radius, positions) {
       this.vertices.push(vec1);
       verticesRow.push(this.vertices.length - 1);
       uvsRow.push( new THREE.Vector2( u, v ) );
-      
+
       var vec2 = new THREE.Vector3(
         p2.x + r.x*radius*Math.cos(u*Math.PI*2) + s.x*radius*Math.sin(u*Math.PI*2),
         p2.y + r.y*radius*Math.cos(u*Math.PI*2) + s.y*radius*Math.sin(u*Math.PI*2),

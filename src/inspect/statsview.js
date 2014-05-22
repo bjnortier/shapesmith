@@ -1,7 +1,7 @@
 define(['backbone', 'interactioncoordinator'], function(Backbone, coordinator) {
 
   var View = Backbone.View.extend({
-    
+
     initialize: function() {
       this.showing = true;
       this.render();
@@ -12,7 +12,7 @@ define(['backbone', 'interactioncoordinator'], function(Backbone, coordinator) {
 
     render: function() {
       var stats = new Stats();
-      stats.setMode(0); 
+      stats.setMode(0);
       stats.domElement.style.position = 'absolute';
       stats.domElement.style.left = '0px';
       stats.domElement.style.bottom = '0px';

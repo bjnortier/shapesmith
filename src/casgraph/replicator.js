@@ -47,13 +47,13 @@ define(['underscore', 'backbone-events'], function(_, Events) {
     };
 
     // Read a graph. The readers may be asynchronous
-    // so callbacks are used. Each vertex in the graph is read 
-    // and stored in a map of hashes to vertices. The the 
+    // so callbacks are used. Each vertex in the graph is read
+    // and stored in a map of hashes to vertices. The the
     // vertices and edges are added to the graph
     this.readGraph = function(graphHash, callback) {
       var that = this;
       readers.graph(graphHash, function(success, graphHash, hashedGraph) {
-        
+
         // Read all the vertices into a map of hases to vertices
         var vertexHashes = hashedGraph.vertices;
         var remaining = vertexHashes.length;

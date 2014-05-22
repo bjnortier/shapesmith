@@ -33,16 +33,16 @@ define([], function() {
     mouseRay.direction = mouse3D.sub(camera.position).normalize();
     return mouseRay;
   };
-  
+
   var positionOnWorkplane = function(sceneElement, event, workplaneVertex, geometryGraph, camera) {
     var planeOrigin = new THREE.Vector3(0,0,0);
     var planeNormal = new THREE.Vector3(0,0,1);
 
     var workplaneOrigin = objToVector(workplaneVertex.workplane.origin, geometryGraph, THREE.Vector3);
-    var workplaneAxis   = objToVector(workplaneVertex.workplane.axis, geometryGraph, THREE.Vector3);   
+    var workplaneAxis   = objToVector(workplaneVertex.workplane.axis, geometryGraph, THREE.Vector3);
     var workplaneAngle  = geometryGraph.evaluate(workplaneVertex.workplane.angle);
 
-    var localPosition = positionOnPlane(sceneElement, event, planeOrigin, planeNormal, 
+    var localPosition = positionOnPlane(sceneElement, event, planeOrigin, planeNormal,
       workplaneOrigin, workplaneAxis, workplaneAngle, camera);
     return localPosition;
   };
@@ -61,7 +61,7 @@ define([], function() {
     var projector = new THREE.Projector();
     var mouse3D = projector.unprojectVector(vector, camera);
 
-    var ray = new THREE.Ray(camera.position); // To 0,0,0 is the default  
+    var ray = new THREE.Ray(camera.position); // To 0,0,0 is the default
     ray.direction = mouse3D.sub(camera.position).normalize();
 
     // http://en.wikipedia.org/wiki/Line-plane_intersection
@@ -114,7 +114,7 @@ define([], function() {
       var w0 = new THREE.Vector3().subVectors(from, mouseRay.origin);
 
       var a = u.dot(u), b = u.dot(v), c = v.dot(v), d = u.dot(w0), e = v.dot(w0);
-      
+
       var sc = (b*e - c*d)/(a*c - b*b);
       var tc = (a*e - b*d)/(a*c - b*b);
 
@@ -128,7 +128,7 @@ define([], function() {
         var d2 = new THREE.Vector3().subVectors(psc, optionalEnd).length();
         inEllipse = d1 + d2 < segmentLength*1.1;
       }
-      
+
       return {
         position: psc,
         distance: new THREE.Vector3().subVectors(psc, qtc).length(),
@@ -160,13 +160,13 @@ define([], function() {
     };
     if (obj.hasOwnProperty('x')) {
       return new Constructor(
-        evaluate(obj.x), 
-        evaluate(obj.y), 
+        evaluate(obj.x),
+        evaluate(obj.y),
         evaluate(obj.z));
     } else {
       return new Constructor(
-        evaluate(obj.u), 
-        evaluate(obj.v), 
+        evaluate(obj.u),
+        evaluate(obj.v),
         evaluate(obj.w));
     }
   };

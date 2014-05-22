@@ -85,7 +85,7 @@ module.exports.create = function(db, username, design, callback) {
           callback(undefined, refs);
         }
       });
-      
+
     });
   });
 
@@ -98,7 +98,7 @@ module.exports.updateRef = function(db, username, design, type, ref, newSHA, cal
     if (err) {
       callback(err);
       return;
-    } 
+    }
     if (refs === null) {
       callback('notFound');
       return;
@@ -126,7 +126,7 @@ module.exports.rename = function(db, username, from, to, callback) {
     if (err) {
       callback(err);
       return;
-    } 
+    }
     if (refs === null) {
       callback('notFound');
       return;
@@ -135,7 +135,7 @@ module.exports.rename = function(db, username, from, to, callback) {
       if (err) {
         callback(err);
         return;
-      } 
+      }
       if (conflictRefs !== null) {
         callback('alreadyExists');
         return;

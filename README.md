@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bjnortier/shapesmith.next.png?branch=master)](https://travis-ci.org/bjnortier/shapesmith.next)
+[![Build Status](https://travis-ci.org/bjnortier/shapesmith.png?branch=master)](https://travis-ci.org/bjnortier/shapesmith)
 
 # Shapesmith.next
 

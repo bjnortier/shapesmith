@@ -11,10 +11,10 @@ define([
     'modelviews/transforms/uvwrotationsceneviews',
     'calculations',
     'modelviews/currentworkplane',
-  ], 
+  ],
   function(
-    Backbone, 
-    selection, 
+    Backbone,
+    selection,
     sceneModel,
     sceneViewEventGenerator,
     geometryGraph,
@@ -71,16 +71,16 @@ define([
           this.selectedModel = undefined;
         }
       },
- 
+
       dragStarted: function() {
         this.sceneViews.forEach(function(view) {
           view.remove();
         });
         this.sceneViews = [];
-        
+
         this.initialTranslation = calc.objToVector(
           this.vertex.transforms.translation,
-          geometryGraph, 
+          geometryGraph,
           THREE.Vector3);
         this.originalVertex = this.vertex;
         this.originalVertex.transforming = true;

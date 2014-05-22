@@ -48,16 +48,16 @@ define([
             {
               label: 'Grid',
               key: 'snapgrid',
-            }, 
+            },
             {
               label: 'Faces',
               key: 'snapfaces'
             }
           ]
         };
-        var template = '<div class="icon32 settings"></div><h2>{{title}}</h2>' + 
+        var template = '<div class="icon32 settings"></div><h2>{{title}}</h2>' +
         '<table><tr><td>Grid spacing</td><td>' +
-        '<input class="field gridsize" type="text" value="{{gridsize}}"></input>' + 
+        '<input class="field gridsize" type="text" value="{{gridsize}}"></input>' +
         '</td></tr>' +
         '<tr><td colspan="2"><h3>{{snappingLabel}}</h3></td><tr>' +
         '{{#snapping}}<tr><td colspan="2">' +

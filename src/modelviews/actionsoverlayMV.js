@@ -8,7 +8,7 @@ define([
     'asyncAPI',
     'modelviews/modelgraph',
   ], function(
-    $, 
+    $,
     Mustache,
     Backbone,
     sceneModel,
@@ -34,7 +34,7 @@ define([
           if (this.geometryVertices.length) {
             if (!this.view) {
               this.view = new View({model: this});
-            } 
+            }
             this.geomVertexModels = this.geometryVertices.map(function(v) {
               return modelGraph.get(v.id);
             });
@@ -75,8 +75,8 @@ define([
         },
 
         render: function() {
-          var template = 
-            '<div class="title">COLORS...</div>' + 
+          var template =
+            '<div class="title">COLORS...</div>' +
             '<div class="options">' +
               '<div class="colors">{{#colors}}' +
                 '<div class="color" data-color="{{hex}}" style="background-color:{{hex}}"></div>' +
@@ -157,5 +157,5 @@ define([
       });
 
       return new Model();
-      
+
     });

@@ -47,17 +47,17 @@ define([
 
     var Model = Toolbar.ItemModel.extend({
 
-      name: 'stl',
+      name: 'stl out',
 
       initialize: function() {
         Toolbar.ItemModel.prototype.initialize.call(this);
       },
 
       click: function() {
-        
-        
+
+
         var stl = 'solid ' + Shapesmith.design + '\n';
-        
+
         var topModels = objectTree.getTopLevelModels();
         topModels.forEach(function(model) {
           var geometry = model.sceneView.sceneObject.children[0].geometry;
@@ -71,7 +71,7 @@ define([
         saveAs(blob, Shapesmith.design  + '.stl');
       },
 
-      icon: icons['stl'],
+      icon: icons['stl_out'],
 
     });
 

@@ -2,7 +2,7 @@ define([
     'backbone',
     'jquery',
     'lib/mustache',
-    'geometrygraphsingleton', 
+    'geometrygraphsingleton',
   ], function(Backbone, $, Mustache, geometryGraph) {
 
     var Model = Backbone.Model.extend({
@@ -26,10 +26,10 @@ define([
       },
 
       render: function() {
-        var template = 
+        var template =
           '<td colspan="3" class="section">' +
-          '<div>variables <span class="add">+</span></div>' + 
-          '</td>'; 
+          '<div>variables <span class="add">+</span></div>' +
+          '</td>';
         var view = {};
         this.$el.html(Mustache.render(template, view));
         return this;
@@ -47,7 +47,7 @@ define([
       },
 
     });
-    
+
     return new Model();
 
   });

@@ -12,16 +12,16 @@ define(['geomnode', 'geometrygraph'], function(GeomNode, GeometryGraph) {
       var graph = new GeometryGraph.Graph();
       var point = graph.createPointPrototype();
 
-      assert.equal(graph.childrenOf(point).length, 0);    
+      assert.equal(graph.childrenOf(point).length, 0);
     });
 
     it('can support a polyline with point children', function() {
       var graph = new GeometryGraph.Graph();
       var polyline = graph.createPolylinePrototype();
-      assert.equal(graph.childrenOf(polyline).length, 1); 
+      assert.equal(graph.childrenOf(polyline).length, 1);
 
       graph.addPointToParent(polyline);
-      assert.equal(graph.childrenOf(polyline).length, 2); 
+      assert.equal(graph.childrenOf(polyline).length, 2);
 
     });
 

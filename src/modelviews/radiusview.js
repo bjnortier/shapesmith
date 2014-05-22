@@ -1,17 +1,17 @@
 define([
-    'calculations', 
+    'calculations',
     'colors',
-    'scene', 
+    'scene',
     'interactioncoordinator',
     'scenevieweventgenerator',
     'worldcursor',
     'geometrygraphsingleton',
-    'modelviews/geomvertexMV', 
-  ], 
+    'modelviews/geomvertexMV',
+  ],
   function(
-    calc, 
-    colors, 
-    sceneModel, 
+    calc,
+    colors,
+    sceneModel,
     coordinator,
     sceneViewEventGenerator,
     worldCursor,
@@ -43,9 +43,9 @@ define([
       render: function() {
         GeomVertexMV.EditingSceneView.prototype.render.call(this);
         this.point = THREE.SceneUtils.createMultiMaterialObject(
-          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1), 
+          new THREE.CubeGeometry(1, 1, 1, 1, 1, 1),
           [
-            this.materials.editing.face, 
+            this.materials.editing.face,
             this.materials.editing.wire
           ]);
 
@@ -81,11 +81,11 @@ define([
         this.point.scale = this.cameraScale;
       },
 
-      isClickable: function() { 
+      isClickable: function() {
         return false;
       },
 
-      // This view is not draggable, but the display scene view can transfer 
+      // This view is not draggable, but the display scene view can transfer
       // the dragging to this view (e.g. when a point is dragged), but only for
       // points that are not prototypes any more
       isDraggable: function() {
@@ -103,8 +103,8 @@ define([
 
         var originPosition = calc.objToVector(this.origin.parameters.coordinate, geometryGraph, THREE.Vector3);
         var dx = position.x - originPosition.x;
-        var dy = position.y - originPosition.y;   
-        var r = parseFloat(Math.sqrt(dx*dx + dy*dy).toFixed(3));   
+        var dy = position.y - originPosition.y;
+        var r = parseFloat(Math.sqrt(dx*dx + dy*dy).toFixed(3));
         this.model.vertex.parameters.radius = r;
         this.model.vertex.parameters.dx = dx;
         this.model.vertex.parameters.dy = dy;

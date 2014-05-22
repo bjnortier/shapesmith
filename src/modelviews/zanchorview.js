@@ -37,7 +37,7 @@ define([
         GeomVertexMV.EditingSceneView.prototype.render.call(this);
 
         this.pointSceneObject = THREE.SceneUtils.createMultiMaterialObject(
-          new THREE.CylinderGeometry(0, 0.75, 1.5, 3), 
+          new THREE.CylinderGeometry(0, 0.75, 1.5, 3),
           [
             new THREE.MeshBasicMaterial({color: 0x993333, opacity: 0.5, wireframe: false } ),
             new THREE.MeshBasicMaterial({color: 0xcc6666, wireframe: true})
@@ -71,8 +71,8 @@ define([
       dragStarted: function() {
         this.showHeightLine = true;
         this.rayOrigin = calc.objToVector(
-          this.origin, 
-          geometryGraph, 
+          this.origin,
+          geometryGraph,
           THREE.Vector3);
       },
 
@@ -96,12 +96,12 @@ define([
         if (!this.isGlobal) {
           // Apply Workplane
           var workplaneOrigin = calc.objToVector(
-            this.vertex.workplane.origin, 
-            geometryGraph, 
+            this.vertex.workplane.origin,
+            geometryGraph,
             THREE.Vector3);
           var workplaneAxis = calc.objToVector(
-            this.vertex.workplane.axis, 
-            geometryGraph, 
+            this.vertex.workplane.axis,
+            geometryGraph,
             THREE.Vector3);
           var workplaneAngle = geometryGraph.evaluate(this.vertex.workplane.angle);
 
@@ -114,7 +114,7 @@ define([
           absolutePositionOnNormal = calc.positionOnRay(mouseRay, ray);
 
           // Back into local coordinates
-          var positionOnNormalInLocalCoords = 
+          var positionOnNormalInLocalCoords =
             calc.rotateAroundAxis(absolutePositionOnNormal, workplaneAxis, -workplaneAngle);
           positionOnNormalInLocalCoords.sub(workplaneOrigin);
 
@@ -128,7 +128,7 @@ define([
       },
 
     });
-    
+
     return ZAnchor;
 
   });

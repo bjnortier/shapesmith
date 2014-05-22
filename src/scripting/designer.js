@@ -1,9 +1,9 @@
 define([
     'underscore',
     'geomnode',
-    'geometrygraphsingleton', 
+    'geometrygraphsingleton',
     'asyncAPI',
-  ], 
+  ],
   function(_, GeomNode, geometryGraph, AsyncAPI) {
 
     var Designer = function() {
@@ -11,7 +11,7 @@ define([
 
     Designer.prototype.createVariable = function(name, expression) {
       var variable = new GeomNode.Variable({
-        name: name, 
+        name: name,
         parameters: {expression: expression},
       });
       geometryGraph.add(variable);
@@ -44,10 +44,10 @@ define([
 
     Designer.prototype.setColorOrMaterial = function(parameters, options) {
       if (options.texture) {
-        parameters.material = {texture: options.texture};    
+        parameters.material = {texture: options.texture};
       }
       if (options.color) {
-        parameters.material = {color: options.color};    
+        parameters.material = {color: options.color};
       }
     };
 
@@ -107,7 +107,7 @@ define([
         throw new Error('point index out of bounds [0,' + (points.length-1) + ']');
       }
       return points[index];
-        
+
     };
 
     Designer.prototype.createExtrusion = function(coordinatesOrPointsOrPolyline, options) {
@@ -116,18 +116,18 @@ define([
       var parameters = {
         height: height,
         vector: {
-          u: 0, 
-          v: 0, 
+          u: 0,
+          v: 0,
           w: 1,
         }
       };
       this.setColorOrMaterial(parameters, options);
       return this.createGeometryWithPolylineChild(
-        coordinatesOrPointsOrPolyline, 
-        GeomNode.Extrude, 
+        coordinatesOrPointsOrPolyline,
+        GeomNode.Extrude,
         parameters,
         true);
-    };  
+    };
 
     Designer.prototype.createGeometryWithPolylineChild = function(coordinatesOrPointsOrPolyline, Constructor, parameters, polylineExplicit) {
       var points, polyline;

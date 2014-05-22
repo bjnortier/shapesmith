@@ -5,7 +5,7 @@ define([
     'geomnode',
     'variablegraph',
     'layers/layertree',
-  ], 
+  ],
   function(_, Events, CASGraph, geomNode, variableGraphLib, LayerTree) {
 
     var GeometryGraph = function() {
@@ -67,7 +67,7 @@ define([
                   vertex.errors = {name: 'has dependants'};
                 }
               }
-            } 
+            }
           }
         }
 
@@ -98,7 +98,7 @@ define([
 
 
       // ---------- Prototypes ----------
-       
+
       this.createPointPrototype = function(options) {
         options = _.extend(options || {}, {
           editing    : true,
@@ -114,17 +114,17 @@ define([
         var pointVertex = new geomNode.Point({
           editing: true,
           proto: true,
-          implicit: true, 
+          implicit: true,
           workplane: options.workplane,
         });
         this.add(pointVertex);
-        
+
         var polylineOptions = _.extend(options || {}, {
           editing    : true,
           proto    : true,
         });
         var polylineVertex = new geomNode.Polyline(polylineOptions);
-        
+
         this.add(polylineVertex, function() {
           graph.createEdge(polylineVertex, pointVertex);
         });
@@ -145,7 +145,7 @@ define([
 
       this.createVariablePrototype = function() {
         var vertex = new geomNode.Variable({
-          name: 'placeholder', 
+          name: 'placeholder',
           editing    : true,
           proto    : true,
           parameters: {
@@ -162,7 +162,7 @@ define([
           point = new geomNode.Point({
             editing: true,
             proto: true,
-            implicit: true, 
+            implicit: true,
             workplane: parent.workplane,
           });
           this.add(point, function() {
@@ -206,7 +206,7 @@ define([
           vertex.on('change', this.vertexChanged, this);
           that.trigger('vertexAdded', vertex);
         } else if (event.vertexRemoved) {
-          vertex = event.vertexRemoved; 
+          vertex = event.vertexRemoved;
           vertex.off('change', that.vertexChanged, this);
           that.trigger('vertexRemoved', vertex);
         } else if (event.vertexReplaced) {
@@ -277,7 +277,7 @@ define([
         } catch (e) {
           if (e instanceof variableGraphLib.ParseError) {
             console.error('Exception when evaluating expression', expression, e);
-          } 
+          }
           throw e;
         }
       };
@@ -364,8 +364,8 @@ define([
           v.trigger('change', v);
         });
 
-        // Use a different event here as children beng notified 
-        // of parent changes is used less, and would also lead to 
+        // Use a different event here as children beng notified
+        // of parent changes is used less, and would also lead to
         // recursive notifications if 'change' was used.
         var notifyChildren = function(v) {
           that.childrenOf(v).map(function(child) {
@@ -413,7 +413,7 @@ define([
       };
 
       this.getEditingVertices = function() {
-        return _.reject(graph.vertices(), function(vertex) { 
+        return _.reject(graph.vertices(), function(vertex) {
           return !vertex.editing;
         });
       };

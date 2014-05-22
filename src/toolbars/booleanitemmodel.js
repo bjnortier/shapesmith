@@ -18,7 +18,7 @@ define([
     AsyncAPI) {
 
     var Model = toolbar.ItemModel.extend({
-      
+
       initialize: function(attributes) {
         toolbar.ItemModel.prototype.initialize.call(this, attributes);
         this.set('enabled', false);

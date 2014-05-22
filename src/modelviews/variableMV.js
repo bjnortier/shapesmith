@@ -4,15 +4,15 @@ define([
     'backbone',
     'lib/mustache',
     'modelviews/vertexMV',
-    'geometrygraphsingleton', 
+    'geometrygraphsingleton',
     'interactioncoordinator',
     'asyncAPI',
   ], function(
-    $, __$, 
+    $, __$,
     Backbone,
     Mustache,
-    VertexMV, 
-    geometryGraph, 
+    VertexMV,
+    geometryGraph,
     coordinator,
     AsyncAPI) {
 
@@ -20,7 +20,7 @@ define([
       var originalModel = newDOMView.model.attributes.originalModel;
       var rowIndex =  originalModel ?
           originalModel.domView.$el.closest('tr').prevAll().length : undefined;
-      if ((rowIndex !== undefined) && 
+      if ((rowIndex !== undefined) &&
         (rowIndex < $('#variables tr').length)) {
         $($('#variables tr')[rowIndex]).before(newDOMView.$el);
       } else {
@@ -61,7 +61,7 @@ define([
         VertexMV.EditingDOMView.prototype.initialize.call(this);
         this.render();
         this.$el.addClass('variable');
-        replaceOrAppendInTable(this); 
+        replaceOrAppendInTable(this);
         $('.field').autoGrowInput();
 
       },
@@ -72,11 +72,11 @@ define([
       },
 
       render: function() {
-        var template = 
-          '<td class="name">' +  
+        var template =
+          '<td class="name">' +
           '<input class="field var" placeholder="var" type="text" value="{{name}}"></input>' +
           '</td>' +
-          '<td class="expression">' +  
+          '<td class="expression">' +
           '<input class="field expr" placeholder="expr" type="text" value="{{expression}}"></input>' +
           '</td>' +
           '<td><i class="delete icon-remove"></i></td>';
@@ -133,7 +133,7 @@ define([
 
       initialize: function() {
         VertexMV.DisplayDOMView.prototype.initialize.call(this);
-        replaceOrAppendInTable(this); 
+        replaceOrAppendInTable(this);
         $('.field').autoGrowInput();
       },
 
@@ -142,12 +142,12 @@ define([
       },
 
       render: function() {
-        var template = 
+        var template =
           '<td class="name">{{name}}</input></td>' +
           '<td class="expression">{{expression}}</td>' +
           '<td><i class="delete icon-remove"></i></td>';
         var view = {
-          id: this.model.vertex.id,   
+          id: this.model.vertex.id,
           name:  this.model.vertex.name,
           expression: this.model.vertex.parameters.expression,
         };

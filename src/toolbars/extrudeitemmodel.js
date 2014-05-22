@@ -10,7 +10,7 @@ define([
     toolbar) {
 
     var Model = toolbar.ItemModel.extend({
-      
+
       name: 'extrude',
 
       initialize: function(attributes) {
@@ -41,7 +41,7 @@ define([
           var selectedId = savedSelection[0];
           var height = 10;
 
-          // Extrude up to the next elevation plane 
+          // Extrude up to the next elevation plane
           // if possible
           var polyline = geometryGraph.vertexById(selectedId);
           var polylineWorkplaneZ = (polyline.workplane && polyline.workplane.origin.z) || 0;

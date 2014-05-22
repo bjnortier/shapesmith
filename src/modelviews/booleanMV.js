@@ -6,8 +6,8 @@ define([
     'worldcursor',
     'scene',
     'geometrygraphsingleton',
-    'modelviews/geomvertexMV', 
-  ], 
+    'modelviews/geomvertexMV',
+  ],
   function(
     $,
     Mustache,
@@ -44,7 +44,7 @@ define([
           this.startRotationCenter = {
             x: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.x),
             y: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.y),
-            z: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.z), 
+            z: geometryGraph.evaluate(this.vertex.transforms.rotation.origin.z),
           };
         }
         this.vertex.transforms.translation =  {
@@ -136,14 +136,18 @@ define([
       },
 
       applyTransforms: function() {
+        if (!this.meshObject) {
+          return;
+        }
+
         var translation = calc.objToVector(
-          this.model.vertex.transforms.translation, 
-          geometryGraph, 
+          this.model.vertex.transforms.translation,
+          geometryGraph,
           THREE.Vector3);
 
         var rotationOrigin = calc.objToVector(
-          this.model.vertex.transforms.rotation.origin, 
-          geometryGraph, 
+          this.model.vertex.transforms.rotation.origin,
+          geometryGraph,
           THREE.Vector3);
 
         var rotationQuat = new THREE.Quaternion().setFromAxisAngle(
@@ -151,14 +155,14 @@ define([
             geometryGraph.evaluate(this.model.vertex.transforms.rotation.angle)/180*Math.PI);
 
         var scaleOrigin = calc.objToVector(
-          this.model.vertex.transforms.scale.origin, 
-          geometryGraph, 
+          this.model.vertex.transforms.scale.origin,
+          geometryGraph,
           THREE.Vector3);
 
         var factor = geometryGraph.evaluate(this.model.vertex.transforms.scale.factor);
 
         var workplaneOrigin = calc.objToVector(
-          this.model.vertex.workplane.origin, 
+          this.model.vertex.workplane.origin,
           geometryGraph,
           THREE.Vector3);
 

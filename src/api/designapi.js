@@ -53,7 +53,7 @@ var DesignAPI = function(app) {
 
   // Create a new design
   app.post(/^\/api\/([\w._-]+)\/design\/?$/, function(req, res) {
-    
+
     var username = decodeURIComponent(req.params[0]);
     var design = req.body.name && req.body.name.trim();
     if (design === undefined) {
@@ -74,11 +74,11 @@ var DesignAPI = function(app) {
         if (err) {
           res.json(500, err);
           return;
-        } 
+        }
         if (value !== null) {
           res.json(409, 'design already exists');
           return;
-        } 
+        }
 
         designs.create(db, username, design, function(err, obj) {
           if (err) {

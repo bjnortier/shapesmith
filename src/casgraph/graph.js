@@ -1,4 +1,4 @@
-define(['underscore', 'backbone-events', 'casgraph/sha1hasher'], 
+define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
   function(_, Events, sha1hasher) {
 
   // Create a new Graph. Any JS object can be inserted and will be
@@ -10,14 +10,14 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
   // `serializableFn` optional function to detrmine if a vertex should be serialized
   // `constructionFn` optional function to construct deserialzed vertices
   var CAS = function(options) {
-    
+
     options = options || {};
     var idKey = options.idKey || 'id';
     var hashFn = options.hashFn || sha1hasher.hash;
     var stripFn = options.stripFn;
     var serializableFn = options.serializableFn || function() { return true; };
     var constructionFn = options.constructionFn || function(obj) { return obj; };
-    
+
     // For cloning
     this.options = options;
 
@@ -31,7 +31,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
 
     // Put an object in the graph. It must have a unique `idKey` property
     // and not be in the graph already
-    this.put = function(object) {
+    this.put = function(object, hash) {
       if (!object.hasOwnProperty(idKey)) {
         throw new Error("object has no '" + idKey + "' property");
       }
@@ -44,7 +44,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       vertices[id] = object;
       outgoingVertices[id] = [];
       incomingVertices[id] = [];
-      this.hashIfHashable(id, object);
+      this.hashIfHashable(id, object, hash);
       updateLeafFirstSequence();
     };
 
@@ -120,10 +120,15 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       return hashes[id];
     };
 
-    this.hashIfHashable = function(id, object) {
+    this.hashIfHashable = function(id, object, precomputedHash) {
       if (serializableFn(object)) {
         var strippedObject = stripFn ? stripFn(object) : object;
-        var hash = hashFn(strippedObject);
+        var hash;
+        if (precomputedHash) {
+          hash = precomputedHash;
+        } else {
+          hash = hashFn(strippedObject);
+        }
         hashes[id] = hash;
         this.trigger('vertexHashed', hash, strippedObject);
       } else if (hashes[id]) {
@@ -178,7 +183,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       if (!outgoingVertices[fromId]) {
         throw new Error('no vertex ' + fromId + ' in graph');
       }
-      return outgoingVertices[fromId] ? 
+      return outgoingVertices[fromId] ?
         outgoingVertices[fromId].map(function(id) {
           return vertices[id];
         }) : [];
@@ -190,7 +195,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       if (!incomingVertices[fromId]) {
         throw new Error('no vertex ' + fromId + ' in graph');
       }
-      return incomingVertices[fromId] ? 
+      return incomingVertices[fromId] ?
         incomingVertices[fromId].map(function(id) {
           return vertices[id];
         }) : [];
@@ -206,7 +211,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       _.keys(vertices).map(function(id) {
         // Serializable vertices will have hashes
         if (hashes[id]) {
-          result.vertices[id] = stripFn ? 
+          result.vertices[id] = stripFn ?
             stripFn(vertices[id]) : vertices[id];
         }
       });
@@ -215,7 +220,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       _.keys(vertices).map(function(fromId) {
         var outgoingVertices = that.getOutgoing(vertices[fromId]);
         // Serializable vertices will have hashes
-        if (hashes[fromId] && outgoingVertices.length) { 
+        if (hashes[fromId] && outgoingVertices.length) {
           result.edges[fromId] = outgoingVertices.map(function(to) {
             return to[idKey];
           });
@@ -229,7 +234,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       return result;
     };
 
-    // Serialize a hashed version of the graph using a 
+    // Serialize a hashed version of the graph using a
     // Content-addressable-storage technique,
     // where the content of the vertex is hashed to create a key. All objects
     // that are equal will have the same key.
@@ -250,7 +255,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       _.keys(vertices).map(function(fromId) {
         var outgoingVertices = that.getOutgoing(vertices[fromId]);
         // Serializable vertices will have hashes
-        if (hashes[fromId] && (outgoingVertices.length > 0)) { 
+        if (hashes[fromId] && (outgoingVertices.length > 0)) {
           result.edges[hashes[fromId]] = outgoingVertices.map(function(to) {
             return hashes[to[idKey]];
           });
@@ -312,7 +317,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       var newGraph = new CAS(this.options);
 
       _.keys(vertices).forEach(function(id) {
-        newGraph.put(vertices[id]);
+        newGraph.put(vertices[id], hashes[id]);
       });
       _.keys(outgoingVertices).forEach(function(fromId) {
         var toIds = outgoingVertices[fromId];
@@ -327,10 +332,10 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
     };
 
     // Generate diff events when switching to a different graph.
-    // For example this can be used to support undo/redo - 
-    // where the "current" graph is swapped with another 
+    // For example this can be used to support undo/redo -
+    // where the "current" graph is swapped with another
     // (previously cloned) one. Events are generated
-    // for adding, removing and replacing vertices. Edge 
+    // for adding, removing and replacing vertices. Edge
     // events are considered implicit
     this.diffFrom = function(fromGraph, listener) {
       var toGraph = this;
@@ -361,7 +366,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       verticesWithSameId.forEach(function(id) {
         listener({
           vertexReplaced: {
-            from: fromGraph.get(id), 
+            from: fromGraph.get(id),
             to: toGraph.get(id)
           }
         });
@@ -373,7 +378,7 @@ define(['underscore', 'backbone-events', 'casgraph/sha1hasher'],
       if (hashFn(fromMetadata) !== hashFn(toMetadata)) {
         listener({
           metadataChanged: {
-            from: fromMetadata, 
+            from: fromMetadata,
             to: toMetadata
           }
         });

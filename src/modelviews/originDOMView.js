@@ -24,19 +24,19 @@ define([
       },
 
       render: function() {
-        var template = 
+        var template =
           '(<div class="dim x">{{x}}</div>,' +
           '<div class="dim y">{{y}}</div>,' +
           '<div class="dim z">{{z}}</div>)';
-        var view = 
+        var view =
           calc.objToVector(this.origin, geometryGraph, THREE.Vector3);
         this.$el.html(Mustache.render(template, view));
       },
 
       update: function() {
         this.localPosition = calc.objToVector(
-          this.origin,  
-          geometryGraph, 
+          this.origin,
+          geometryGraph,
           THREE.Vector3);
         DimensionView.prototype.update.call(this);
       },

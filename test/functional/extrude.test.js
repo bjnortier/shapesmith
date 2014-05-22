@@ -8,7 +8,7 @@ describe('Extrusions', function() {
     before(function(done) {
         this.timeout(5000);
         client.initDesign(done);
-            
+
     });
 
     beforeEach(function(done) {
@@ -59,6 +59,6 @@ describe('Extrusions', function() {
             .moveToWorld(-10,0,11)
             .dragToWorld(-10,0,21)
             .assertValueEqual('.vertex.editing.extrude0 .height', '20', done)
-    });    
+    });
 
 });

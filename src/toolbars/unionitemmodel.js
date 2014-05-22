@@ -8,7 +8,7 @@ define([
     BooleanItemModel) {
 
     var Model = BooleanItemModel.extend({
-      
+
       name: 'union',
       VertexConstructor: GeomNode.Union,
       icon: icons['union'],

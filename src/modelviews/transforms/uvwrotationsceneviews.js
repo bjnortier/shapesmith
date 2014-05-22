@@ -12,7 +12,7 @@ define([
       initialize: function(options) {
         RotationSceneView.prototype.initialize.call(this, options);
       },
-      
+
       render: function() {
         RotationSceneView.prototype.render.call(this);
         this.circleAndArrow.rotation.y = Math.PI/2;
@@ -22,7 +22,7 @@ define([
       getArrowStartPosition: function() {
         return new THREE.Vector3(0, this.radius, 0);
       },
-      
+
       relativeRotationAxis: new THREE.Vector3(1,0,0),
 
     });
@@ -37,7 +37,7 @@ define([
       initialize: function(options) {
         RotationSceneView.prototype.initialize.call(this, options);
       },
-      
+
       render: function() {
         RotationSceneView.prototype.render.call(this);
         this.circleAndArrow.rotation.x = -Math.PI/2;
@@ -62,7 +62,7 @@ define([
       initialize: function(options) {
         RotationSceneView.prototype.initialize.call(this, options);
       },
-      
+
       render: function() {
         RotationSceneView.prototype.render.call(this);
       },

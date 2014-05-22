@@ -13,11 +13,13 @@ define([
     'lib/text!icons/save.svg',
     'lib/text!icons/list.svg',
     'lib/text!icons/workplane.svg',
-    'lib/text!icons/stl.svg',
+    'lib/text!icons/stl_in.svg',
+    'lib/text!icons/stl_out.svg',
+    'lib/text!icons/mesh.svg',
     'lib/text!icons/help.svg',
-  ], 
+  ],
   function(
-    point, 
+    point,
     polyline,
     cube,
     sphere,
@@ -31,11 +33,13 @@ define([
     save,
     list,
     workplane,
-    stl,
+    stl_in,
+    stl_out,
+    mesh,
     help) {
 
     return {
-      point    : point, 
+      point    : point,
       polyline : polyline,
       cube     : cube,
       sphere   : sphere,
@@ -49,7 +53,9 @@ define([
       save     : save,
       list     : list,
       workplane: workplane,
-      stl      : stl,
+      stl_out  : stl_out,
+      stl_in   : stl_in,
+      stl      : mesh,
       help     : help,
     };
 

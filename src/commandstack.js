@@ -45,7 +45,7 @@ define([
         }
         redoStack.peek().redo();
         undoStack.push(redoStack.pop());
-      };  
+      };
 
       this.canUndo = function() {
         return undoStack.peek() !== undefined;
@@ -65,7 +65,7 @@ define([
           this.trigger('afterPop');
           return true;
         }
-        
+
         if (redoStack.peek() && redoStack.peek().toCommit === commit) {
           console.info('REDO: ' + redoStack.peek().toCommit);
           this.redo();
@@ -73,7 +73,7 @@ define([
           return true;
         }
 
-      };      
+      };
 
     };
 

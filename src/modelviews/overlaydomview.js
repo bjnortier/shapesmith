@@ -6,9 +6,9 @@ define([
     'backbone',
     'calculations',
     'scene',
-  ], 
+  ],
   function(Backbone, calc, sceneModel) {
-  
+
     var View = Backbone.View.extend({
 
       initialize: function() {

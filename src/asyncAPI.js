@@ -151,7 +151,7 @@ define([
               }
             }
           }
-        }); 
+        });
       };
       collectVerticesToRemove(vertex);
       toRemove.forEach(function(v) {
@@ -180,7 +180,7 @@ define([
           copyChildren(originalChild, newChild);
           return newChild;
         });
-        
+
         // Variable are already in the graph with their children
         if (newParent.type !== 'variable') {
           geometryGraph.add(newParent, function() {
@@ -199,7 +199,7 @@ define([
     };
 
     var commitLayerTree = function(oldlayerTreeObj, newlayerTreeObj) {
-      geometryGraph.setMetadata(newlayerTreeObj); 
+      geometryGraph.setMetadata(newlayerTreeObj);
       layerTree.trigger('change');
       return commit([]);
     };
@@ -255,7 +255,7 @@ define([
         layerTree.fromObj(graphMetadata);
         layerTree.trigger('change');
       }
-      
+
       // This is for webdriver to determine when things have loaded
       Shapesmith.loadDone = true;
     };

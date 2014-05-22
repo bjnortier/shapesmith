@@ -291,7 +291,7 @@ define([], function() {
         return Number(a) + Number(b);
     }
     function sub(a, b) {
-        return a - b; 
+        return a - b;
     }
     function mul(a, b) {
         return a * b;
@@ -633,7 +633,7 @@ define([], function() {
 
             for (var i = 0; i < v.length; i++) {
                 var c = v.charAt(i);
-    
+
                 if (escaping) {
                     switch (c) {
                     case "'":
@@ -678,7 +678,7 @@ define([], function() {
                     }
                 }
             }
-    
+
             return buffer.join('');
         },
 

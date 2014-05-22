@@ -38,7 +38,7 @@ define([
         '</ul>' +
         '<div class="button-container"><div class="button">Continue</div></div>';
         this.$el.html(Mustache.render(template, {}));
-     
+
         return this;
       },
 

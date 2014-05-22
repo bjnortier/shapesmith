@@ -20,7 +20,7 @@ define(['geomnode'], function(GeomNode) {
   });
 
   describe('Variable', function() {
-    
+
     it('clones nonEditing correctly', function() {
 
       var a = new GeomNode.Variable({
@@ -84,8 +84,8 @@ define(['geomnode'], function(GeomNode) {
     it('has mutable parameters', function() {
 
       var point = new GeomNode.Point({parameters: {coordinate: {
-        x: '1', 
-        y: '2', 
+        x: '1',
+        y: '2',
         z:'3',
       }}});
 
@@ -100,8 +100,8 @@ define(['geomnode'], function(GeomNode) {
       var point = new GeomNode.Point({
         parameters: {
           coordinate: {
-            x: 1, 
-            y: 2, 
+            x: 1,
+            y: 2,
             z:3,
           }
         }

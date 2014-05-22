@@ -16,7 +16,7 @@ client.testDesignName = '__test__'
 before(function(done) {
     this.timeout(20000);
     client.initDesign(done);
-        
+
 });
 
 beforeEach(function(done) {
@@ -44,7 +44,7 @@ client.addCommand('initDesign', function(callback) {
 });
 
 client.addCommand('freshDesign', function(callback) {
-    this    
+    this
         .url(client.baseUrl + '/_ui/local/' + encodeURIComponent(client.testDesignName) + '/modeller?commit=51ba39e8fdd07321b190226727022c35649d8da4&noFadein=true')
         .waitForMainDone(function() {
             this.click('.toolbar .expander.hidden')
@@ -129,7 +129,7 @@ client.addCommand('waitForElement', function(selector, callback) {
 });
 
 client.addCommand('reloadCommit', function(callback) {
-    this    
+    this
         .url(function(result) {
             this
                 .url(result.value + '&noFadein=true')
@@ -174,7 +174,7 @@ client.addCommand('doesntHaveClass', function(selector, clazz, callback) {
 });
 
 client.addCommand('assertCSSEqual', function(selector, property, expected, callback) {
-    this.getCssProperty(selector, property, function(result) { 
+    this.getCssProperty(selector, property, function(result) {
         assert.equal(result, expected);
         callback();
     });

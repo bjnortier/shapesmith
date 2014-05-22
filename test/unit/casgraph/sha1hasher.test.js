@@ -19,8 +19,8 @@ define(['casgraph/sha1hasher'], function(sha1hasher) {
     });
 
     it('generates the same hash for equivalent objects', function() {
-      var a1 = {a: 1, b:2, c:3}; 
-      var a2 = {a: 1, c:3, b:2}; 
+      var a1 = {a: 1, b:2, c:3};
+      var a2 = {a: 1, c:3, b:2};
 
       var sha1 = hash(a1);
       var sha2 = hash(a2);

@@ -14,7 +14,7 @@ define([
     var Model = toolbar.ItemModel.extend({
 
       name: 'point',
-      
+
       activate: function() {
         toolbar.ItemModel.prototype.activate.call(this);
         var workplane = Calc.copyObj(currentWorkplane.get().vertex.workplane);
@@ -25,7 +25,7 @@ define([
 
       createAnother: function(type) {
         return type === 'point';
-      } 
+      }
 
     });
 

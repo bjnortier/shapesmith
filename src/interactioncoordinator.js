@@ -3,10 +3,10 @@ define([
     'lib/jquery.mousewheel',
     'underscore',
     'backbone',
-    'geometrygraphsingleton', 
+    'geometrygraphsingleton',
     'calculations',
     'scenevieweventgenerator'
-  ], 
+  ],
   function($, __$, _, Backbone, geometryGraph, calc, sceneViewEventGenerator) {
 
     var Coordinator = function() {
@@ -67,7 +67,7 @@ define([
           } else {
             $('#scene').css('cursor', '');
           }
-        } 
+        }
       };
 
       this.mouseup = function(event) {
@@ -85,7 +85,7 @@ define([
             var isWithinThreshold = Math.sqrt(dx*dx + dy*dy) < dragThreshold;
             isSecondClickOfDoubleClick = within500ms && isWithinThreshold;
           }
-            
+
           this.lastClickTimestamp = now;
           this.lastClickPosition = eventPosition;
 

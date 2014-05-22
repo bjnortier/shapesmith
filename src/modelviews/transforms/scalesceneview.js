@@ -8,7 +8,7 @@ define([
   ],
   function(
     calc,
-    AsyncAPI, 
+    AsyncAPI,
     sceneModel,
     geometryGraph,
     TransformSceneView,
@@ -35,23 +35,23 @@ define([
         var boundaryGeometry = new THREE.Geometry();
         var buffer = 5;
         boundaryGeometry.vertices.push(new THREE.Vector3(
-          + extents.dx, 
-          + extents.dy, 
+          + extents.dx,
+          + extents.dy,
           0).add(new THREE.Vector3(extents.center.x, extents.center.y, 0)));
         boundaryGeometry.vertices.push(new THREE.Vector3(
-          - extents.dx, 
-          + extents.dy, 
+          - extents.dx,
+          + extents.dy,
           0).add(new THREE.Vector3(extents.center.x, extents.center.y, 0)));
         boundaryGeometry.vertices.push(new THREE.Vector3(
-          - extents.dx, 
-          - extents.dy, 
+          - extents.dx,
+          - extents.dy,
           0).add(new THREE.Vector3(extents.center.x, extents.center.y, 0)));
         boundaryGeometry.vertices.push(new THREE.Vector3(
-          + extents.dx, 
-          - extents.dy, 
+          + extents.dx,
+          - extents.dy,
           0).add(new THREE.Vector3(extents.center.x, extents.center.y, 0)));
         boundaryGeometry.vertices.push(boundaryGeometry.vertices[0]);
-        this.boundary = new THREE.Line(boundaryGeometry, 
+        this.boundary = new THREE.Line(boundaryGeometry,
           new THREE.LineBasicMaterial({ color: this.greyLineColor }));
 
         this.sceneObject.add(this.boundary);
@@ -93,7 +93,7 @@ define([
           this.sceneObject.add(corner);
           corner.scale = this.cameraScale;
           return corner;
-          
+
         }, this);
       },
 
@@ -135,7 +135,7 @@ define([
 
       drag: function(position) {
         var extents = this.model.selectedModel.getExtents();
-        
+
         var distance = new THREE.Vector3().subVectors(
           position, this.centerOnWorkplane).length();
 
@@ -167,7 +167,7 @@ define([
           this.boundary.geometry.vertices[i] = p;
         }, this);
 
-        this.boundary.geometry.vertices[4] = this.boundary.geometry.vertices[0]; 
+        this.boundary.geometry.vertices[4] = this.boundary.geometry.vertices[0];
         this.boundary.geometry.verticesNeedUpdate = true;
         sceneModel.view.updateScene = true;
 
@@ -175,7 +175,7 @@ define([
         this.editingModel.scale(
           this.center,
           Math.round(this.initialScale*scale*10)/10);
-      
+
       },
 
       dragEnded: function() {

@@ -3,8 +3,8 @@ define([
     'underscore',
     'lib/mustache',
     'colors',
-    'calculations', 
-    'interactioncoordinator', 
+    'calculations',
+    'interactioncoordinator',
     'modelviews/currentworkplane',
     'scene',
     'geomnode',
@@ -22,8 +22,8 @@ define([
     _,
     Mustache,
     colors,
-    calc, 
-    coordinator, 
+    calc,
+    coordinator,
     currentWorkplane,
     sceneModel,
     geomNode,
@@ -43,9 +43,9 @@ define([
         this.SceneView = GridView;
         VertexMV.EditingModel.prototype.initialize.call(this, options);
         this.views.push(new EditingDOMView({model: this}));
-        this.views.push(new OriginView({model: this, vertex: this.vertex, origin: this.vertex.workplane.origin, isGlobal: true })); 
-        this.views.push(new OriginDOMView({model: this, vertex: this.vertex, origin: this.vertex.workplane.origin, isGlobal: true })); 
-        this.views.push(new ZAnchorView({model: this, vertex: this.vertex, origin: this.vertex.workplane.origin, isGlobal: true })); 
+        this.views.push(new OriginView({model: this, vertex: this.vertex, origin: this.vertex.workplane.origin, isGlobal: true }));
+        this.views.push(new OriginDOMView({model: this, vertex: this.vertex, origin: this.vertex.workplane.origin, isGlobal: true }));
+        this.views.push(new ZAnchorView({model: this, vertex: this.vertex, origin: this.vertex.workplane.origin, isGlobal: true }));
         this.views.push(new UVWRotationSceneViews.U({initiator: this, model: this, vertex: this.vertex, isWorkplane: true}));
         this.views.push(new UVWRotationSceneViews.V({initiator: this, model: this, vertex: this.vertex, isWorkplane: true}));
         this.views.push(new UVWRotationSceneViews.W({initiator: this, model: this, vertex: this.vertex, isWorkplane: true}));
@@ -63,7 +63,7 @@ define([
           dx: Math.sqrt(45*45/3),
           dy: Math.sqrt(45*45/3),
           dz: Math.sqrt(45*45/3),
-        };      
+        };
       },
 
       hideOtherViews: function() {
@@ -77,7 +77,7 @@ define([
         this.vertex.trigger('change', this.vertex);
 
       },
-      
+
     });
 
     var DisplayModel = VertexMV.DisplayModel.extend({
@@ -93,7 +93,7 @@ define([
         coordinator.on('mousemove', this.mousemove, this);
         coordinator.on('sceneClick', this.workplaneClick, this);
         coordinator.on('sceneDblClick', this.workplaneDblClick, this);
-        
+
         geometryGraph.on('vertexAdded', this.vertexAdded, this);
         geometryGraph.on('vertexRemoved', this.vertexRemoved, this);
         geometryGraph.on('vertexReplaced', this.vertexReplaced, this);
@@ -165,7 +165,7 @@ define([
       },
 
       // If selected and it's the only one - push the workplane
-      // Otherwise pop the workplane again for multiple selected 
+      // Otherwise pop the workplane again for multiple selected
       vertexSelected: function(selectedIds) {
         var allSelected = selection.getSelected();
         if ((allSelected.length === 1) && (selectedIds.length === 1)) {
@@ -223,20 +223,20 @@ define([
     var EditingDOMView = VertexMV.EditingDOMView.extend({
 
       render: function() {
-        var template = 
-          '<div class="planes">' + 
-            '<input type="button" name="xy" value="XY"/>' + 
-            '<input type="button" name="yz" value="YZ"/>' + 
+        var template =
+          '<div class="planes">' +
+            '<input type="button" name="xy" value="XY"/>' +
+            '<input type="button" name="yz" value="YZ"/>' +
             '<input type="button" name="zx" value="ZX"/>' +
           '</div>' +
           '<div>grid size:<input class="field gridsize" type="text"/></div>' +
-          '<div>origin</div>' +   
+          '<div>origin</div>' +
           '<div>' +
             'x <input class="field originx" type="text" value="{{origin.x}}"></input>' +
             'y <input class="field originy" type="text" value="{{origin.y}}"></input>' +
             'z <input class="field originz" type="text" value="{{origin.z}}"></input>' +
           '</div>' +
-          '<div>axis</div>' +   
+          '<div>axis</div>' +
           '<div>' +
             'x <input class="field axisx" type="text" value="{{axis.x}}"></input>' +
             'y <input class="field axisy" type="text" value="{{axis.y}}"></input>' +
@@ -347,7 +347,7 @@ define([
         this.model.off('change', this.render, this);
         this.model.vertex.off('change', this.render, this);
       },
-      
+
       render: function() {
         VertexMV.SceneView.prototype.render.call(this);
 
@@ -356,7 +356,7 @@ define([
 
         var majorGridLineGeometry = new THREE.Geometry();
         var majorMaterialInside = new THREE.LineBasicMaterial({
-          opacity: 0.5, 
+          opacity: 0.5,
           color: colors.workplane.majorGridLine
         });
         majorGridLineGeometry.vertices.push(new THREE.Vector3(-Math.floor(boundary/grid)*grid, 0, 0));
@@ -379,12 +379,12 @@ define([
             this.sceneObject.add(line);
           }
         }
-        
+
         if (geometryGraph.isEditing()) {
           var minorGridLineGeometry = new THREE.Geometry();
-          var minorMaterialInside = new THREE.LineBasicMaterial({ 
-            color: colors.workplane.minorGridLine, 
-            opacity: 0.1, 
+          var minorMaterialInside = new THREE.LineBasicMaterial({
+            color: colors.workplane.minorGridLine,
+            opacity: 0.1,
             transparent: true
           });
 
@@ -413,27 +413,27 @@ define([
 
         var quaternion = new THREE.Quaternion();
         var axis = calc.objToVector(
-            this.model.vertex.workplane.axis, 
-            geometryGraph, 
+            this.model.vertex.workplane.axis,
+            geometryGraph,
             THREE.Vector3);
         var angle = geometryGraph.evaluate(
           this.model.vertex.workplane.angle)/180*Math.PI;
-          
+
         quaternion.setFromAxisAngle(axis, angle);
         this.sceneObject.useQuaternion = true;
         this.sceneObject.quaternion = quaternion;
 
-        this.sceneObject.position = 
+        this.sceneObject.position =
           calc.objToVector(
-            this.model.vertex.workplane.origin, 
-            geometryGraph, 
+            this.model.vertex.workplane.origin,
+            geometryGraph,
             THREE.Vector3);
 
       },
 
       addAxes: function() {
 
-        var axes = [new THREE.Geometry(), new THREE.Geometry(), new THREE.Geometry(), 
+        var axes = [new THREE.Geometry(), new THREE.Geometry(), new THREE.Geometry(),
                     new THREE.Geometry(), new THREE.Geometry(), new THREE.Geometry()];
         axes[0].vertices.push(new THREE.Vector3(0, 0, 0));
         axes[0].vertices.push(new THREE.Vector3(5000, 0, 0));
@@ -453,17 +453,17 @@ define([
         axes[5].vertices.push(new THREE.Vector3(0, 0, 0));
         axes[5].vertices.push(new THREE.Vector3(0, 0, -5000));
 
-        this.sceneObject.add(new THREE.Line(axes[0], 
-            new THREE.LineBasicMaterial({ color: 0x0000ff }))); 
-        this.sceneObject.add(new THREE.Line(axes[1], 
+        this.sceneObject.add(new THREE.Line(axes[0],
+            new THREE.LineBasicMaterial({ color: 0x0000ff })));
+        this.sceneObject.add(new THREE.Line(axes[1],
             new THREE.LineBasicMaterial({ color: 0x00ff00 })));
-        this.sceneObject.add(new THREE.Line(axes[2], 
+        this.sceneObject.add(new THREE.Line(axes[2],
             new THREE.LineBasicMaterial({ color: 0xff0000 })));
-        this.sceneObject.add(new THREE.Line(axes[3], 
+        this.sceneObject.add(new THREE.Line(axes[3],
             new THREE.LineBasicMaterial({ color: 0x6666cc })));
-        this.sceneObject.add(new THREE.Line(axes[4], 
+        this.sceneObject.add(new THREE.Line(axes[4],
             new THREE.LineBasicMaterial({ color: 0x66cc66 })));
-        this.sceneObject.add(new THREE.Line(axes[5], 
+        this.sceneObject.add(new THREE.Line(axes[5],
             new THREE.LineBasicMaterial({ color: 0xcc6666 })));
 
       },

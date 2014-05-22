@@ -1,7 +1,7 @@
 define([
     'toolbars/toolbar',
     'toolbars/geomtoolbar',
-  ], 
+  ],
   function(
     Toolbar,
     geometryGraph) {
