@@ -4,6 +4,10 @@ body {
   font-size: 13px;
 }
 
+.row {
+  padding: 0.5em 0;
+}
+
 .logo {
   margin-top: 20px;
 }

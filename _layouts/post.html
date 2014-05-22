@@ -5,19 +5,19 @@ layout: layout
 <div class="container">
   <div class="row">
     <div class="twocol"></div>
-    
+
     <div class="eightcol post">
-      
+
       {% if page.title_image %}
       <img style="float: right;" src="{{page.title_image}}"/>
       {% endif %}
       <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
       <h4 class="date">Posted on {{ page.date | date_to_string }} by <a href="http://twitter.com/bjnortier">Ben Nortier</a></h4>
-      
+
       <div class="post-content">
       {{ content }}
       </div>
-      
+
       <script>
       var idcomments_acct = 'cb1078b244d71cf4fd087c5c9f074195';
       var idcomments_post_id;
@@ -25,10 +25,10 @@ layout: layout
       </script>
       <div id="IDCommentsPostTitle"></div>
       <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
-      
+
     </div>
     <div class="twocol last"></div>
     </div>
-    
+
   </div>
 </div>

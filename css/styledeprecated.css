@@ -1,0 +1,147 @@
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #eeeeee;
+  padding-top: 5px;
+  background-color: #101010;
+}
+
+a {
+  color: #eeeeee;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+.header {
+  padding-bottom: 70px;
+}
+
+.header h1 {
+  padding-top: 10px;
+}
+
+.FlattrButton {
+  padding-top: 20px;
+}
+
+.button {
+  box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #69abef), color-stop(1, #378de5) );
+  background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+  background-color:#79bbff;
+  border-radius:6px;
+  border:1px solid #336da6;
+  display:inline-block;
+  color:#ffffff;
+  font-family:arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:1px 1px 0px #528ecc;
+}
+
+.button:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+  background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+  background-color:#378de5;
+}
+.button:active {
+  position:relative;
+  top:1px;
+}
+
+.build-something {
+  text-align: right;
+}
+
+.row {
+    padding-top: 20px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+ul#navlist {
+    padding-left: 0;
+}
+
+#navlist li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+ 
+  font-size: 1.1em;
+}
+
+footer {
+    padding-top: 20px;
+}
+
+.thumbnails {
+  list-style-type: none;
+}
+
+.thumbnail {
+  border: 1px solid #333;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+h1 a, h2 a, h3 a {
+    color: #0074CC;
+    line-height: 1.1em;
+}
+
+.continue-reading {
+    text-align: right;
+    cursor: pointer;
+}
+
+.continue-reading a, .post a, .about a {
+    color: #0074CC;
+}
+
+
+
+.post-summary {
+    padding-bottom: 50px;
+}
+
+.post, .about {
+    font-size: 14px;
+}
+
+.post-summary .date, .post .date {
+    padding-bottom: 20px;
+}
+
+.post h2 {
+    padding: 20px 0;
+}
+
+.post p, .about p {
+    padding: 10px 0;
+}
+
+.post ol li {
+    margin-left: 30px;
+}
+
+#IDCommentsPostTitle {
+    padding-top: 50px;
+}
