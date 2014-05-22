@@ -12,7 +12,7 @@ I tried doing too much, and underestimated the effort required to create a mesh 
 
 Well I finally overcame the [sunk cost fallacy](http://en.wikipedia.org/wiki/Sunk_costs) and replaced my own home-grown kernel with csg.js. This took all of a day.
 
-So now we have STL imports! And csg.js is pretty snappy. And You can do funky things like slicing up bunnies:
+So now we have STL imports! CSG.js is pretty snappy. And you can do funky things like slicing up bunnies:
 
 ![Bunnies](/img/www/stlimport.png)
 
