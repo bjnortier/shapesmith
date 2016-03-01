@@ -1,3 +1,7 @@
+## DEPRECATED ##
+
+THIS PROJECT IS DORMANT AND HAS HAD NO DEVELOPMENT SINCE MAY 2014. 
+
 [![Build Status](https://travis-ci.org/bjnortier/shapesmith.png?branch=master)](https://travis-ci.org/bjnortier/shapesmith)
 
 # Shapesmith.next
