@@ -44,7 +44,11 @@ ul#navlist {
 }
 
 h1, h1 > a {
-  color: rgb(0, 18, 41) !important;
+  color: rgb(0, 18, 41);
+}
+
+h1.deprecated {
+  color: red;
 }
 
 h1 {
