@@ -18,7 +18,7 @@
   },
   "contributors": [],
   "engines": {
-    "node": "0.10.x",
+    "node": "4.8.x",
     "npm": "1.2.x"
   }
 ,
